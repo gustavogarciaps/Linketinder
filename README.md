@@ -1,5 +1,6 @@
-
 # LINKETINDER utilizando Groovy
+
+## Autor: Gustavo Garcia
 
 O intuito desta aplicação é promover o match entre candidatos e empresas através da análise de competências. O Linketinder avalia as competências que a empresa está buscando e procura o candidato ideal para ela. Ocorre o match entre empresa e candidato, quando ambos se curtem dentro da aplicação. A partir desse momento, é disponibilizado o chat para conversação.
 
