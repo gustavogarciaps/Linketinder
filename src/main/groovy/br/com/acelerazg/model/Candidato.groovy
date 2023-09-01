@@ -8,7 +8,7 @@ import java.time.LocalDate
 @ToString
 class Candidato extends Pessoa{
 
-    LocalDate dataNascimento
+    LocalDate dataNascimento = null
     Integer idade
 
     Candidato(){}
@@ -34,7 +34,7 @@ class Candidato extends Pessoa{
     }
 
     def getIdade(){
-        atualizarDataNascimento()
+        this.dataNascimento == null ? this.idade = 0 : atualizarDataNascimento()
         return this.idade
     }
 
