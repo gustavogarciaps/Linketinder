@@ -3,11 +3,12 @@ package br.com.acelerazg.view
 import br.com.acelerazg.controller.GerenciamentoCandidato
 import br.com.acelerazg.controller.GerenciamentoEmpresa
 import br.com.acelerazg.model.Candidato
+import br.com.acelerazg.model.Empresa
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class Main {
+class Aplicacao {
 
     static GerenciamentoCandidato candidatos = new GerenciamentoCandidato()
     static GerenciamentoEmpresa empresas = new GerenciamentoEmpresa()
@@ -51,6 +52,7 @@ class Main {
                     break
                 case 4:
                     println "Adicionar Empresa"
+                    formsEmpresa(new Empresa())
                     break
                 case 5:
                     println "Saindo..."
@@ -96,5 +98,38 @@ class Main {
         candidato.setDataNascimento(data)
 
         candidatos.setCandidato(candidato)
+    }
+
+    static void formsEmpresa(Empresa empresa){
+
+        print "Nome: "
+        empresa.setNome(scanner.nextLine().toUpperCase())
+        print "E-mail: "
+        empresa.setEmail(scanner.nextLine().toUpperCase())
+        print "CNPJ: "
+        empresa.setInscricao(scanner.nextLine().toUpperCase())
+        print "CEP: "
+        empresa.setCEP(scanner.nextLine().toUpperCase())
+        print "Estado (UF): "
+        empresa.setEstado(scanner.nextLine().toUpperCase())
+        print "País: "
+        empresa.setPais(scanner.nextLine().toUpperCase())
+        println "Lista de Competências (Digite 0 para finalizar)"
+
+        while(true){
+
+            print "Competência: "
+            def competencia = scanner.nextLine()
+
+            if(competencia.equals("0")){
+                break
+            }
+            empresa.getCompetencia().setCompetencia(competencia)
+        }
+
+        print "Sua descrição: "
+        empresa.setDescricao(scanner.nextLine())
+
+        empresas.setEmpresa(empresa)
     }
 }

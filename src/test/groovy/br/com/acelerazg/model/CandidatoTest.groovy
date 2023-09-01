@@ -1,6 +1,7 @@
 package br.com.acelerazg.model
 
 import br.com.acelerazg.model.Candidato
+import org.junit.After
 import org.junit.Before
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test
@@ -25,6 +26,27 @@ class CandidatoTest {
         candidato.setPais("BRASIL")
         candidato.setDescricao("SOU O GUSTAVO")
         candidato.setDataNascimento(LocalDate.of(2001,6,9))
+    }
+
+    @Test
+    void cadastrarCompetenciaString(){
+        candidato.getCompetencia().setCompetencia("JAVA")
+        candidato.getCompetencia().setCompetencia("PYTHON")
+
+        def expect = new ArrayList(["JAVA","PYTHON"])
+        def result = candidato.getCompetencia().getCompetencia()
+
+        assertEquals(expect, result)
+    }
+
+    @Test
+    void cadastrarCompetenciaArray(){
+        candidato.getCompetencia().setCompetencia(new ArrayList(["JAVA", "PYTHON"]))
+
+        def expect = new ArrayList(["JAVA","PYTHON"])
+        def result = candidato.getCompetencia().getCompetencia()
+
+        assertEquals(expect, result)
     }
 
     @Test
