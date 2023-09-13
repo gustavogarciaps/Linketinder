@@ -1,8 +1,9 @@
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
+!**/Backend/src/main/**/build/
+!**/Backend/src/test/**/build/
+!**/Frontend/node_modules/
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
