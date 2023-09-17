@@ -22,8 +22,7 @@ module.exports = {
                 { from: 'public'}, 
             ],
         }),
-    ],
-    
+    ],   
     resolve: {
         extensions: ['.ts', '.js']
     },

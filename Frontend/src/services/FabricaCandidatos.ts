@@ -2,9 +2,11 @@ const instanciarCandidato = (formsCandidato: HTMLFormElement) => {
 
      const formData = new FormData(formsCandidato);
 
-     const nome = formData.get('name');
+     console.log(formData.values);
 
-     console.log('Nome:', nome);
+     const nome = formData.get('nome_candidato') as string;   
+     console.log('Nome completo:', nome);
+     
 }
 
 export default instanciarCandidato;
