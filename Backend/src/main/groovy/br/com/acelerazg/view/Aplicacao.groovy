@@ -1,4 +1,4 @@
-package br.com.acelerazg.view
+package
 
 import br.com.acelerazg.controller.GerenciamentoCandidato
 import br.com.acelerazg.controller.GerenciamentoEmpresa
