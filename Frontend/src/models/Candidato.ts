@@ -15,4 +15,5 @@ export class Candidato extends Pessoa {
           private competencias: RepositorioCompetencia = new RepositorioCompetencia()) {
           super(nome, email, inscricao, CEP, estado, pais, descricao)
      }
+
 }
