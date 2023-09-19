@@ -19,50 +19,59 @@
 <body>
 
      <section class="py-5 container">
-               <div class="col-lg-6 col-md-8 mx-auto">
-                    <h2 class="fw-bold py-lg-4">Queremos te conhecer melhor...</h2>
-                    <form class="row g-3" id="forms_candidato" action="./competencias.html">
-                         <div class="col-md-12">
-                              <label for="" class="form-label">Seu nome completo:</label>
-                              <input type="text" class="form-control" name="nome_candidato">
-                         </div>
-                         <div class="col-md-6">
-                              <label for="" class="form-label">Email:</label>
-                              <input type="email" class="form-control" name="email_candidato">
-                         </div>
-                         <div class="col-md-6">
-                              <label for="" class="form-label">Data de Nascimento:</label>
-                              <input type="date" class="form-control" name="data_nascimento_candidato">
-                         </div>
-                         <div class="col-6">
-                              <label for="" class="form-label">Inscrição do CPF:</label>
-                              <input type="number" class="form-control" name="inscricao_cpf_candidato"
-                                   placeholder="Somente números">
-                         </div>
-                         <div class="col-md-6">
-                              <label for="" class="form-label">CEP:</label>
-                              <input type="number" class="form-control" name="CEP_candidato" placeholder="Somente números">
-                         </div>
-                         <div class="col-md-8">
-                              <label for="" class="form-label">Cidade:</label>
-                              <input type="text" class="form-control" name="cidade_candidato">
-                         </div>
-                         <div class="col-md-4">
-                              <label for="" class="form-label">Estado:</label>
-                              <select name="estado_candidato" class="form-select">
-                                   <option selected>Selecionar...</option>
-                                   <option>...</option>
-                              </select>
-                         </div>
-                         <div class="col-12">
-                              <label for="" class="form-label">Descrição</label>
-                              <textarea class="form-control" name="descricao_candidato" rows="3" placeholder="Conte um pouco sobre você..."></textarea>
-                         </div>
-                         <div class="col-12 text-md-end">
-                              <button type="submit" class="btn btn-primary ml-auto">Próxima Etapa</button>
-                         </div>
-                    </form>
-               </div>
+          <div class="container">
+               <h2 class="fw-bold py-lg-4">Queremos te conhecer melhor...</h2>
+               <form class="row g-3" id="forms_candidato">
+                    <div class="col-12 col-md-6">
+                         <label for="" class="form-label">Seu nome completo:</label>
+                         <input type="text" class="form-control" name="nome_candidato">
+                    </div>
+                    <div class="col-12 col-md-6">
+                         <label for="" class="form-label">Email:</label>
+                         <input type="email" class="form-control" name="email_candidato">
+                    </div>
+                    <div class="col-12 col-md-4">
+                         <label for="" class="form-label">Data de Nascimento:</label>
+                         <input type="date" class="form-control" name="data_nascimento_candidato">
+                    </div>
+                    <div class="col-12 col-md-4">
+                         <label for="" class="form-label">Inscrição do CPF:</label>
+                         <input type="number" class="form-control" name="inscricao_cpf_candidato"
+                              placeholder="Somente números">
+                    </div>
+                    <div class="col-12 col-md-4">
+                         <label for="" class="form-label">CEP:</label>
+                         <input type="number" class="form-control" name="CEP_candidato" placeholder="Somente números">
+                    </div>
+                    <div class="col-12 col-md-6">
+                         <label for="" class="form-label">Cidade:</label>
+                         <input type="text" class="form-control" name="cidade_candidato">
+                    </div>
+                    <div class="col-12 col-md-6">
+                         <label for="" class="form-label">Estado:</label>
+                         <select name="estado_candidato" class="form-select">
+                              <option selected>Selecionar...</option>
+                              <option>...</option>
+                         </select>
+                    </div>
+                    <div class="col-12">
+                         <label for="" class="form-label">Descrição</label>
+                         <textarea class="form-control" name="descricao_candidato" rows="3"
+                              placeholder="Conte um pouco sobre você..."></textarea>
+                    </div>
+
+                    <h2 class="fw-bold py-lg-4">Quais são seus pontos mais fortes?</h2>
+
+                    <div class="row row-cols-sm-8 row-cols-md-8 row-cols-lg-10 g-lg-3 g-2 p-4 d-flex"
+                         id="carregar_competencias">
+                         <!-- Carga de Competências -->
+                    </div>
+
+                    <div class="col-12 text-md-end">
+                         <button type="submit" class="btn btn-primary ml-auto">Próxima Etapa</button>
+                    </div>
+               </form>
+          </div>
      </section>
      <script src="./../app.min.js"></script>
 </body>

@@ -1,6 +1,6 @@
 import { Candidato } from "../models/Candidato";
 import { Competencia } from "../models/Competencia";
-import { guardarCadastroFuncionario, recuperarCadastroFuncionario, deletarCadastroFuncionario } from "./CadastroAtualCandidato"
+import { guardarCadastroFuncionario, recuperarCadastroFuncionario, deletarCadastroFuncionario } from "./ArmazenamentoCandidatos"
 import { instanciarCompetencias } from "./FabricaCompetencias";
 
 export const instanciarCandidato = (forms: HTMLFormElement) => {
@@ -18,15 +18,10 @@ export const instanciarCandidato = (forms: HTMLFormElement) => {
      const dataNascimento = formData.get('data_nascimento_candidato') as string;
      candidato.dataNascimento = new Date(dataNascimento);
 
-     guardarCadastroFuncionario(candidato);
+     selecionarCompetencias(forms, candidato);
 }
 
-export const selecionarCompetencias = (forms: HTMLFormElement) => {
-
-     const candidato = recuperarCadastroFuncionario();
-
-     console.log(candidato)
-
+const selecionarCompetencias = (forms: HTMLFormElement, candidato: Candidato) => {
 
      let selecionados: Competencia[] = [];
 

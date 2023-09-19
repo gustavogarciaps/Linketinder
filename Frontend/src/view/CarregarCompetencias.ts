@@ -1,4 +1,4 @@
-import { instanciarCompetencias } from "../services/FabricaCompetencias";
+import { instanciarCompetencias } from "./../services/FabricaCompetencias";
 
 export const carregarCompetencias = () => {
 
@@ -10,11 +10,10 @@ export const carregarCompetencias = () => {
           competencias.forEach(competencia => {
 
                HTMLCompetencias.innerHTML += `
-                              <div class="col p-1">
-                                   <input type="checkbox" class="btn-check" id="btn-check-${competencias.indexOf(competencia)}">
-                                   <label class="btn btn-outline-dark" for="btn-check-${competencias.indexOf(competencia)}">${competencia.Nome}</label>
-                               </div>
-                               `;
+                    <div class="col p-1">
+                         <input type="checkbox" class="btn-check" id="btn-check-${competencias.indexOf(competencia)}">
+                         <label class="btn btn-outline-dark" for="btn-check-${competencias.indexOf(competencia)}">${competencia.Nome}</label>
+                    </div>`;
           });
      }
 
