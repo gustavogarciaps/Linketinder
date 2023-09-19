@@ -45,6 +45,7 @@ export const instanciarCompetencias = (): Competencia[] => {
   repositorioCompetencias.adicionarCompetencia(new Competencia("Gestão de Pessoas"));
   repositorioCompetencias.adicionarCompetencia(new Competencia("Psicologia Organizacional"));
   repositorioCompetencias.adicionarCompetencia(new Competencia("Marketing de Eventos"));
+  repositorioCompetencias.adicionarCompetencia(new Competencia("Discípulo do ACZG"));
 
   return repositorioCompetencias.listarCompetencias();
 };

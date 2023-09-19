@@ -1,39 +1,68 @@
 export abstract class Pessoa {
 
-     constructor(private nome: string,
-          private email: string,
-          private inscricao: string,
-          private cep: string,
-          private estado: string,
-          private pais: string,
-          private descricao: string) {
+     constructor(
+          private _nome?: string,
+          private _email?: string,
+          private _inscricao?: string,
+          private _cep?: string,
+          private _estado?: string,
+          private _pais?: string,
+          private _descricao?: string
+     ) { }
+
+     get nome() {
+          return this._nome ?? "";
      }
 
-     get Nome() {
-          return this.nome;
+     set nome(nome: string) {
+          this._nome = nome;
      }
 
-     get Email() {
-          return this.email;
+     get email() {
+          return this._email ?? "";
      }
 
-     get Inscricao() {
-          return this.inscricao;
+     set email(email: string) {
+          this._email = email;
      }
 
-     get Cep() {
-          return this.cep;
+     get inscricao() {
+          return this._inscricao ?? "";
      }
 
-     get Estado() {
-          return this.estado;
+     set inscricao(inscricao: string) {
+          this._inscricao = inscricao;
      }
 
-     get Pais() {
-          return this.pais;
+     get cep() {
+          return this._cep ?? "";
      }
 
-     get Descricao() {
-          return this.descricao;
+     set cep(cep: string) {
+          this._cep = cep;
+     }
+
+     get estado() {
+          return this._estado ?? "";
+     }
+
+     set estado(estado: string) {
+          this._estado = estado;
+     }
+
+     get pais(): string {
+          return this._pais ?? "";
+     }
+
+     set pais(pais: string) {
+          this._pais = pais;
+     }
+
+     get descricao() {
+          return this._descricao ?? "";
+     }
+
+     set descricao(descricao: string) {
+          this._descricao = descricao;
      }
 }

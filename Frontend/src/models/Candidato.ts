@@ -4,27 +4,28 @@ import { Pessoa } from "./Pessoa";
 export class Candidato extends Pessoa {
 
      constructor(
-          nome: string,
-          email: string,
-          inscricao: string,
-          CEP: string,
-          estado: string,
-          pais: string,
-          descricao: string,
-          private dataNascimento: Date,
-          private competencias: RepositorioCompetencias = new RepositorioCompetencias()) {
-          super(nome, email, inscricao, CEP, estado, pais, descricao)
+          _nome?: string,
+          _email?: string,
+          _inscricao?: string,
+          _cep?: string,
+          _estado?: string,
+          _pais?: string,
+          _descricao?: string,
+          private _dataNascimento?: Date | null,
+          private _competencias: RepositorioCompetencias = new RepositorioCompetencias()) {
+          super(_nome, _email, _inscricao, _cep, _estado, _pais, _descricao)
      }
 
-     get DataNascimento() {
-          return this.dataNascimento;
+     get dataNascimento(): Date | null {
+          return this._dataNascimento ?? null;
      }
 
-     get Competencias() {
-          return this.competencias;
+     set dataNascimento(dataNascimento: Date | null) {
+          this._dataNascimento = dataNascimento;
      }
 
-     set Competencias(competencias: RepositorioCompetencias) {
-          this.competencias = competencias;
+     get competencias() {
+          return this._competencias ?? "";
      }
+
 }
