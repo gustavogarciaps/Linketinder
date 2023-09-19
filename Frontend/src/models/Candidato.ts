@@ -1,4 +1,4 @@
-import { RepositorioCompetencia } from "../repositories/RepositorioCompetencia";
+import { RepositorioCompetencias } from "../repositories/RepositorioCompetencias";
 import { Pessoa } from "./Pessoa";
 
 export class Candidato extends Pessoa {
@@ -12,8 +12,19 @@ export class Candidato extends Pessoa {
           pais: string,
           descricao: string,
           private dataNascimento: Date,
-          private competencias: RepositorioCompetencia = new RepositorioCompetencia()) {
+          private competencias: RepositorioCompetencias = new RepositorioCompetencias()) {
           super(nome, email, inscricao, CEP, estado, pais, descricao)
      }
 
+     get DataNascimento() {
+          return this.dataNascimento;
+     }
+
+     get Competencias() {
+          return this.competencias;
+     }
+
+     set Competencias(competencias: RepositorioCompetencias) {
+          this.competencias = competencias;
+     }
 }

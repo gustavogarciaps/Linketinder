@@ -1,4 +1,8 @@
 import { Candidato } from "../models/Candidato";
+import { Competencia } from "../models/Competencia";
+import { instanciarCompetencias } from "./FabricaCompetencias";
+
+let referenciaCandidato: Candidato;
 
 export const instanciarCandidato = (formsCandidato: HTMLFormElement) => {
 
@@ -15,18 +19,26 @@ export const instanciarCandidato = (formsCandidato: HTMLFormElement) => {
 
      const conversaoDataNascimento = new Date(dataNascimento);
 
-     const referenciaCandidato = new Candidato(nome, email, inscricao, CEP, estado, pais, descricao, conversaoDataNascimento) as Candidato;
+     referenciaCandidato = new Candidato(nome, email, inscricao, CEP, estado, pais, descricao, conversaoDataNascimento) as Candidato;
 
      return referenciaCandidato;
 }
 
-export const selecionarMarcados = (formsCompetenciasCandidato: HTMLFormElement) => {
+export const selecionarCompetencias = (formsCompetenciasCandidato: HTMLFormElement) => {
 
-     const selecionados = [] as string[];
+     let selecionados: Competencia[] = [];
 
-     const selecionadosDisponiveis = formsCompetenciasCandidato.querySelectorAll('.btn-check'); 
+     const competenciasCadastradas = instanciarCompetencias();
+     const competenciasSelecionadas = formsCompetenciasCandidato.querySelectorAll('.btn-check');
 
+     competenciasSelecionadas.forEach((checkbox) => {
 
+          if (checkbox instanceof HTMLInputElement && checkbox.checked) {
+               const checkboxId = parseInt(checkbox.id.split('-')[2]) as number;
+               selecionados.push(competenciasCadastradas[checkboxId]);
+          }
 
-     console.log('Checkboxes Marcados:', selecionadosDisponiveis.item(0));
-}
+     });
+
+     referenciaCandidato.Competencias.adicionarCompetencia(selecionados);
+};

@@ -1,9 +1,9 @@
-import { RepositorioCompetencia } from "../repositories/RepositorioCompetencia";
+import { RepositorioCompetencias } from "../repositories/RepositorioCompetencias";
 
 export class Vaga {
      constructor(private titulo: string,
           private descricao: string,
           private criacao: Date,
-          private competencias: RepositorioCompetencia = new RepositorioCompetencia()
+          private competencias: RepositorioCompetencias = new RepositorioCompetencias()
      ) { }
 }
