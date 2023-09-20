@@ -1,7 +1,7 @@
 import { Candidato } from "../models/Candidato";
 import { Competencia } from "../models/Competencia";
 import { RepositorioCandidatos } from "./../repositories/RepositorioCandidatos";
-import { guardarCadastro } from "./ServicoArmazenamento";
+import { deletarChaveCadastro, guardarCadastro } from "./ServicoArmazenamento";
 
 export const mockCandidatos = () => {
 
@@ -35,6 +35,8 @@ export const mockCandidatos = () => {
                     (new Candidato
                               ("Nome 7", "Email 7", "Inscrição 7", "CEP 7", "Estado 7", "País 7", "Descrição 7",
                                         new Date("1990-01-01")));
+
+          deletarChaveCadastro('candidatos');
 
           repositorioCandidatos.listarCandidatos().forEach(candidato => {
                     guardarCadastro('candidatos', candidato);

@@ -1,4 +1,5 @@
 import { Empresa } from "../models/Empresa";
+import { Vaga } from "../models/Vaga";
 import { guardarCadastro, recuperarCadastro, deletarChaveCadastro } from "./ServicoArmazenamento"
 
 export const instanciarEmpresa = (forms: HTMLFormElement) => {
@@ -14,10 +15,21 @@ export const instanciarEmpresa = (forms: HTMLFormElement) => {
           empresa.pais = formData.get('pais_empresa') as string;
           empresa.descricao = formData.get('descricao_empresa') as string;
 
-
           guardarCadastro('empresas', empresa);
 }
 
+export const atribuirVaga = (empresa: Empresa, vaga: Vaga) => {
+
+          if (vaga && empresa) {
+
+                    empresa.vagas.adicionarVaga(vaga);
+                    deletarChaveCadastro('vagas');
+                    guardarCadastro('vagas', vaga);
+          }
+
+          deletarChaveCadastro('empresas');
+          guardarCadastro('empresas', empresa);
+}
 
 
 

@@ -1,38 +1,45 @@
 import { Vaga } from "../models/Vaga";
-import { RepositorioVagas } from "../repositories/RepositorioVagas";
 import { Competencia } from "../models/Competencia";
+import { guardarCadastro, recuperarCadastro, deletarChaveCadastro } from "./ServicoArmazenamento"
+import { instanciarCompetencias } from "./FabricaCompetencias";
+import { atribuirVaga } from "./FabricaEmpresas";
+import { Empresa } from "../models/Empresa";
 
-export const instanciarVagas = (): Vaga[] => {
+export const instanciarVaga = (forms: HTMLFormElement) => {
 
-          const repositorioVagas = new RepositorioVagas();
-          const vaga1 = new Vaga(
-                    "Desenvolvedor Full Stack",
-                    "Requisitos necessários: Graduação em curso de nível superior na área de Tecnologia da Informação, ou conclusão de qualquer curso de nível superior acompanhado de certificado de curso de pós-graduação (especialização, mestrado ou doutorado) na área de Tecnologia",
-                    new Date(),
-          );
+          const vaga = new Vaga();
+          const formData = new FormData(forms);
 
-          vaga1.competencias.adicionarCompetencia(new Competencia("Java"));
-          vaga1.competencias.adicionarCompetencia(new Competencia("JavaScript"));
-          vaga1.competencias.adicionarCompetencia(new Competencia("Angular"));
-          vaga1.competencias.adicionarCompetencia(new Competencia("React"));
+          vaga.nome = formData.get('nome_vaga') as string;
+          vaga.descricao = formData.get('descricao_vaga') as string;
+          const dataCriacao = formData.get('data_publicacao_vaga') as string;
+          vaga.criacao = new Date(dataCriacao);
 
-          repositorioVagas.adicionarVaga(vaga1);
+          selecionarCompetencias(forms, vaga);
 
-          const vaga2 = new Vaga(
-                    "Desenvolvedor Frontend",
-                    "Requisitos necessários: Graduação em curso de nível superior na área de Tecnologia da Informação, ou conclusão de qualquer curso de nível superior acompanhado de certificado de curso de pós-graduação (especialização, mestrado ou doutorado) na área de Tecnologia",
-                    new Date(),
-          );
-
-          vaga2.competencias.adicionarCompetencia(new Competencia("Java"));
-          vaga2.competencias.adicionarCompetencia(new Competencia("JavaScript"));
-          vaga2.competencias.adicionarCompetencia(new Competencia("Angular"));
-          vaga2.competencias.adicionarCompetencia(new Competencia("React"));
-          vaga2.competencias.adicionarCompetencia(new Competencia("HTML"));
-          vaga2.competencias.adicionarCompetencia(new Competencia("CSS"));
-          vaga2.competencias.adicionarCompetencia(new Competencia("Bootstrap"));
-
-          repositorioVagas.adicionarVaga(vaga2);
-
-          return repositorioVagas.listarVaga();
 }
+
+const selecionarCompetencias = (forms: HTMLFormElement, vaga: Vaga) => {
+
+          let selecionados: Competencia[] = [];
+
+          const competenciasCadastradas = instanciarCompetencias();
+          const competenciasSelecionadas = forms.querySelectorAll('.btn-check');
+
+          competenciasSelecionadas.forEach(checkbox => {
+
+                    if (checkbox instanceof HTMLInputElement && checkbox.checked) {
+
+                              const checkboxId = parseInt(checkbox.id.split('-')[2]) as number;
+
+                              selecionados.push(competenciasCadastradas[checkboxId]);
+                    }
+
+          });
+
+          vaga.competencias?.adicionarCompetencias(selecionados);
+
+          atribuirVaga(recuperarCadastro('empresas')[0] as Empresa, vaga);
+
+};
+

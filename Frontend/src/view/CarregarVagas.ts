@@ -1,17 +1,29 @@
+import { Empresa } from "../models/Empresa";
 import { Vaga } from "../models/Vaga";
-import { instanciarVagas } from "./../services/FabricaVagas";
+import { recuperarCadastro } from "../services/ServicoArmazenamento";
 
 export const carregarVagas = () => {
 
-          const HTMLVagas = document.querySelector("#carregar_vagas");
+     const HTMLVagas = document.querySelector("#carregar_vagas");
 
-          const vagas = instanciarVagas();
+     const empresa = recuperarCadastro('empresas') as Empresa[];
+     const vagas = Vaga [];
+
+     empresa.forEach(empresa => {
+          if(empresa.vagas.listarVagas().length > 0){
+               carregarVaga(empresa.vagas.listarVagas());
+          }
+      } )
+
 
           if (HTMLVagas) {
 
-                    vagas.forEach(vaga => {
 
-                              HTMLVagas.innerHTML += `
+               vagas.forEach(vaga => {
+
+                    console.log(vaga)
+
+                    HTMLVagas.innerHTML += `
                               <div class="col">
                                         <div class="card text-center text-bg-light mb-3 p-3">
                                         <h5 class="card-header fw-bold">${vaga.titulo}</h5>
@@ -50,17 +62,17 @@ export const carregarVagas = () => {
                               </div>
                          </div>
                     </div>`;
-                    });
+               });
           }
 }
 
 const carregarCompetencias = (vaga: Vaga) => {
 
-          let HTMLCompetencias = '' as string;
+     let HTMLCompetencias = '' as string;
 
-          vaga.competencias.listarCompetencias().forEach(competencia => {
-                    HTMLCompetencias += `<span class="badge text-bg-warning">#${competencia.nome.toLocaleUpperCase()}</span>`
-          })
+     vaga.competencias?.listarCompetencias().forEach(competencia => {
+          HTMLCompetencias += `<span class="badge text-bg-warning">#${competencia.nome.toLocaleUpperCase()}</span>`
+     })
 
-          return HTMLCompetencias;
+     return HTMLCompetencias;
 }
