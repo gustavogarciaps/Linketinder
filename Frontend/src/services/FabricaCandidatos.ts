@@ -1,6 +1,6 @@
 import { Candidato } from "../models/Candidato";
 import { Competencia } from "../models/Competencia";
-import { guardarCadastroFuncionario, recuperarCadastroFuncionario, deletarCadastroFuncionario } from "./ArmazenamentoCandidatos"
+import { guardarCadastro, recuperarCadastro, deletarChaveCadastro } from "./ServicoArmazenamento"
 import { instanciarCompetencias } from "./FabricaCompetencias";
 
 export const instanciarCandidato = (forms: HTMLFormElement) => {
@@ -43,8 +43,8 @@ const selecionarCompetencias = (forms: HTMLFormElement, candidato: Candidato) =>
 
           candidato.competencias.adicionarCompetencias(selecionados);
 
-          deletarCadastroFuncionario();
-          guardarCadastroFuncionario(candidato);
+          deletarChaveCadastro('candidatos');
+          guardarCadastro('candidatos', candidato);
      }
 
 };
