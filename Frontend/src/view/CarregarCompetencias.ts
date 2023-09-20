@@ -12,7 +12,7 @@ export const carregarCompetencias = () => {
                HTMLCompetencias.innerHTML += `
                     <div class="col p-1">
                          <input type="checkbox" class="btn-check" id="btn-check-${competencias.indexOf(competencia)}">
-                         <label class="btn btn-outline-dark" for="btn-check-${competencias.indexOf(competencia)}">${competencia.Nome}</label>
+                         <label class="btn btn-outline-dark" for="btn-check-${competencias.indexOf(competencia)}">${competencia.nome}</label>
                     </div>`;
           });
      }

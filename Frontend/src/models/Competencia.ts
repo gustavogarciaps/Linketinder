@@ -1,8 +1,8 @@
 export class Competencia {
 
-     constructor(private nome: string) { }
+     constructor(private _nome: string) { }
 
-     get Nome(){
-          return this.nome;
+     get nome(){
+          return this._nome;
      }
 }
