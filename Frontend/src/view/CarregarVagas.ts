@@ -6,31 +6,37 @@ export const carregarVagas = () => {
 
      const HTMLVagas = document.querySelector("#carregar_vagas");
 
-     const empresa = recuperarCadastro('empresas') as Empresa[];
-     const vagas = Vaga [];
+     const empresas = recuperarCadastro('empresas') as Empresa[];
 
-     empresa.forEach(empresa => {
-          if(empresa.vagas.listarVagas().length > 0){
-               carregarVaga(empresa.vagas.listarVagas());
+     console.log(empresas)
+
+     empresas.forEach(empresa => {
+
+          console.log(empresa.vagas)
+
+          const vagas = empresa.vagas.listarVagas();
+
+
+          if (!vagas || vagas.length > 0) {
+               return console.error('Não há vagas cadastradas')
           }
-      } )
+
+          if (!HTMLVagas) {
+               return console.error('Não há vagas cadastradas')
+          }
+          console.log(empresa.vagas.listarVagas())
 
 
-          if (HTMLVagas) {
+          vagas.forEach(vaga => {
 
-
-               vagas.forEach(vaga => {
-
-                    console.log(vaga)
-
-                    HTMLVagas.innerHTML += `
+               HTMLVagas.innerHTML += `
                               <div class="col">
                                         <div class="card text-center text-bg-light mb-3 p-3">
-                                        <h5 class="card-header fw-bold">${vaga.titulo}</h5>
+                                        <h5 class="card-header fw-bold">${vaga.nome}</h5>
                                         <div class="card-body placeholder-glow">
-                                        <h5 class="card-title placeholder">ZG SOLUÇÕES</h5>
+                                        <h5 class="card-title placeholder">?</h5>
                                         <i class='fas fa-question-circle' style='font-size:24px' data-bs-toggle="tooltip"
-                                        data-bs-title="Somos a maior multinacional brasileira e estamos entre as 100 maiores empresas de TI do mundo. Estamos presentes em 41 países com +30k colaboradores. Nosso principal objetivo auxiliar os clientes a encontrar, por meio de soluções personalizadas, a maneira ideal para alcançar seus desafios, impulsionando a inovação digital."></i>
+                                        data-bs-title="${empresa.descricao}"></i>
                                         <p class="card-text">
                                         ${vaga.descricao}</p>
                                         ${carregarCompetencias(vaga)}
@@ -62,8 +68,10 @@ export const carregarVagas = () => {
                               </div>
                          </div>
                     </div>`;
-               });
-          }
+          });
+
+
+     })
 }
 
 const carregarCompetencias = (vaga: Vaga) => {

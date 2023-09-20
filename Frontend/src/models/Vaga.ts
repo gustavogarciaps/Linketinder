@@ -2,11 +2,25 @@ import { RepositorioCompetencias } from "../repositories/RepositorioCompetencias
 import { Empresa } from "./Empresa";
 
 export class Vaga {
-     constructor(private _nome?: string,
-          private _descricao?: string,
-          private _criacao?: Date | null,
-          private _competencias: RepositorioCompetencias = new RepositorioCompetencias()
-     ) { }
+
+     private _nome?: string;
+     private _descricao?: string;
+     private _criacao?: Date | null;
+     private _competencias: RepositorioCompetencias = new RepositorioCompetencias();
+
+
+     constructor(dados: Empresa | any = {}) {
+          const {
+               nome = '',
+               descricao = '',
+               criacao = null
+          } = dados;
+
+          this._nome = nome;
+          this._descricao = descricao;
+          this._criacao = criacao;
+
+     }
 
      get nome(): string {
           return this._nome ?? "";

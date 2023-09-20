@@ -8,16 +8,15 @@ export class RepositorioVagas {
           this.vagas.push(vaga)
      }
 
-     public adicionarVagas(vaga: Vaga[]): void {
-          this.vagas = vaga;
-     }
-
      public removeVaga(vaga: Vaga): void {
           const index = this.vagas.indexOf(vaga)
           this.vagas.splice(index, 1)
      }
 
-     public listarVaga(): Vaga[] {
+     public listarVagas(): Vaga[] {
+          if(this.vagas.length == 0){
+               return []
+          }
           return this.vagas
      }
 }

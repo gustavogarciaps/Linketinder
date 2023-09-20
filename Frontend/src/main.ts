@@ -26,7 +26,7 @@ adicionarEventoSeExistir('forms_vaga', 'submit', function (event: Event) {
      instanciarVaga(formsVaga);
 });
 
-mockCandidatos();
+//mockCandidatos();
 
 
 

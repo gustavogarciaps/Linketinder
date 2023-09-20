@@ -2,21 +2,28 @@ import { RepositorioVagas } from '../repositories/RepositorioVagas';
 import { Pessoa } from './Pessoa';
 
 export class Empresa extends Pessoa {
+          
+          private _vagas: RepositorioVagas = new RepositorioVagas();
 
-          constructor(
-                    _nome?: string,
-                    _email?: string,
-                    _inscricao?: string,
-                    _cep?: string,
-                    _estado?: string,
-                    _pais?: string,
-                    _descricao?: string,
-                    private _vagas = new RepositorioVagas()
-          ) {
-                    super(_nome, _email, _inscricao, _cep, _estado, _pais, _descricao);
+          constructor(dados: Empresa | any = {}) {
+                    const {
+                              nome = '',
+                              email = '',
+                              inscricao = '',
+                              cep = '',
+                              estado = '',
+                              pais = '',
+                              descricao = ''
+                    } = dados;
+
+                    super(nome, email, inscricao, cep, estado, pais, descricao);
           }
 
           get vagas() {
                     return this._vagas;
+          }
+
+          static fromJSON(json: any): Empresa {
+                    return new Empresa(json);
           }
 }

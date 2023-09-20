@@ -1,29 +1,23 @@
-import { Candidato } from "../models/Candidato";
-import { Empresa } from "../models/Empresa";
-import { Vaga } from "../models/Vaga";
-
-export const guardarCadastro = (chave: string, valor: Candidato | Empresa | Vaga) => {
-
+export const guardarCadastro = <T>(chave: string, valor: T) => {
           const registroJSON = localStorage.getItem(chave);
-
-          let registros: (Candidato | Empresa | Vaga)[] = [];
+          let registros: T[] = [];
 
           if (registroJSON) {
-                    registros = JSON.parse(registroJSON) as (Candidato | Empresa | Vaga)[];
+                    registros = JSON.parse(registroJSON) as T[];
           }
 
-          registros.push(valor);
+          console.log("Registros", registros)
+
+          registros = [...registros, ...[valor]];
 
           localStorage.setItem(chave, JSON.stringify(registros));
 }
 
-
-export const recuperarCadastro = (chave: string): Candidato[] | Empresa[] | Vaga[] => {
-
+export const recuperarCadastro = <T>(chave: string): T[] => {
           const registroJSON = localStorage.getItem(chave);
 
           if (registroJSON) {
-                    return JSON.parse(registroJSON) as Candidato[] | Empresa[] | Vaga[];
+                    return JSON.parse(registroJSON) as T[];
           }
 
           return [];
@@ -33,18 +27,19 @@ export const deletarChaveCadastro = (chave: string) => {
           localStorage.removeItem(chave);
 }
 
-export const atualizarCadastro = (chave: string, valor: Candidato | Empresa | Vaga) => {
+export const atualizarCadastro = <T>(chave: string, valor: T, indice: number) => {
+          const registrosJSON = localStorage.getItem(chave);
+          let registros: T[] = [];
 
-          const registros = recuperarCadastro(chave);
+          if (registrosJSON) {
+                    registros = JSON.parse(registrosJSON) as T[];
+          }
 
-          registros.forEach(registro => {
+          if (indice >= 0 && indice < registros.length) {
 
-                    if (registro instanceof Candidato || registro instanceof Empresa) {
-                              if (registro.nome === valor.nome) {
-                                        registro = valor;
-                              }
-                    }
-          });
-
-          localStorage.setItem(chave, JSON.stringify(registros));
+                    console.log("Registros", registros[indice])
+                    registros[indice] = valor;
+                    console.log("Valor", valor)
+                    localStorage.setItem(chave, JSON.stringify(registros));
+          }
 }

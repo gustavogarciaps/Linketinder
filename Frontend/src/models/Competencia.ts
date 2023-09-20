@@ -1,8 +1,16 @@
 export class Competencia {
 
-     constructor(private _nome: string) { }
+     private _nome: string;
 
-     get nome(){
+     constructor(dados: Competencia | any = {}) {
+          const {
+               nome = ''
+          } = dados;
+
+          this._nome = nome;
+     }
+
+     get nome() {
           return this._nome;
      }
 }

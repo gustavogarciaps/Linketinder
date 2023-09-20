@@ -5,18 +5,19 @@ import { instanciarCompetencias } from "./FabricaCompetencias";
 
 export const instanciarCandidato = (forms: HTMLFormElement) => {
 
-     const candidato = new Candidato();
      const formData = new FormData(forms);
+     const dados = {
+          nome: formData.get('nome_candidato') as string,
+          email: formData.get('email_candidato') as string,
+          inscricao: formData.get('inscricao_candidato') as string,
+          cep: formData.get('CEP_candidato') as string,
+          estado: formData.get('estado_candidato') as string,
+          pais: formData.get('pais_candidato') as string,
+          descricao: formData.get('descricao_candidato') as string,
+          dataNascimento: new Date(formData.get('descricao_candidato') as string) as Date
+     };
 
-     candidato.nome = formData.get('nome_candidato') as string;
-     candidato.email = formData.get('email_candidato') as string;
-     candidato.inscricao = formData.get('inscricao_candidato') as string;
-     candidato.cep = formData.get('CEP_candidato') as string;
-     candidato.estado = formData.get('estado_candidato') as string;
-     candidato.pais = formData.get('pais_candidato') as string;
-     candidato.descricao = formData.get('descricao_candidato') as string;
-     const dataNascimento = formData.get('data_nascimento_candidato') as string;
-     candidato.dataNascimento = new Date(dataNascimento);
+     const candidato = new Candidato(dados);
 
      selecionarCompetencias(forms, candidato);
 }
@@ -42,8 +43,6 @@ const selecionarCompetencias = (forms: HTMLFormElement, candidato: Candidato) =>
      if (candidato) {
 
           candidato.competencias.adicionarCompetencias(selecionados);
-
-          deletarChaveCadastro('candidatos');
           guardarCadastro('candidatos', candidato);
      }
 
