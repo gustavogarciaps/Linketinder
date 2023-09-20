@@ -30,7 +30,7 @@ export const carregarVagas = () => {
                                         </div>
                                         <div class="p-2 ms-auto">
                                              <strong>
-                                                  <span>75% Compatível</span>
+                                                  <span>${Math.floor(Math.random() * 100) + 1}% compatível.</span>
                                              </strong>
                                         </div>
                                         <div class="p-2">
