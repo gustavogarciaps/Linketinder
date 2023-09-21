@@ -1,4 +1,4 @@
-import { RepositorioCompetencias } from "../repositories/RepositorioCompetencias";
+import { Competencia } from "./Competencia";
 import { Empresa } from "./Empresa";
 
 export class Vaga {
@@ -6,19 +6,20 @@ export class Vaga {
      private _nome?: string;
      private _descricao?: string;
      private _criacao?: Date | null;
-     private _competencias: RepositorioCompetencias = new RepositorioCompetencias();
-
+     private _competencias: Competencia[] = [];
 
      constructor(dados: Empresa | any = {}) {
           const {
                nome = '',
                descricao = '',
-               criacao = null
+               criacao = null,
+               competencias = []
           } = dados;
 
           this._nome = nome;
           this._descricao = descricao;
           this._criacao = criacao;
+          this._competencias = competencias;
 
      }
 
@@ -46,8 +47,11 @@ export class Vaga {
           this._criacao = criacao ?? null;
      }
 
-     get competencias(): RepositorioCompetencias | null {
-          return this._competencias ?? null;
+     get competencias(): Competencia[] {
+          return this._competencias;
      }
 
+     set competencias(competencias: Competencia[]) {
+          this._competencias = competencias;
+     }
 }

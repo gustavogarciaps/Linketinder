@@ -1,16 +1,17 @@
-import { recuperarCadastroFuncionario } from "./../services/ArmazenamentoCandidatos";
+import { Candidato } from "../models/Candidato";
+import { recuperarCadastro } from "../services/ServicoArmazenamento";
 
 export const carregarCandidatos = () => {
 
-          const HTMLCandidatos = document.querySelector("#");
+          const candidatosJSON = recuperarCadastro('candidatos') as Candidato[];
+          const candidatos = [] as Candidato[];
 
-          const candidatos = recuperarCadastroFuncionario();
+          candidatosJSON.forEach(candidato => {
+                    candidatos.push(new Candidato(candidato));
+          });
 
-          if (HTMLCandidatos) {
-                    candidatos.forEach(candidato => {
+          candidatos.forEach(candidato => {
 
-                              HTMLCandidatos.innerHTML += ``;
-                    });
-          }
-
+          });
 }
+

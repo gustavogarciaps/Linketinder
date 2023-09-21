@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Linketinder: Criando vínculos profissionais</title>
+
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+          crossorigin="anonymous"></script>
+
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+
+     <section class="py-5 container">
+          <div class="container">
+               <h2 class="fw-bold py-lg-4">Qual oportunidade você tem?</h2>
+               <form class="row g-3" id="forms_vaga">
+                    <div class="col-12 col-md-6">
+                         <label for="" class="form-label">Título:</label>
+                         <input type="text" class="form-control" name="nome_vaga">
+                    </div>
+                    <div class="col-12">
+                         <label for="" class="form-label">Descrição</label>
+                         <textarea class="form-control" name="descricao_vaga" rows="3"
+                              placeholder="Conte um pouco sobre a vaga..."></textarea>
+                    </div>
+                    <div class="col-12 col-md-4">
+                         <label for="" class="form-label">Data de publicação:</label>
+                         <input type="date" class="form-control" name="data_publicacao_vaga">
+                    </div>
+
+                    <h2 class="fw-bold py-lg-4">Esta vaga necessita de quais Competências?</h2>
+
+                    <div class="row row-cols-sm-8 row-cols-md-8 row-cols-lg-10 g-lg-3 g-2 p-4 d-flex"
+                         id="carregar_competencias">
+                         <!-- Carga de Competências -->
+                    </div>
+
+                    <div class="col-12 text-md-end">
+                         <button type="submit" class="btn btn-primary ml-auto">Cadastrar Vaga</button>
+                    </div>
+               </form>
+          </div>
+     </section>
+     <script src="./../app.min.js"></script>
+</body>
+
+</html>

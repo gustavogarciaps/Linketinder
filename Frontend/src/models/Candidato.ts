@@ -1,9 +1,9 @@
-import { RepositorioCompetencias } from "../repositories/RepositorioCompetencias";
+import { Competencia } from "./Competencia";
 import { Pessoa } from "./Pessoa";
 
 export class Candidato extends Pessoa {
      private _dataNascimento: Date | null;
-     private _competencias: RepositorioCompetencias = new RepositorioCompetencias();
+     private _competencias: Competencia[] = [];
 
      constructor(dados: Candidato | any = {}) {
           const {
@@ -14,11 +14,13 @@ export class Candidato extends Pessoa {
                estado = '',
                pais = '',
                descricao = '',
-               dataNascimento = null
+               dataNascimento = null,
+               competencias = []
           } = dados;
 
           super(nome, email, inscricao, cep, estado, pais, descricao);
           this._dataNascimento = dataNascimento;
+          this._competencias = competencias;
      }
 
      get dataNascimento(): Date | null {
@@ -29,8 +31,12 @@ export class Candidato extends Pessoa {
           this._dataNascimento = dataNascimento;
      }
 
-     get competencias(): RepositorioCompetencias {
+     get competencias(): Competencia[] {
           return this._competencias;
+     }
+
+     set competencias(competencias: Competencia[]) {
+          this._competencias = competencias;
      }
 
      static fromJSON(json: any): Candidato {

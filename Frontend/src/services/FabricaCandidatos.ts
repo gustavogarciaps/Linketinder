@@ -42,7 +42,7 @@ const selecionarCompetencias = (forms: HTMLFormElement, candidato: Candidato) =>
 
      if (candidato) {
 
-          candidato.competencias.adicionarCompetencias(selecionados);
+          candidato.competencias = [...selecionados];
           guardarCadastro('candidatos', candidato);
      }
 

@@ -10,10 +10,13 @@ export const instanciarVaga = (forms: HTMLFormElement) => {
           const dados = {
                     nome: formData.get('nome_vaga') as string,
                     descricao: formData.get('descricao_vaga') as string,
-                    criacao: new Date(formData.get('data_publicacao_vaga') as string)
+                    criacao: new Date(formData.get('data_publicacao_vaga') as string),
+                    competencias: [] as Competencia[]
           };
 
           const vaga = new Vaga(dados);
+
+          console.log(vaga)
 
           selecionarCompetencias(forms, vaga);
 }
@@ -37,13 +40,17 @@ const selecionarCompetencias = (forms: HTMLFormElement, vaga: Vaga) => {
           });
 
           if (vaga) {
-                    
-                    vaga.competencias?.adicionarCompetencias(selecionados);
-                    const empresas = recuperarCadastro('empresas') as Empresa[];
-                    const empresa = empresas[0] 
-                    empresa.vagas?.adicionarVaga(vaga);
 
-                    atualizarCadastro('empresas',empresa,0 )
+                    vaga.competencias = [...selecionados];
+
+                    const empresas = recuperarCadastro('empresas') as Empresa[];
+                    const empresa = new Empresa(empresas[0])
+
+                    empresa.vagas.push(vaga)
+
+                    console.log(empresa)
+
+                    atualizarCadastro('empresas', empresa, 0)
           }
 };
 

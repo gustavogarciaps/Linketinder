@@ -1,13 +1,12 @@
 import { Candidato } from "../models/Candidato";
 import { Competencia } from "../models/Competencia";
-import { RepositorioCandidatos } from "./../repositories/RepositorioCandidatos";
 import { deletarChaveCadastro, guardarCadastro } from "./ServicoArmazenamento";
 
 export const mockCandidatos = () => {
 
-          const repositorioCandidatos = new RepositorioCandidatos();
+          const candidatos = [] as Candidato[];
 
-          repositorioCandidatos.adicionarCandidato(new Candidato({
+          candidatos.push(new Candidato({
                     nome: 'Nome 1',
                     email: 'E-mail 1',
                     inscricao: 'Inscrição 1',
@@ -20,7 +19,7 @@ export const mockCandidatos = () => {
 
           deletarChaveCadastro('candidatos');
 
-          repositorioCandidatos.listarCandidatos().forEach(candidato => {
+          candidatos.forEach(candidato => {
                     guardarCadastro('candidatos', candidato);
           });
 

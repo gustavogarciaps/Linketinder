@@ -5,6 +5,7 @@ import { carregarVagas } from "./view/CarregarVagas";
 import { instanciarEmpresa } from "./services/FabricaEmpresas";
 import { mockCandidatos } from "./services/MockCandidato";
 import { instanciarVaga } from "./services/FabricaVagas";
+import { recuperarCadastro } from "./services/ServicoArmazenamento";
 
 document.addEventListener('DOMContentLoaded', function () {
      carregarCompetencias();
