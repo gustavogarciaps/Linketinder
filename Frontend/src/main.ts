@@ -3,13 +3,16 @@ import { instanciarCandidato } from "./services/FabricaCandidatos";
 import { adicionarEventoSeExistir } from "./view/CarregarFormularios";
 import { carregarVagas } from "./view/CarregarVagas";
 import { instanciarEmpresa } from "./services/FabricaEmpresas";
-import { mockCandidatos } from "./services/MockCandidato";
+import { mockCandidatos } from "./services/MockCandidatos";
 import { instanciarVaga } from "./services/FabricaVagas";
-import { recuperarCadastro } from "./services/ServicoArmazenamento";
+import { mockVagas } from "./services/MockVagas";
+import { carregarCandidatos } from "./view/CarregarCandidatos";
 
 document.addEventListener('DOMContentLoaded', function () {
      carregarCompetencias();
      carregarVagas();
+     carregarCandidatos();
+     console.error("DOM carregado");
 });
 
 adicionarEventoSeExistir('forms_candidato', 'submit', function (event: Event) {
@@ -28,6 +31,7 @@ adicionarEventoSeExistir('forms_vaga', 'submit', function (event: Event) {
 });
 
 //mockCandidatos();
+//mockVagas();
 
 
 

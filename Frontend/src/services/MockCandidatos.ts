@@ -1,5 +1,4 @@
 import { Candidato } from "../models/Candidato";
-import { Competencia } from "../models/Competencia";
 import { deletarChaveCadastro, guardarCadastro } from "./ServicoArmazenamento";
 
 export const mockCandidatos = () => {

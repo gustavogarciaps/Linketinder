@@ -1,23 +1,21 @@
-export const guardarCadastro = <T>(chave: string, valor: T) => {
+export const guardarCadastro = (chave: string, valor: object) => {
           const registroJSON = localStorage.getItem(chave);
-          let registros: T[] = [];
+          let registros: object[] = [];
 
           if (registroJSON) {
-                    registros = JSON.parse(registroJSON) as T[];
+                    registros = JSON.parse(registroJSON) as object[];
           }
-
-          console.log("Registros", registros)
 
           registros = [...registros, ...[valor]];
 
           localStorage.setItem(chave, JSON.stringify(registros));
 }
 
-export const recuperarCadastro = <T>(chave: string): T[] => {
+export const recuperarCadastro = (chave: string): object[] => {
           const registroJSON = localStorage.getItem(chave);
 
           if (registroJSON) {
-                    return JSON.parse(registroJSON) as T[];
+                    return JSON.parse(registroJSON) as object[];
           }
 
           return [];
@@ -27,19 +25,19 @@ export const deletarChaveCadastro = (chave: string) => {
           localStorage.removeItem(chave);
 }
 
-export const atualizarCadastro = <T>(chave: string, valor: T, indice: number) => {
+export const atualizarCadastro = (chave: string, valor: object, indice: number) => {
           const registrosJSON = localStorage.getItem(chave);
-          let registros: T[] = [];
 
           if (registrosJSON) {
-                    registros = JSON.parse(registrosJSON) as T[];
-          }
+                    const registros: object[] = JSON.parse(registrosJSON) as object[];
 
-          if (indice >= 0 && indice < registros.length) {
-
-                    console.log("Registros", registros[indice])
-                    registros[indice] = valor;
-                    console.log("Valor", valor)
-                    localStorage.setItem(chave, JSON.stringify(registros));
+                    if (indice >= 0 && indice < registros.length) {
+                              registros[indice] = valor;
+                              localStorage.setItem(chave, JSON.stringify(registros));
+                    } else {
+                              console.error('Índice fora dos limites.');
+                    }
+          } else {
+                    console.error('Nenhum registro encontrado para atualização.');
           }
 }

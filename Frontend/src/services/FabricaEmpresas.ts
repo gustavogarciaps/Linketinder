@@ -2,7 +2,7 @@ import { Empresa } from "../models/Empresa";
 import { guardarCadastro, deletarChaveCadastro } from "./ServicoArmazenamento"
 
 export const instanciarEmpresa = (forms: HTMLFormElement) => {
-          
+
           const formData = new FormData(forms);
           const dados = {
                     nome: formData.get('nome_empresa') as string,
@@ -16,9 +16,20 @@ export const instanciarEmpresa = (forms: HTMLFormElement) => {
 
           const empresa = new Empresa(dados);
 
-          console.log(empresa)
+          guardarCadastro('empresas', prepararJSON(empresa));
+}
 
-          guardarCadastro('empresas', empresa);
+const prepararJSON = (empresa: Empresa) => {
+          return {
+                    nome: empresa.nome,
+                    email: empresa.email,
+                    inscricao: empresa.inscricao,
+                    cep: empresa.cep,
+                    estado: empresa.estado,
+                    pais: empresa.pais,
+                    descricao: empresa.descricao,
+                    vagas: empresa.vagas
+          }
 }
 
 
