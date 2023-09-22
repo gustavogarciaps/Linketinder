@@ -46,7 +46,7 @@ const atribuirVagaEmpresa = (vaga: Vaga) => {
                               const empresa: Empresa = desestruturarJSON(empresasJSON[0]);
                               empresa.vagas.push(vaga);
 
-                              console.log("fim lógica selecinarCompetencias")
+                              empresa.vagas.forEach(vaga => console.error("Nome Vaga", vaga.nome, "Nome Competências:", vaga.competencias.map(competencia => competencia.nome).join(", ")))
 
                               const empresaJSON = estruturarJSON(empresa);
                               atualizarCadastro('empresas', empresaJSON, 0);
@@ -54,23 +54,24 @@ const atribuirVagaEmpresa = (vaga: Vaga) => {
           };
 }
 
-const desestruturarJSON = (empresaJSON: any) => {
-
+export const desestruturarJSON = (empresaJSON: any) => {
           const vagasJSON = empresaJSON.vagas || [];
 
           const vagas: Vaga[] = vagasJSON.map((vagaJSON: any) => {
                     const competenciasJSON = vagaJSON.competencias || [];
+                    const competencias: Competencia[] = competenciasJSON.map((competenciaJSON: any) => {
+                              return new Competencia({ nome: competenciaJSON });
+                    });
 
-                    const competencias: Competencia[] = competenciasJSON.map(
-                              (competenciaJSON: any) => new Competencia(competenciaJSON.nome)
-                    );
-
-                    return new Vaga({
+                    const vaga = new Vaga({
                               nome: vagaJSON.nome,
                               descricao: vagaJSON.descricao,
                               criacao: new Date(vagaJSON.criacao),
-                              competencias: competencias
                     });
+
+                    vaga.competencias = competencias;
+
+                    return vaga;
           });
 
           const empresa = new Empresa({
@@ -94,7 +95,7 @@ const estruturarJSON = (empresa: Empresa) => {
                               nome: vaga.nome,
                               descricao: vaga.descricao,
                               criacao: vaga.criacao,
-                              competencias: vaga.competencias.map(competencia => competencia.nome)
+                              competencias: vaga.competencias.map(competencia => { return competencia.nome })
                     };
           });
 
@@ -109,7 +110,6 @@ const estruturarJSON = (empresa: Empresa) => {
                     vagas: vagasJSON
           };
 
-          console.error(empresaJSON)
           return empresaJSON;
 }
 

@@ -2,76 +2,47 @@ import { Empresa } from "../models/Empresa";
 import { Vaga } from "../models/Vaga";
 import { Competencia } from "../models/Competencia";
 import { recuperarCadastro } from "../services/ServicoArmazenamento";
+import { desestruturarJSON } from "../services/FabricaVagas";
 
 export const carregarVagas = () => {
-    const empresasJSON = recuperarCadastro('empresas') as any[];
+     const empresasJSON = recuperarCadastro('empresas') as any[];
 
-    if (!empresasJSON) {
-        console.error('Não há empresas cadastradas.');
-        return;
-    }
+     if (!empresasJSON) {
+          console.error('Não há empresas cadastradas.');
+          return;
+     }
 
-    const empresas: Empresa[] = empresasJSON.map(
-        (empresaJSON: any) => {
+     const empresas: Empresa[] = [];
 
-            const vagasJSON = empresaJSON.vagas || [];
+     empresasJSON.forEach(
+          (empresaJSON: any) => {
+               empresas.push(desestruturarJSON(empresaJSON) as Empresa);
+          }
+     );
 
-            const vagas: Vaga[] = vagasJSON.map(
-                (vagaJSON: any) => {
-
-                    const competenciasJSON = vagaJSON.competencias || [];
-
-                    console.error(competenciasJSON)
-
-                    const competencias: Competencia[] = competenciasJSON.map(
-                        (competenciaJSON: any) => new Competencia(competenciaJSON)
-                    );
-
-                    return new Vaga({
-                        nome: vagaJSON.nome,
-                        descricao: vagaJSON.descricao,
-                        criacao: new Date(vagaJSON.criacao),
-                        competencias: competencias
-                    });
-                }
-            );
-
-            return new Empresa({
-                nome: empresaJSON.nome,
-                email: empresaJSON.email,
-                inscricao: empresaJSON.inscricao,
-                cep: empresaJSON.cep,
-                estado: empresaJSON.estado,
-                pais: empresaJSON.pais,
-                descricao: empresaJSON.descricao,
-                vagas: vagas
-            });
-        }
-    );
-
-    empresas.forEach(empresa => {
-        empresa.vagas.forEach(vaga => {
-            montarHTMLVagas(empresa, vaga);
-        });
-    });
+     empresas.forEach(empresa => {
+          empresa.vagas.forEach(vaga => {
+               montarHTMLVagas(empresa, vaga);
+          });
+     });
 }
 
 const montarHTMLVagas = (empresa: Empresa, vaga: Vaga) => {
-    const HTMLVagas = document.querySelector("#carregar_vagas");
+     const HTMLVagas = document.querySelector("#carregar_vagas");
 
-    if (!HTMLVagas) {
-        console.error('Não há vagas cadastradas.');
-        return;
-    }
+     if (!HTMLVagas) {
+          console.error('Não há vagas cadastradas.');
+          return;
+     }
 
-    HTMLVagas.innerHTML += `
+     HTMLVagas.innerHTML += `
     <div class="col">
         <div class="card text-center text-bg-light mb-3 p-3">
             <h5 class="card-header fw-bold">${vaga.nome}</h5>
             <div class="card-body placeholder-glow">
                 <h5 class="card-title placeholder">?</h5>
                 <i class='fas fa-question-circle' style='font-size:24px' data-bs-toggle="tooltip"
-                    data-bs-title="${empresa.descricao}"></i>
+                    data-bs-title="Somos a maior"></i>
                 <p class="card-text">${vaga.descricao}</p>
                 ${carregarCompetencias(vaga)}
                 <hr>
@@ -103,9 +74,9 @@ const montarHTMLVagas = (empresa: Empresa, vaga: Vaga) => {
 }
 
 const carregarCompetencias = (vaga: Vaga) => {
-    let HTMLCompetencias = '';
-    vaga.competencias.forEach(competencia => {
-        HTMLCompetencias += `<span class="badge text-bg-warning">#${competencia.nome.toLocaleUpperCase()}</span>`;
-    });
-    return HTMLCompetencias;
+     let HTMLCompetencias = '';
+     vaga.competencias.forEach(competencia => {
+          HTMLCompetencias += `<span class="badge text-bg-warning">#${competencia.nome.toLocaleUpperCase()}</span>`;
+     });
+     return HTMLCompetencias;
 }
