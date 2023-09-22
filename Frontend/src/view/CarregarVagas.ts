@@ -46,7 +46,7 @@ const montarHTMLVagas = (empresa: Empresa, vaga: Vaga) => {
                 </div>
                 <div class="col">
                 <i class='fas fa-question-circle' style='font-size:24px' data-bs-toggle="tooltip"
-                    data-bs-title="Somos a maior"></i>
+                    data-bs-title="${empresa.descricao}"></i>
                 </div>
                 </div>
                 <p class="card-text">${vaga.descricao}</p>

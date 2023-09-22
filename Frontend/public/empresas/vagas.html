@@ -38,13 +38,14 @@
                               </a>
                               <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                                    <li><a class="dropdown-item" href="#">Meus matchs</a></li>
-                                   <li><a class="dropdown-item" href="#">Visualizar matchs</a></li>
+                                   <li><a class="dropdown-item" href="visualizacao.html">Visualizar matchs</a></li>
                                    <li><a class="dropdown-item" href="vagas.html">Criar vagas</a></li>
+                                   <li><a class="dropdown-item" href="grafico.html">Dashboard</a></li>
                                    <li><a class="dropdown-item" href="#">Configurações</a></li>
                                    <li>
                                         <hr class="dropdown-divider">
                                    </li>
-                                   <li><a class="dropdown-item" href="#">Finalizar sessão</a></li>
+                                   <li><a class="dropdown-item" href="../index.html">Finalizar sessão</a></li>
                               </ul>
                          </div>
                     </div>
@@ -59,19 +60,19 @@
                          <label for="" class="form-label">Título:</label>
                          <input type="text" class="form-control" name="nome_vaga">
                     </div>
+                    <div class="col-12 col-md-6">
+                         <label for="" class="form-label">Data de publicação:</label>
+                         <input type="date" class="form-control" name="data_publicacao_vaga">
+                    </div>
                     <div class="col-12">
                          <label for="" class="form-label">Descrição</label>
                          <textarea class="form-control" name="descricao_vaga" rows="3"
                               placeholder="Conte um pouco sobre a vaga..."></textarea>
                     </div>
-                    <div class="col-12 col-md-4">
-                         <label for="" class="form-label">Data de publicação:</label>
-                         <input type="date" class="form-control" name="data_publicacao_vaga">
-                    </div>
 
-                    <h2 class="fw-bold py-lg-4">Esta vaga necessita de quais Competências?</h2>
+                    <h2 class="fw-bold py-lg-1">Esta vaga necessita de quais Competências?</h2>
 
-                    <div class="row row-cols-sm-8 row-cols-md-8 row-cols-lg-10 g-lg-3 g-2 p-4 d-flex"
+                    <div class="row row-cols-sm-8 row-cols-md-8 row-cols-lg-10 g-lg-3 g-2 p-3 d-flex"
                          id="carregar_competencias">
                          <!-- Carga de Competências -->
                     </div>

@@ -14,7 +14,7 @@ export const carregarGrafico = () => {
                     data: {
                               labels: relacionamentos.map(relacionamento => relacionamento.competencia),
                               datasets: [{
-                                        label: 'Número de Candidatos/Competência',
+                                        label: 'Candidatos:',
                                         data: relacionamentos.map(relacionamento => relacionamento.quantidade),
                                         borderWidth: 1
                               }]
