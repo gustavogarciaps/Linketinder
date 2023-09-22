@@ -3,10 +3,12 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: 'production', // development
-    entry: './src/main.ts',
+    entry: {
+        app: './src/main.ts'
+    },
     devServer: {
         static: {
-            directory: path.join(__dirname, 'dist'), 
+            directory: path.join(__dirname, 'dist'),
         },
         port: 9000,
         compress: true,
@@ -19,10 +21,10 @@ module.exports = {
     plugins: [
         new CopyPlugin({
             patterns: [
-                { from: 'public'}, 
+                { from: 'public' },
             ],
         }),
-    ],   
+    ],
     resolve: {
         extensions: ['.ts', '.js']
     },
@@ -32,5 +34,8 @@ module.exports = {
             use: 'ts-loader',
             exclude: /node_modules/
         }]
-    }
-}
+    },
+    performance: {
+        hints: false,
+    },
+};

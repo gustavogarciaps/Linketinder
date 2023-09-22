@@ -31,14 +31,16 @@
 
      </section>
 
+     <script src="./../app.min.js"></script>
      <!--
      **** script responsável pela "ferramenta de ajuda" que aparece encima do nome da empresa
      -->
      <script>
-          const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-          const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+          document.addEventListener('DOMContentLoaded', function () {
+               const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+               const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+          });
      </script>
-     <script src="./../app.min.js"></script>
 </body>
 
 </html>

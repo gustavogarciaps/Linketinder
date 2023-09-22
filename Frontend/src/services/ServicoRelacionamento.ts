@@ -1,10 +1,13 @@
 import { Candidato } from "../models/Candidato";
-import { Competencia } from "../models/Competencia";
 import { desestruturarJSON } from "./FabricaCandidatos";
-import { instanciarCompetencias } from "./FabricaCompetencias";
 import { recuperarCadastro } from "./ServicoArmazenamento"
 
-export const carregarCompetenciasCandidatos = () => {
+interface Relacionamento {
+          competencia: string;
+          quantidade: number;
+}
+
+export const carregarCompetenciasCandidatos = (): Relacionamento[] => {
 
           const candidatosJSON = recuperarCadastro('candidatos');
           const candidatos: Candidato[] = [];
@@ -13,20 +16,13 @@ export const carregarCompetenciasCandidatos = () => {
                     candidatos.push(desestruturarJSON(candidatoJSON) as Candidato);
           });
 
-          console.log(relacionarCompetenciasCandidatos(candidatos));
+          return (relacionarCompetenciasCandidatos(candidatos));
 
 }
 
-const relacionarCompetenciasCandidatos = (candidatos: Candidato[]) => {
+const relacionarCompetenciasCandidatos = (candidatos: Candidato[]): Relacionamento[] => {
 
-          interface Relacionamento {
-                    competencia: string;
-                    quantidade: number;
-          }
-
-          const competencias = instanciarCompetencias();
           const relacionamentos: Relacionamento[] = [];
-
 
           candidatos.forEach(candidato => {
                     candidato.competencias.forEach(competencia => {
