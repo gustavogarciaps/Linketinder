@@ -59,8 +59,6 @@ export const carregarVagas = () => {
 const montarHTMLVagas = (empresa: Empresa, vaga: Vaga) => {
     const HTMLVagas = document.querySelector("#carregar_vagas");
 
-    console.log(empresa.descricao)
-
     if (!HTMLVagas) {
         console.error('Não há vagas cadastradas.');
         return;

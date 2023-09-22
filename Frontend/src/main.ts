@@ -10,7 +10,7 @@ import { carregarCandidatos } from "./view/CarregarCandidatos";
 
 document.addEventListener('DOMContentLoaded', function () {
      carregarCompetencias();
-     carregarVagas();
+     //carregarVagas();
      carregarCandidatos();
      console.error("DOM carregado");
 });
