@@ -42,9 +42,6 @@ const montarHTMLVagas = (empresa: Empresa, vaga: Vaga) => {
             <div class="card-body placeholder-glow">
                 <div class="row d-flex">
                 <div class="col">
-                    <h5>Empresa: </h5>
-                </div>
-                <div class="col">
                 <h5 class="card-title placeholder">${empresa.nome}</h5>
                 </div>
                 <div class="col">
@@ -56,15 +53,15 @@ const montarHTMLVagas = (empresa: Empresa, vaga: Vaga) => {
                 ${carregarCompetencias(vaga)}
                 <hr>
                 <div class="hstack gap-3">
-                    <div class="p-2">
+                    <div class="col p-2">
                         <button class="btn btn-success btn-lg"><i class="far fa-thumbs-up"></i></button>
                     </div>
-                    <div class="p-2 ms-auto">
+                    <div class="col p-2">
                         <strong>
                             <span>${Math.floor(Math.random() * 100) + 1}% compatível.</span>
                         </strong>
                     </div>
-                    <div class="p-2">
+                    <div class="col p-2">
                         <button class="btn btn-danger btn-lg"><i class="far fa-thumbs-down"></i></button>
                     </div>
                 </div>
@@ -76,7 +73,7 @@ const montarHTMLVagas = (empresa: Empresa, vaga: Vaga) => {
                 </div>
             </div>
             <div class="card-footer text-body-secondary">
-                Publicada há dois dias atrás
+                ${definirDataPublicacao(vaga.criacao)}
             </div>
         </div>
     </div>`;
@@ -88,4 +85,21 @@ const carregarCompetencias = (vaga: Vaga) => {
         HTMLCompetencias += `<span class="badge text-bg-warning">#${competencia.nome.toLocaleUpperCase()}</span>`;
     });
     return HTMLCompetencias;
+}
+
+const definirDataPublicacao = (data: Date | null) => {
+
+    if(data){
+        const dataAtual = new Date();
+        const dataPublicacao = new Date(data);
+        const diferenca = dataAtual.getTime() - dataPublicacao.getTime();
+        const dias = Math.floor(diferenca / (1000 * 3600 * 24)); 
+        
+        if(dias > 0){
+            return `Publicado há ${dias} ${dias > 1 ? 'dias' : 'dia'}.`;
+        }
+        return `Publicado hoje.`;
+    }
+
+    return `Data de publicação não definida.`
 }
