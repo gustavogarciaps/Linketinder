@@ -27,8 +27,6 @@ export const carregarCandidatos = () => {
                     });
           });
 
-          console.log(candidatos)
-
           candidatos.forEach(candidato => {
 
           });
