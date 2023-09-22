@@ -7,6 +7,7 @@ import { mockCandidatos } from "./services/MockCandidatos";
 import { instanciarVaga } from "./services/FabricaVagas";
 import { mockVagas } from "./services/MockVagas";
 import { carregarCandidatos } from "./view/CarregarCandidatos";
+import { carregarCompetenciasCandidatos } from "./services/ServicoRelacionamento";
 
 document.addEventListener('DOMContentLoaded', function () {
      carregarCompetencias();
@@ -32,6 +33,8 @@ adicionarEventoSeExistir('forms_vaga', 'submit', function (event: Event) {
 
 //mockCandidatos();
 //mockVagas();
+
+carregarCompetenciasCandidatos();
 
 
 
