@@ -25,6 +25,17 @@ export const carregarGrafico = () => {
                                                   type: 'linear',
                                                   beginAtZero: true
                                         }
+                              },
+                              plugins: {
+
+                                        legend: {
+                                                  labels: {
+                                                            font: {
+                                                                      size: 14
+                                                            }
+                                                  }
+                                        }
+
                               }
                     }
           });

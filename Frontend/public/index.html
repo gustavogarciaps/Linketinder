@@ -18,46 +18,66 @@
 
 <body>
 
-     <nav class="navbar navbar-expand-lg bg-body-tertiary">
-          <div class="container-fluid">
-               <a class="navbar-brand" href="#">LINKETINDER</a>
-               <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-               </button>
-               <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                         <li class="nav-item">
-                              <a class="nav-link active" aria-current="page" href="#">Home</a>
-                         </li>
-                         <li class="nav-item">
-                              <a class="nav-link" href="#">Link</a>
-                         </li>
-                         <li class="nav-item">
-                              <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                         </li>
+     <!--Cabeçalho de Primeiro Acesso-->
+     <header class="p-3 mb-3 border-bottom">
+          <div class="container">
+               <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <a href="/" class="d-flex mb-2 mb-lg-0 text-dark text-decoration-none">
+                         <h2 class="fw-bold px-25">Linketinder</h2>
+                    </a>
+
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+
                     </ul>
-                    <form class="d-flex" role="search">
-                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                         <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+
+                    <div class="text-end">
+                         <button type="button" class="btn btn-outline-dark">Acessar</button>
+                         <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                              data-bs-target="#definir_cadastro">Cadastrar-se</button>
+                    </div>
                </div>
           </div>
-     </nav>
+     </header>
 
-     <section class="py-5 text-center container">
-          <div class="row py-lg-5">
-               <div class="col-lg-6 col-md-8 mx-auto">
-                    <h1 class="fw-light">Album example</h1>
-                    <p class="lead text-body-secondary">Something short and leading about the collection below—its
-                         contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply
-                         skip over it entirely.</p>
-                    <p>
-                         <a href="candidatos/cadastro.html" class="btn btn-primary my-2">Main call to action</a>
-                         <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-                    </p>
+     <!-- Modal -->
+     <div class="modal fade" id="definir_cadastro" tabindex="-1" aria-labelledby="definir_cadastro" aria-hidden="true">
+          <div class="modal-dialog">
+               <div class="modal-content">
+                    <div class="modal-header">
+                         <h5 class="modal-title" id="definir_cadastro">Qual é o seu perfil?</h5>
+                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                         Você pode ser um candidato em busca de novas oportunidades ou uma empresa disposta a oferecê-las.
+                    </div>
+                    <div class="modal-footer col-6 mx-auto">
+                         <a class="btn btn-success" href="empresas/cadastro.html">Empresa</a>
+                         <a class="btn btn-warning" href="candidatos/cadastro.html">Candidato</a>
+                    </div>
                </div>
+          </div>
+     </div>
+
+     <section class="py-1 text-center container">
+          <div class="row">
+               <h2 class="fw-bold">Bem-Vindo ao Linketinder</h2>
+               <h3 class="fw-normal">Conectando Pessoas e Oportunidades Profissionais</h3>
+               <p class="lead text-body-secondary">No mundo em constante evolução da carreira e dos negócios,
+                    encontrar a combinação perfeita entre profissionais talentosos e empresas inovadoras é uma
+                    tarefa desafiadora. É nesse cenário que o Linketinder entra em ação, oferecendo uma plataforma
+                    que simplifica e revoluciona a forma como as pessoas se conectam com oportunidades
+                    profissionais.
+               </p>
+               <p class="lead text-body-secondary">
+                    Seja você um candidato em busca de sua próxima grande aventura profissional ou uma empresa em
+                    crescimento em busca de talentos excepcionais, o Linketinder é o lugar onde os sonhos se
+                    encontram
+                    com a realidade. Nossa missão é unir as pessoas certas com as oportunidades certas, criando
+                    relações
+                    profissionais duradouras e bem-sucedidas.</p>
+               <p>
+                    <a href="candidatos/cadastro.html" class="btn btn-primary my-2">Conhecer mais</a>
+               </p>
           </div>
      </section>
 

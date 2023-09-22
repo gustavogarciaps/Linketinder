@@ -18,10 +18,25 @@
 
 <body>
 
-     <section class="py-5 container">
+     <!--Cabeçalho-->
+     <header class="p-3 mb-3 border-bottom">
+          <div class="container">
+               <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <a href="/" class="d-flex mb-2 mb-lg-0 text-dark text-decoration-none">
+                         <h2 class="fw-bold px-25">Linketinder</h2>
+                    </a>
+
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+
+                    </ul>
+               </div>
+          </div>
+     </header>
+
+     <section class="py-1 container">
           <div class="container">
                <h2 class="fw-bold py-lg-4">Informe os Dados da sua empresa...</h2>
-               <form class="row g-3" id="forms_empresa">
+               <form class="row g-3" id="forms_empresa" action="visualizacao.html">
                     <div class="col-12 col-md-6">
                          <label for="" class="form-label">Razão Social:</label>
                          <input type="text" class="form-control" name="nome_empresa">
@@ -30,12 +45,12 @@
                          <label for="" class="form-label">Email:</label>
                          <input type="email" class="form-control" name="email_empresa">
                     </div>
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-6">
                          <label for="" class="form-label">Inscrição do CNPJ:</label>
                          <input type="number" class="form-control" name="inscricao_cnpj_empresa"
                               placeholder="Somente números">
                     </div>
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-6">
                          <label for="" class="form-label">CEP:</label>
                          <input type="number" class="form-control" name="CEP_empresa" placeholder="Somente números">
                     </div>
