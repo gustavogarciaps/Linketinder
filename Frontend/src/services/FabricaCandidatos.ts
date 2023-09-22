@@ -14,7 +14,8 @@ export const instanciarCandidato = (forms: HTMLFormElement) => {
           estado: formData.get('estado_candidato') as string,
           pais: formData.get('pais_candidato') as string,
           descricao: formData.get('descricao_candidato') as string,
-          dataNascimento: new Date(formData.get('descricao_candidato') as string) as Date
+          dataNascimento: new Date(formData.get('descricao_candidato') as string) as Date,
+          formacao: formData.get('formacao_candidato') as string
      };
 
      const candidato = new Candidato(dados);
@@ -37,15 +38,55 @@ const selecionarCompetencias = (forms: HTMLFormElement, candidato: Candidato) =>
 
                selecionados.push(competenciasCadastradas[checkboxId]);
           }
-
+          candidato.competencias = [...selecionados];
      });
 
      if (candidato) {
-
-          candidato.competencias = [...selecionados];
-          guardarCadastro('candidatos', candidato);
-     }
-
+          const candidatosJSON = recuperarCadastro('candidatos');
+          const candidatoJSON = estruturarJSON(candidato);
+          candidatosJSON.push(candidatoJSON);
+          guardarCadastro('candidatos', candidatoJSON);
+     };
 };
 
+export const desestruturarJSON = (candidatoJSON: any) => {
 
+     const competenciasJSON = candidatoJSON.competencias || [];
+     const competencias: Competencia[] = competenciasJSON.map((competenciaJSON: any) => {
+          return new Competencia({ nome: competenciaJSON });
+     });
+
+     const candidato = new Candidato({
+          nome: candidatoJSON.nome,
+          email: candidatoJSON.email,
+          inscricao: candidatoJSON.inscricao,
+          cep: candidatoJSON.cep,
+          estado: candidatoJSON.estado,
+          pais: candidatoJSON.pais,
+          descricao: candidatoJSON.descricao,
+          dataNascimento: new Date(candidatoJSON.dataNascimento),
+          formacao: candidatoJSON.formacao,
+          competencias: competencias
+     });
+
+
+     return candidato;
+}
+
+const estruturarJSON = (candidato: Candidato) => {
+
+     const candidatoJSON = {
+          nome: candidato.nome,
+          email: candidato.email,
+          inscricao: candidato.inscricao,
+          cep: candidato.cep,
+          estado: candidato.estado,
+          pais: candidato.pais,
+          descricao: candidato.descricao,
+          dataNascimento: candidato.dataNascimento,
+          formacao: candidato.formacao,
+          competencias: candidato.competencias.map(competencia => { return competencia.nome })
+     };
+
+     return candidatoJSON;
+}

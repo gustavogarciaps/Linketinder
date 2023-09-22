@@ -46,7 +46,7 @@ const atribuirVagaEmpresa = (vaga: Vaga) => {
                               const empresa: Empresa = desestruturarJSON(empresasJSON[0]);
                               empresa.vagas.push(vaga);
 
-                              empresa.vagas.forEach(vaga => console.error("Nome Vaga", vaga.nome, "Nome Competências:", vaga.competencias.map(competencia => competencia.nome).join(", ")))
+                              //empresa.vagas.forEach(vaga => console.error("Nome Vaga", vaga.nome, "Nome Competências:", vaga.competencias.map(competencia => competencia.nome).join(", ")))
 
                               const empresaJSON = estruturarJSON(empresa);
                               atualizarCadastro('empresas', empresaJSON, 0);

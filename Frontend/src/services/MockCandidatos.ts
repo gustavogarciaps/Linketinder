@@ -13,7 +13,8 @@ export const mockCandidatos = () => {
                     estado: 'Estado 1',
                     pais: 'País 1',
                     descricao: 'Descrição 1',
-                    dataNascimento: new Date('2000-01-01')
+                    dataNascimento: new Date('2000-01-01'),
+                    formacao: 'Formação 1',
           }));
 
           deletarChaveCadastro('candidatos');

@@ -3,6 +3,7 @@ import { Pessoa } from "./Pessoa";
 
 export class Candidato extends Pessoa {
      private _dataNascimento: Date | null;
+     private _formacao: string;
      private _competencias: Competencia[] = [];
 
      constructor(dados: Candidato | any = {}) {
@@ -15,11 +16,13 @@ export class Candidato extends Pessoa {
                pais = '',
                descricao = '',
                dataNascimento = null,
+               formacao = '',
                competencias = []
           } = dados;
 
           super(nome, email, inscricao, cep, estado, pais, descricao);
           this._dataNascimento = dataNascimento;
+          this._formacao = formacao;
           this._competencias = competencias;
      }
 
@@ -29,6 +32,14 @@ export class Candidato extends Pessoa {
 
      set dataNascimento(dataNascimento: Date | null) {
           this._dataNascimento = dataNascimento;
+     }
+
+     get formacao(): string {
+          return this._formacao;
+     }
+
+     set formacao(formacao: string) {
+          this._formacao = formacao;
      }
 
      get competencias(): Competencia[] {
