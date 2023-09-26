@@ -19,13 +19,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 adicionarEventoSeExistir('forms_candidato', 'submit', function (event: Event) {
      event.preventDefault();
-     instanciarCandidato(event);
+     instanciarCandidato();
 });
 
 adicionarEventoSeExistir('forms_empresa', 'submit', function (event: Event) {
      event.preventDefault();
-     const formsEmpresa = document.getElementById('forms_empresa') as HTMLFormElement;
-     instanciarEmpresa(formsEmpresa);
+     instanciarEmpresa();
 });
 
 adicionarEventoSeExistir('forms_vaga', 'submit', function (event: Event) {

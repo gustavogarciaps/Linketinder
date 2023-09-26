@@ -2,6 +2,7 @@ import { Competencia } from "./Competencia";
 import { Pessoa } from "./Pessoa";
 
 export class Candidato extends Pessoa {
+     private _linkedin: string;
      private _dataNascimento: Date | null;
      private _formacao: string;
      private _competencias: Competencia[] = [];
@@ -21,9 +22,18 @@ export class Candidato extends Pessoa {
           } = dados;
 
           super(nome, email, inscricao, cep, estado, pais, descricao);
+          this._linkedin = dados.linkedin;
           this._dataNascimento = dataNascimento;
           this._formacao = formacao;
           this._competencias = competencias;
+     }
+
+     set linkedin(linkedin: string) {
+          this._linkedin = linkedin;
+     }
+
+     get linkedin(): string {
+          return this._linkedin;
      }
 
      get dataNascimento(): Date | null {

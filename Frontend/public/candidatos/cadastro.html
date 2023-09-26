@@ -36,17 +36,21 @@
      <section class="py-1 container">
           <div class="container">
                <h2 class="fw-bold py-lg-4">Queremos te conhecer melhor...</h2>
-               <form class="row g-3" id="forms_candidato" class="needs-validation"
-                    novalidate>
-                    <div class="col-12 col-md-6">
+               <form class="row g-3" id="forms_candidato" class="needs-validation" novalidate>
+                    <div class="col-12 col-md-4">
                          <label for="" class="form-label">Seu nome completo:</label>
                          <input type="text" class="form-control" name="nome_candidato" required>
                          <div class="invalid-feedback">Por favor, insira um nome válido.</div>
                     </div>
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-4">
                          <label for="" class="form-label">Email:</label>
                          <input type="email" class="form-control" name="email_candidato" required>
                          <div class="invalid-feedback">Por favor, insira um e-mail válido.</div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                         <label for="" class="form-label">Linkedin:</label>
+                         <input type="text" class="form-control" name="linkedin_candidato" required>
+                         <div class="invalid-feedback">Por favor, insira um Linkedin válido.</div>
                     </div>
                     <div class="col-12 col-md-4">
                          <label for="" class="form-label">Data de Nascimento:</label>
@@ -55,12 +59,13 @@
                     </div>
                     <div class="col-12 col-md-4">
                          <label for="" class="form-label">Inscrição do CPF:</label>
-                         <input type="number" class="form-control" name="inscricao_cpf_candidato"
-                              placeholder="Somente números">
+                         <input type="text" class="form-control" name="inscricao_cpf_candidato"
+                              placeholder="000.000.000-00">
+                         <div class="invalid-feedback">Por favor, insira um CPF válido.</div>
                     </div>
                     <div class="col-12 col-md-4">
                          <label for="" class="form-label">CEP:</label>
-                         <input type="number" class="form-control" name="CEP_candidato" placeholder="Somente números">
+                         <input type="text" class="form-control" name="CEP_candidato" placeholder="00.000-000">
                     </div>
                     <div class="col-12 col-md-6">
                          <label for="" class="form-label">Cidade:</label>
@@ -76,12 +81,14 @@
                     <div class="col-12">
                          <label for="" class="form-label">Vaga de interesse:</label>
                          <textarea class="form-control" name="formacao_candidato" rows="3"
-                              placeholder="Nos diga o quê está procurando..."></textarea>
+                              placeholder="Nos diga o quê está procurando..." required></textarea>
+                         <div class="invalid-feedback">Por favor, precisamos da sua vaga de interesse.</div>
                     </div>
                     <div class="col-12">
                          <label for="" class="form-label">Descrição</label>
                          <textarea class="form-control" name="descricao_candidato" rows="3"
-                              placeholder="Conte um pouco sobre você..."></textarea>
+                              placeholder="Conte um pouco sobre você..." required></textarea>
+                         <div class="invalid-feedback">Por favor, precisamos de sua descrição.</div>
                     </div>
 
                     <h2 class="fw-bold py-lg-4">Quais são seus pontos mais fortes?</h2>

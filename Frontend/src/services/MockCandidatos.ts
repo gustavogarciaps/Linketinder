@@ -8,6 +8,7 @@ export const mockCandidatos = () => {
           candidatos.push(new Candidato({
                     nome: 'Nome 1',
                     email: 'E-mail 1',
+                    linkedin: 'Linkedin 1',
                     inscricao: 'Inscrição 1',
                     cep: 'CEP 1',
                     estado: 'Estado 1',
