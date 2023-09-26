@@ -40,19 +40,23 @@
                     <div class="col-12 col-md-6">
                          <label for="" class="form-label">Razão Social:</label>
                          <input type="text" class="form-control" name="nome_empresa">
+                         <div class="invalid-feedback">Por favor, insira um nome válido.</div>
                     </div>
                     <div class="col-12 col-md-6">
                          <label for="" class="form-label">Email:</label>
                          <input type="email" class="form-control" name="email_empresa">
+                         <div class="invalid-feedback">Por favor, insira um e-mail válido.</div>
                     </div>
                     <div class="col-12 col-md-6">
                          <label for="" class="form-label">Inscrição do CNPJ:</label>
-                         <input type="number" class="form-control" name="inscricao_cnpj_empresa"
-                              placeholder="Somente números">
+                         <input type="text" class="form-control" name="inscricao_cnpj_empresa"
+                              placeholder="00.000.000/0000-00">
+                         <div class="invalid-feedback">Por favor, insira um CNPJ válido.</div>
                     </div>
                     <div class="col-12 col-md-6">
                          <label for="" class="form-label">CEP:</label>
-                         <input type="number" class="form-control" name="CEP_empresa" placeholder="Somente números">
+                         <input type="text" class="form-control" name="CEP_empresa" placeholder="00.000-000">
+                         <div class="invalid-feedback">Por favor, insira um CPF válido.</div>
                     </div>
                     <div class="col-12 col-md-6">
                          <label for="" class="form-label">Cidade:</label>
@@ -69,6 +73,7 @@
                          <label for="" class="form-label">Descrição</label>
                          <textarea class="form-control" name="descricao_empresa" rows="3"
                               placeholder="Conte um pouco sobre você..."></textarea>
+                         <div class="invalid-feedback">Por favor, insira um CPF válido.</div>
                     </div>
 
                     <div class="col-12 text-md-end">

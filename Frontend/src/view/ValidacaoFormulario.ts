@@ -19,13 +19,12 @@ export const validarLinkedin = (linkedin: string): boolean => {
 }
 
 export const validarNome = (nome: string): boolean => {
-	const regex: RegExp = /^[A-Za-z\s]{3,}$/;
+	const regex: RegExp = /^[A-Za-zçõ\s]{2,}$/;
 	return regex.test(nome);
 }
 
 export const validarEmail = (email: string): boolean => {
-	const regex: RegExp = /^[\w\.-]+@[\w\.-]+\.\w+$/
-	;
+	const regex: RegExp = /^[\w\.-]+@[\w\.-]+\.\w+$/;
 	return regex.test(email);
 }
 
