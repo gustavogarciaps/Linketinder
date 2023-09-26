@@ -1,9 +1,10 @@
 import { Candidato } from "../models/Candidato";
 import { Competencia } from "../models/Competencia";
-import { guardarCadastro, recuperarCadastro, deletarChaveCadastro } from "./ServicoArmazenamento"
+import { guardarCadastro, recuperarCadastro } from "./ServicoArmazenamento"
 import { instanciarCompetencias } from "./FabricaCompetencias";
+import { invalido, valido, validarEmail, validarNome } from "../view/ValidacaoFormulario";
 
-export const instanciarCandidato = (forms: HTMLFormElement) => {
+export const capturarCandidato = (forms: HTMLFormElement): any => {
 
      const formData = new FormData(forms);
      const dados = {
@@ -18,9 +19,42 @@ export const instanciarCandidato = (forms: HTMLFormElement) => {
           formacao: formData.get('formacao_candidato') as string
      };
 
-     const candidato = new Candidato(dados);
+     return dados;
+}
 
-     selecionarCompetencias(forms, candidato);
+export const validacaoCandidato = (): Boolean => {
+
+     let forms = document.getElementById('forms_candidato') as HTMLFormElement;
+     let nome: any = forms.querySelector('[name="nome_candidato"]') as HTMLInputElement
+     let email: any = forms.querySelector('[name="email_candidato"]') as HTMLInputElement
+     let dataNascimento: any = forms.querySelector('[name="dataNascimento_candidato"]') as HTMLInputElement
+     let formacao: any = forms.querySelector('[name="formacao_candidato"]') as HTMLInputElement
+     let descricao: any = forms.querySelector('[name="descricao_candidato"]') as HTMLInputElement
+
+
+     nome = validarNome(nome.value) ? valido(nome) : invalido(nome);
+     email = validarEmail(email.value) ? valido(email) : invalido(email);
+     //dataNascimento = dataNascimento.value ? valido(dataNascimento) : invalido(dataNascimento);
+     formacao = formacao.value ? valido(formacao) : invalido(formacao);
+     descricao = descricao.value ? valido(descricao) : invalido(descricao);
+
+     if (nome && email) {
+          return true;
+     }
+
+     return false;
+
+}
+
+export const instanciarCandidato = (event: Event) => {
+
+     const forms = document.getElementById('forms_candidato') as HTMLFormElement;
+
+     if (validacaoCandidato()) {
+          const candidato = new Candidato(capturarCandidato(forms));
+          selecionarCompetencias(forms, candidato);
+          window.location.href = './visualizacao.html';
+     }
 }
 
 const selecionarCompetencias = (forms: HTMLFormElement, candidato: Candidato) => {

@@ -5,39 +5,39 @@ import { carregarCompetenciasCandidatos } from "../services/ServicoRelacionament
 export const carregarGrafico = () => {
 
 
-          const ctx = document.getElementById('carregar_grafico') as HTMLCanvasElement;
+	const ctx = document.getElementById('carregar_grafico') as HTMLCanvasElement;
 
-          const relacionamentos = carregarCompetenciasCandidatos();
+	const relacionamentos = carregarCompetenciasCandidatos();
 
-          new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                              labels: relacionamentos.map(relacionamento => relacionamento.competencia),
-                              datasets: [{
-                                        label: 'Candidatos:',
-                                        data: relacionamentos.map(relacionamento => relacionamento.quantidade),
-                                        borderWidth: 1
-                              }]
-                    },
-                    options: {
-                              scales: {
-                                        y: {
-                                                  type: 'linear',
-                                                  beginAtZero: true
-                                        }
-                              },
-                              plugins: {
+	new Chart(ctx, {
+		type: 'bar',
+		data: {
+			labels: relacionamentos.map(relacionamento => relacionamento.competencia),
+			datasets: [{
+				label: 'Candidatos:',
+				data: relacionamentos.map(relacionamento => relacionamento.quantidade),
+				borderWidth: 1
+			}]
+		},
+		options: {
+			scales: {
+				y: {
+					type: 'linear',
+					beginAtZero: true
+				}
+			},
+			plugins: {
 
-                                        legend: {
-                                                  labels: {
-                                                            font: {
-                                                                      size: 14
-                                                            }
-                                                  }
-                                        }
+				legend: {
+					labels: {
+						font: {
+							size: 14
+						}
+					}
+				}
 
-                              }
-                    }
-          });
+			}
+		}
+	});
 
 }
