@@ -20,4 +20,15 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+    }
 }
+
+task start(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'br.com.linketinder.view.Instancia'
+}
+
+
+

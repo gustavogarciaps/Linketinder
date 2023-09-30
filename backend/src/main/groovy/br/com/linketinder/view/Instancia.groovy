@@ -6,6 +6,7 @@ import br.com.linketinder.model.Candidato
 import br.com.linketinder.model.Empresa
 
 import java.time.LocalDate
+import java.util.Scanner
 
 GerenciamentoCandidato candidatos = new GerenciamentoCandidato()
 GerenciamentoEmpresa empresas = new GerenciamentoEmpresa()
@@ -63,7 +64,12 @@ while (opcao != 3) {
     println "3. Sair"
     print "Escolha uma opção: "
 
-    opcao = scanner.nextInt()
+    try {
+        opcao = scanner.nextInt()
+    } catch (NoSuchElementException e) {
+        println "Erro ao ler entrada do usuário: ${e.message}"
+        opcao = 0 // Defina um valor padrão ou faça algo apropriado em caso de erro
+    }
 
     switch (opcao) {
         case 1:
