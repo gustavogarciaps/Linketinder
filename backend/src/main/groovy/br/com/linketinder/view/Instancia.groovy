@@ -68,7 +68,7 @@ while (opcao != 3) {
         opcao = scanner.nextInt()
     } catch (NoSuchElementException e) {
         println "Erro ao ler entrada do usuário: ${e.message}"
-        opcao = 0 // Defina um valor padrão ou faça algo apropriado em caso de erro
+        opcao = 0
     }
 
     switch (opcao) {
