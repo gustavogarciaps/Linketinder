@@ -5,13 +5,14 @@ Linketinder é uma plataforma que combina a abordagem profissional do LinkedIn c
 
 ## Funcionalidades
 
-- Cadastro e Autenticação de Usuários.
-- Perfis personalizados para Empresas e Candidatos.
-- Visualização de Candidatos de forma anônima. "Recrutamento às cegas".
-- Visualização de Vagas de Empresas anômimas.
-- Sistema de match. O candidato pode curtir uma vaga e uma empresa pode curtir o candidato.
-- Cadastro e manutenção de vagas e competências.
-- Dashboard para visualização da relação de candidatos por competência.
+- [ ] Cadastro e Autenticação de Usuários.
+- [x] Perfis personalizados para Empresas e Candidatos.
+- [x] Visualização de Candidatos de forma anônima. "Recrutamento às cegas".
+- [x] Visualização de Vagas de Empresas anômimas.
+- [ ] Sistema de match. O candidato pode curtir uma vaga e uma empresa pode curtir o candidato.
+- [ ] Cadastro e manutenção de vagas e competências.
+- [x] Dashboard para visualização da relação de candidatos por competência.
+
 ## Stack utilizada
 
 **Front-end:** HTML, CSS, TS e Boostrap. Além disso, webpack para gerenciar.
@@ -19,7 +20,6 @@ Linketinder é uma plataforma que combina a abordagem profissional do LinkedIn c
 **Back-end:** Groovy
 
 **Banco de Dados:** Postgres
-
 
 ## Instalação
 
@@ -49,7 +49,6 @@ Linketinder é uma plataforma que combina a abordagem profissional do LinkedIn c
 ```bash
   $ 
 ```
-
 Executando a aplicação frontend:
 
 ```bash
