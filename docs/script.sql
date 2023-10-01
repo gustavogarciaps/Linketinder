@@ -119,6 +119,60 @@ CREATE TABLE IF NOT EXISTS correspondencias (
     FOREIGN KEY (candidatos_vagas_id) REFERENCES candidatos_vagas (id)
 );
 
+CREATE OR REPLACE FUNCTION criar_correspondencia_candidato_vaga()
+RETURNS TRIGGER AS $$
+DECLARE
+  empresas_candidatos_id INTEGER;
+BEGIN
+  IF NEW.curtida = TRUE 
+  THEN
+    SELECT ec.id INTO empresas_candidatos_id
+    FROM empresas_candidatos ec
+    WHERE ec.candidatos_id = NEW.candidatos_id
+      AND ec.empresas_id = (
+      SELECT empresas_id FROM vagas WHERE id = NEW.vagas_id
+    )
+      AND ec.curtida = TRUE;
+
+    IF empresa_candidato_id IS NOT NULL THEN
+      INSERT INTO correspondencias (empresas_candidatos_id, candidatos_vagas_id)
+      VALUES (empresas_candidatos_id, NEW.id);
+    END IF;
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER candidatos_vagas_trigger
+AFTER INSERT ON candidatos_vagas
+FOR EACH ROW
+EXECUTE FUNCTION criar_correspondencia_candidato_vaga();
+
+CREATE OR REPLACE FUNCTION criar_correspondencia_empresa_candidato()
+RETURNS TRIGGER AS $$
+DECLARE
+  candidatos_vagas_id INTEGER;
+BEGIN
+  IF NEW.curtida = TRUE THEN
+	IF EXISTS(
+    SELECT 1 FROM candidatos_vagas cv
+    WHERE cv.candidatos_id = NEW.candidatos_vagas_id
+	AND cv.curtida = TRUE;
+	); THEN
+      INSERT INTO correspondencias (empresas_candidatos_id, candidatos_vagas_id)
+      VALUES (NEW.id, NEW.candidatos_vagas_id);
+    END IF;
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE TRIGGER empresas_candidatos_trigger
+AFTER INSERT ON empresas_candidatos
+FOR EACH ROW
+EXECUTE FUNCTION criar_correspondencia_empresa_candidato();
+
 INSERT INTO usuarios (email, senha)
 VALUES
   ('ana.silva@email.com', 'senha123'),
@@ -221,9 +275,6 @@ VALUES
   (3, 4, TRUE),
   (4, 5, FALSE),
   (5, 1, TRUE);
-
-
-
-
+  
 
 
