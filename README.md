@@ -1,3 +1,6 @@
+## Autor
+
+- [@gustavogarciaps](https://github.com/gustavogarciaps)
 
 # Linketinder: Conectando Talentos e empresas
 
