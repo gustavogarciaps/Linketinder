@@ -276,5 +276,20 @@ VALUES
   (4, 5, FALSE),
   (5, 1, TRUE);
   
+SELECT c.nome, e.razao_social FROM
+correspondencias cs 
+INNER JOIN
+candidatos_vagas cv
+ON cs.candidatos_vagas_id = cv.id
+INNER JOIN 
+empresas_candidatos ec
+ON cs.empresas_candidatos_id = ec.id
+INNER JOIN 
+candidatos c
+ON c.usuarios_id = cv.id
+INNER JOIN 
+empresas e
+ON e.usuarios_id = ec.id
+  
 
 
