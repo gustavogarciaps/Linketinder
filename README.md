@@ -79,3 +79,43 @@ O modelo foi criado através do site https://dbdiagram.io/ e retrata a lógica d
 
 - [Script do Banco de Dados](https://github.com/gustavogarciaps/Linketinder/blob/master/docs/script.sql)
 
+## Lógica do Match
+
+Para deixar o match (correspondências entre candidatos e empresas) dinâmico dentro do Banco de Dados, foi necessário implementar um gatilho para monitorar as tabelas. Esse gatilho (Trigger) será acionado todas as vezes que houver inserções de dados nas tabelas ```candidatos_vagas``` e ```empresas_candidatos```. Essas tabelas são responsáveis pela lógica de curtida de um candidato com uma vaga e de uma empresa com um candidato.
+
+No Postegres, eu preciso criar uma função que será executada quando o Trigger for acionado. Essa função retorna o valor do Trigger. Depois de criar essa função, eu preciso associar ela a tabela que será responsável por acionar ela.
+
+
+Script da função do meu Trigger que monitora a tabela ```candidatos_vagas```.
+
+```SQL
+CREATE OR REPLACE FUNCTION criar_correspondencia_candidato_vaga()
+RETURNS TRIGGER AS $$
+DECLARE
+  empresas_candidatos_id INTEGER;
+BEGIN
+  IF NEW.curtida = TRUE 
+  THEN
+    SELECT ec.id INTO empresas_candidatos_id
+    FROM empresas_candidatos ec
+    WHERE ec.candidatos_id = NEW.candidatos_id
+      AND ec.empresas_id = (
+      SELECT empresas_id FROM vagas WHERE id = NEW.vagas_id
+    )
+      AND ec.curtida = TRUE;
+
+    IF empresa_candidato_id IS NOT NULL THEN
+      INSERT INTO correspondencias (empresas_candidatos_id, candidatos_vagas_id)
+      VALUES (empresas_candidatos_id, NEW.id);
+    END IF;
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+```
+
+Nesse script, foi declarado a variável ```empresas_candidatos_id``` para armazenar o id da empresa responsável pela vaga. Para obtermos esse id, foi necessário realizar uma consulta SQL. Antes de todo o esforço, verificamos se o candidato curtiu a vaga (```NEW.curtida = TRUE```). Se sim (```THEN```), atribuímos o valor da consulta à variável ```empresas_candidatos_id``` (```SELECT ec.id INTO empresas_candidatos_id```) . Nesse caso, a consulta está selecionando o id da tabela ```empresas_candidatos```, onde o campo ```candidatos_id``` tenha o mesmo valor que o registro que havia sido inserido. Se tiver, a função faz uma inserção na tabela ``` correspondências``` com o valor do id da tabela ```empresas_candidatos``` e ```candidatos_vagas```.
+
+O Trigger para a tabela ```empresas_candidatos``` segue quase o mesmo raciocínio, com a diferença que eu não preciso criar uma variável para armazenar o id do candidato, pois eu consigo consultar direto na tabela ```empresas_candidatos```.
+
+
