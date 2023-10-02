@@ -1,5 +1,6 @@
 plugins {
     id 'groovy'
+    id 'application'
 }
 
 group = 'br.com.linketinder'
@@ -14,8 +15,9 @@ dependencies {
         include '*.jar'
         include '*/*.jar'
     }
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.8.2'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '4.11.0'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
 }
 
 test {
@@ -25,9 +27,8 @@ test {
     }
 }
 
-task start(type: JavaExec) {
-    classpath = sourceSets.main.runtimeClasspath
-    main = 'br.com.linketinder.view.Instancia'
+application {
+    mainClass = 'Instancia.groovy'
 }
 
 
