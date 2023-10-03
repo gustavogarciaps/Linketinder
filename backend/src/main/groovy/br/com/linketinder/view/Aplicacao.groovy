@@ -1,7 +1,7 @@
 package br.com.linketinder.view
 
-import br.com.linketinder.controller.GerenciamentoCandidato
-import br.com.linketinder.controller.GerenciamentoEmpresa
+import br.com.linketinder.services.GerenciamentoCandidato
+import br.com.linketinder.services.GerenciamentoEmpresa
 import br.com.linketinder.model.Candidato
 import br.com.linketinder.model.Empresa
 

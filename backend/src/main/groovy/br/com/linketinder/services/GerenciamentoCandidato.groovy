@@ -1,4 +1,4 @@
-package br.com.linketinder.controller
+package br.com.linketinder.services
 
 import br.com.linketinder.model.Candidato
 

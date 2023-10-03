@@ -1,19 +1,18 @@
 package br.com.linketinder.model
 
-import br.com.linketinder.controller.GerenciamentoCompetencia
+import br.com.linketinder.services.GerenciamentoCompetencia
 import groovy.transform.ToString
 
 @ToString
 class Pessoa implements PessoaHabilidades{
 
-    String nome
-    String email
-    String inscricao
-    String CEP
-    String estado
-    String pais
-    String descricao
-    GerenciamentoCompetencia competencia = new GerenciamentoCompetencia()
+    private String nome
+    private String email
+    private String inscricao
+    private String CEP
+    private String estado
+    private String pais
+    private String descricao
 
     Pessoa(){}
 
@@ -28,12 +27,7 @@ class Pessoa implements PessoaHabilidades{
     }
 
     @Override
-    def match(Object o) {
-        return null
-    }
-
-    @Override
-    def like() {
+    def reagir(boolean reacao){
         return null
     }
 
@@ -46,7 +40,6 @@ class Pessoa implements PessoaHabilidades{
                 "CEP='$CEP', " +
                 "estado='$estado', " +
                 "pais='$pais', " +
-                "competencia=$competencia, " +
                 "descricao='$descricao'" +
                 " }"
     }

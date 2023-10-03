@@ -1,4 +1,4 @@
-package br.com.linketinder.controller
+package br.com.linketinder.services
 
 import br.com.linketinder.model.Competencia
 import groovy.transform.ToString
@@ -14,7 +14,7 @@ class GerenciamentoCompetencia {
 
     def setCompetencia(String s){
         def c = new Competencia()
-        c.setDescricao(s.toUpperCase())
+        c.setNome(s.toUpperCase())
         this.competencia.add(c)
     }
 

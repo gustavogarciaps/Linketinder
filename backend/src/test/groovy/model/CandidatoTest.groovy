@@ -1,6 +1,7 @@
 package model
 
 import br.com.linketinder.model.Candidato
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test
 
@@ -63,4 +64,5 @@ class CandidatoTest {
     void consultarIdadeCandidato(){
         assertEquals(22,candidato.getIdade())
     }
+
 }

@@ -1,5 +1,6 @@
 package br.com.linketinder.model
 
+import br.com.linketinder.services.GerenciamentoCompetencia
 import groovy.transform.ToString
 
 import java.time.LocalDate
@@ -7,14 +8,30 @@ import java.time.LocalDate
 @ToString
 class Candidato extends Pessoa{
 
-    LocalDate dataNascimento = null
-    Integer idade
+    private String linkedin;
+    private LocalDate dataNascimento = null;
+    private String formacao;
+    private GerenciamentoCompetencia competencias;
 
     Candidato(){}
 
-    Candidato(String nome, String email, String inscricao, String CEP, String estado, String pais, String descricao, LocalDate dataNascimento) {
+    Candidato(
+            String nome,
+            String email,
+            String inscricao,
+            String CEP,
+            String estado,
+            String pais,
+            String descricao,
+            String linkedin,
+            LocalDate dataNascimento,
+            String formacao
+    ) {
         super(nome, email, inscricao, CEP, estado, pais, descricao)
-        this.dataNascimento = dataNascimento
+        this.linkedin = linkedin;
+        this.dataNascimento = dataNascimento;
+        this.formacao = formacao;
+        competencias = new GerenciamentoCompetencia();
     }
 
     def atualizarDataNascimento(){
@@ -26,15 +43,14 @@ class Candidato extends Pessoa{
         int dias = dataAtual.dayOfMonth - dataNascimento.dayOfMonth
 
         if (meses < 0 || (meses == 0 && dias < 0)) {
-            anos - 1
+            anos --
         }
 
-        this.idade = anos
+        return anos
     }
 
     def getIdade(){
-        this.dataNascimento == null ? this.idade = 0 : atualizarDataNascimento()
-        return this.idade
+        return this.dataNascimento == null ? 0 : atualizarDataNascimento()
     }
 
     @Override

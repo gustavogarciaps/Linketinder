@@ -28,7 +28,7 @@ test {
 }
 
 application {
-    mainClass = 'Instancia.groovy'
+    mainClass = 'br.com.linkedin.view.Instancia'
 }
 
 
