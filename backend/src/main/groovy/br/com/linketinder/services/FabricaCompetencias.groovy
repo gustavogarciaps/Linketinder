@@ -1,21 +1,40 @@
 package br.com.linketinder.services
 
+import br.com.linketinder.database.CompetenciaDAO
 import br.com.linketinder.model.Competencia
 
 class FabricaCompetencias {
 
-    static ArrayList<Competencia> instanciarCompetencias () {
-        ArrayList<Competencia> competencias = new ArrayList<>()
+	static String criar(String nome) {
 
-        competencias.add(new Competencia('JAVA'))
-        competencias.add(new Competencia('PYTHON'))
-        competencias.add(new Competencia('JAVASCRIPT'))
-        competencias.add(new Competencia('GROOVY'))
-        competencias.add(new Competencia('RUBY'))
-        competencias.add(new Competencia('NODE'))
-        competencias.add(new Competencia('TYPESCRIPT'))
-        competencias.add(new Competencia('ANGULAR'))
+		try {
+			CompetenciaDAO.create(new Competencia(null, nome));
+			return "Concluído";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Erro na requisição: " + e.message();
+		}
+	}
 
-        return competencias
-    }
+	static String deletar(Integer id) {
+		try {
+			CompetenciaDAO.delete(new Competencia(id, null));
+			return "Concluído";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Erro na requisição: " + e.message();
+		}
+	}
+
+	static String atualizar(Integer id, String nome){
+		try {
+			CompetenciaDAO.update(new Competencia(id, nome));
+			return "Concluído";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Erro na requisição: " + e.message;
+		}
+	}
+
+
 }

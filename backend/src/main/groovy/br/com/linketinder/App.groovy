@@ -3,14 +3,20 @@ package br.com.linketinder
 import br.com.linketinder.database.CompetenciaDAO
 import br.com.linketinder.model.Competencia
 import br.com.linketinder.services.FabricaCompetencias
+import br.com.linketinder.view.MenuCompetencias
+import br.com.linketinder.view.MenuPrincipal
 
 class App {
 
     static void main(args){
-        ArrayList<Competencia> competencias = FabricaCompetencias.instanciarCompetencias();
 
-        println(CompetenciaDAO.read())
+        /*
+        competencias.each {competencia ->
+            CompetenciaDAO.create(competencia)
+        }
+*/
+        MenuCompetencias.exibir()
 
-        print("Ola")
+
     }
 }

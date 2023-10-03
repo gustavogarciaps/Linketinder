@@ -6,7 +6,7 @@ class GerenciamentoVaga {
 
     ArrayList<Vaga> vagas;
 
-    public GerenciamentoVaga(){
+    GerenciamentoVaga(){
         this.vagas = new ArrayList<>();
     }
 

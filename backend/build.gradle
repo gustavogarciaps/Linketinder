@@ -27,8 +27,8 @@ test {
     }
 }
 
-application {
-    mainClass = 'br.com.linkedin.view.Instancia'
+run {
+    mainClass = 'br.com.linkedin.App.main'
 }
 
 
