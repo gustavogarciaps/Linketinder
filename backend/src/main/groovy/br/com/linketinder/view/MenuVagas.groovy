@@ -1,15 +1,9 @@
 package br.com.linketinder.view
 
-import br.com.linketinder.database.CandidatoDAO
-import br.com.linketinder.database.CompetenciaDAO
+import br.com.linketinder.database.VagaCompetenciaDAO
 import br.com.linketinder.database.VagaDAO
-import br.com.linketinder.model.Competencia
 import br.com.linketinder.model.Empresa
 import br.com.linketinder.model.Vaga
-import br.com.linketinder.services.FabricaCandidatos
-import br.com.linketinder.services.FabricaCompetencias
-
-import java.time.LocalDate
 
 class MenuVagas {
 
@@ -20,13 +14,14 @@ class MenuVagas {
 
         def opcaoMenu = 0
 
-        while (opcaoMenu != 5) {
+        while (opcaoMenu != 6) {
             println "Menu de Opções:";
             println "1. Visualizar Vagas";
             println "2. Cadastrar Nova Vaga";
             println "3. Excluir Vaga";
             println "4. Atualizar Vaga";
-            println "5. Voltar"
+            println "5. Vincular competências à Vaga";
+            println "6. Voltar"
             print "Escolha uma opção: "
 
             try {
@@ -47,6 +42,9 @@ class MenuVagas {
                         atualizar()
                         break
                     case 5:
+                        vincularCompetencias()
+                        break
+                    case 6:
                         println "Voltando..."
                         break
                     default:
@@ -71,6 +69,11 @@ class MenuVagas {
 
         vagas.each { v ->
             println("|" + v.getId() + ("\t" * 2) + "|" + v.getTitulo() + ("\t" * 6) + "|" + v.getEmpresa().getId() + ("\t" * 4))
+            println("Competências:")
+
+            v.getCompetencias().getCompetencia().each { competencia ->
+                println("|" + competencia.getId() + ("\t" * 2) + "|" + competencia.getNome() + ("\t" * 4))
+            }
         }
     }
 
@@ -199,4 +202,42 @@ class MenuVagas {
             println("Erro ao atualizar o candidato: " + e.getMessage())
         }
     }
+
+    static void vincularCompetencias() {
+        println("Adicionar Competências: (Escreva EXIT para voltar)")
+        MenuCompetencias.carregar();
+        println("1. Vincular competências")
+        println "2. Acessar o Menu de Competências"
+        print "Opção: "
+        def opcaoMenu = scanner.nextInt()
+        scanner.nextLine()
+
+        if (opcaoMenu == 1) {
+            "Vincular Competência"
+            print "Código da Vaga: "
+            Integer vagas_id = scanner.nextInt()
+            scanner.nextLine()
+            println "Digite o código das Competências que serão adicionadas. "
+            println "(Digite uma por vez (Para sair Digite 0)"
+            ArrayList<Integer> competencias = new ArrayList<>();
+            Integer competencias_id
+
+            while (competencias_id != 0) {
+                print "Competência: "
+                competencias_id = scanner.nextInt()
+                scanner.nextLine()
+                if (competencias_id != 0) {
+                    competencias.add(competencias_id)
+                }
+            }
+
+            competencias.each { competencia ->
+                VagaCompetenciaDAO.create(vagas_id, competencia)
+            }
+
+        } else if (opcaoMenu == 2) {
+            MenuCompetencias.exibir()
+        }
+    }
+
 }

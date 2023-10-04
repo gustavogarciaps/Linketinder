@@ -38,6 +38,8 @@ class VagaDAO {
                     cidade: rs[5]
             )
 
+            vaga.setCompetencias(VagaCompetenciaDAO.read(vaga.getId()))
+
             vagas.add(vaga)
         }
         return vagas
