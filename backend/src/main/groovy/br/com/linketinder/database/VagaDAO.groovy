@@ -10,7 +10,6 @@ class VagaDAO {
     static ArrayList<Vaga> vagas = new ArrayList<>()
 
     static void create(Vaga v) throws Exception {
-        println(v)
 
         String query = "INSERT INTO vagas (empresas_id, titulo, descricao, modalidades_id, cidades_id) VALUES (?,?,?,?,?)"
         sql.executeInsert(query, [
@@ -41,9 +40,9 @@ class VagaDAO {
         return vagas
     }
 
-    static void delete(Competencia c) throws Exception {
-        String query = "DELETE FROM competencias WHERE id = ?"
-        sql.execute(query, [c.getId()])
+    static void delete(Vaga v) throws Exception {
+        String query = "DELETE FROM vagas WHERE id = ?"
+        sql.execute(query, [v.getId()])
     }
 
     static void update(Competencia c) throws Exception {

@@ -105,8 +105,6 @@ class MenuVagas {
             return
         }
 
-        println("Até aqui Ok")
-
         Empresa empresa = new Empresa(id: Integer.parseInt(empresas_id))
         Vaga vaga = new Vaga(
                 empresa: empresa,
@@ -117,22 +115,22 @@ class MenuVagas {
                 cidade: Integer.parseInt(cidade)
         )
 
-        println("Até aqui Ok 2")
-
-        println(vaga)
         println(VagaDAO.create(vaga));
     }
 
     static void deletar() {
-        println("Deletar Competência: (Escreva EXIT para voltar)")
+        println("Deletar Vaga: (Escreva EXIT para voltar)")
         carregar();
-        println("Qual o código (id) da competência?");
+        println("Qual o código (id) da vaga?");
         print("Id: ")
         def id = scanner.nextLine();
         if (id.equals("EXIT")) {
             return
         }
-        println(FabricaCompetencias.deletar(Integer.parseInt(id)));
+
+        def vaga = new Vaga(id: Integer.parseInt(id))
+
+        VagaDAO.delete(vaga)
     }
 
     static void atualizar() {
