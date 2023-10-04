@@ -12,7 +12,7 @@ class FabricaCompetencias {
 			return "Concluído";
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "Erro na requisição: " + e.message();
+			return "Erro na requisição: " + e.getMessage();
 		}
 	}
 
@@ -22,7 +22,7 @@ class FabricaCompetencias {
 			return "Concluído";
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "Erro na requisição: " + e.message();
+			return "Erro na requisição: " + e.getMessage();
 		}
 	}
 
@@ -32,9 +32,8 @@ class FabricaCompetencias {
 			return "Concluído";
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "Erro na requisição: " + e.message;
+			return "Erro na requisição: " + e.getMessage;
 		}
 	}
-
 
 }

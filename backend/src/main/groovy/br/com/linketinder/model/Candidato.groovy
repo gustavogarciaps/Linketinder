@@ -8,26 +8,31 @@ import java.time.LocalDate
 @ToString
 class Candidato extends Pessoa{
 
+    private String nome;
+    private String sobrenome;
     private String linkedin;
-    private LocalDate dataNascimento = null;
+    private LocalDate dataNascimento;
     private String formacao;
     private GerenciamentoCompetencia competencias;
 
     Candidato(){}
 
     Candidato(
+            Integer id,
             String nome,
-            String email,
+            String sobrenome,
             String inscricao,
-            String CEP,
-            String estado,
-            String pais,
             String descricao,
-            String linkedin,
+            Integer cidade,
+            String CEP,
+            String formacao,
             LocalDate dataNascimento,
-            String formacao
+            String linkedin,
+            String pais
     ) {
-        super(nome, email, inscricao, CEP, estado, pais, descricao)
+        super(id, inscricao, CEP, cidade, pais, descricao)
+        this.nome = nome;
+        this.sobrenome = sobrenome;
         this.linkedin = linkedin;
         this.dataNascimento = dataNascimento;
         this.formacao = formacao;
@@ -47,6 +52,54 @@ class Candidato extends Pessoa{
         }
 
         return anos
+    }
+
+    String getNome() {
+        return nome
+    }
+
+    void setNome(String nome) {
+        this.nome = nome
+    }
+
+    String getSobrenome() {
+        return sobrenome
+    }
+
+    void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome
+    }
+
+    String getLinkedin() {
+        return linkedin
+    }
+
+    void setLinkedin(String linkedin) {
+        this.linkedin = linkedin
+    }
+
+    LocalDate getDataNascimento() {
+        return dataNascimento
+    }
+
+    void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento
+    }
+
+    String getFormacao() {
+        return formacao
+    }
+
+    void setFormacao(String formacao) {
+        this.formacao = formacao
+    }
+
+    GerenciamentoCompetencia getCompetencias() {
+        return competencias
+    }
+
+    void setCompetencias(GerenciamentoCompetencia competencias) {
+        this.competencias = competencias
     }
 
     def getIdade(){

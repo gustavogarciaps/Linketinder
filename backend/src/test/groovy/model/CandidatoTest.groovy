@@ -18,10 +18,10 @@ class CandidatoTest {
         candidato = new Candidato()
 
         candidato.setNome("GUSTAVO")
-        candidato.setEmail("gustavo@gmail.com")
+        candidato.setSobrenome("gustavo@gmail.com")
         candidato.setInscricao("123.456.789-10")
         candidato.setCEP("38.200-000")
-        candidato.setEstado("MG")
+        candidato.setCidade(1)
         candidato.setPais("BRASIL")
         candidato.setDescricao("SOU O GUSTAVO")
         candidato.setDataNascimento(LocalDate.of(2001,6,9))

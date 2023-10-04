@@ -1,47 +1,85 @@
 package br.com.linketinder.model
 
-import br.com.linketinder.services.GerenciamentoCompetencia
+
 import groovy.transform.ToString
 
 @ToString
-class Pessoa implements PessoaHabilidades{
+class Pessoa implements PessoaHabilidades {
 
-    private String nome
-    private String email
-    private String inscricao
-    private String CEP
-    private String estado
-    private String pais
-    private String descricao
+	private Integer id;
+	private String inscricao;
+	private String CEP;
+	private Integer cidade;
+	private String pais;
+	private String descricao;
 
-    Pessoa(){}
+	Pessoa() {}
 
-    Pessoa(String nome, String email, String inscricao, String CEP, String estado, String pais, String descricao) {
-        this.nome = nome
-        this.email = email
-        this.inscricao = inscricao
-        this.CEP = CEP
-        this.estado = estado
-        this.pais = pais
-        this.descricao = descricao
-    }
+	Pessoa(Integer id, String inscricao, String CEP, Integer cidade, String pais, String descricao) {
+		this.id = id
+		this.inscricao = inscricao
+		this.CEP = CEP
+		this.cidade = cidade
+		this.pais = pais
+		this.descricao = descricao
+	}
 
-    @Override
-    def reagir(boolean reacao){
-        return null
-    }
+	Integer getId() {
+		return id
+	}
 
-    @Override
-    String toString() {
-        return "{ " +
-                "nome='$nome', " +
-                "email='$email', " +
-                "inscricao='$inscricao', " +
-                "CEP='$CEP', " +
-                "estado='$estado', " +
-                "pais='$pais', " +
-                "descricao='$descricao'" +
-                " }"
-    }
+	void setId(Integer id) {
+		this.id = id
+	}
+
+	String getInscricao() {
+		return inscricao
+	}
+
+	void setInscricao(String inscricao) {
+		this.inscricao = inscricao
+	}
+
+	String getCEP() {
+		return CEP
+	}
+
+	void setCEP(String CEP) {
+		this.CEP = CEP
+	}
+
+	Integer getCidade() {
+		return cidade
+	}
+
+	void setCidade(Integer estado) {
+		this.cidade = estado
+	}
+
+	String getPais() {
+		return pais
+	}
+
+	void setPais(String pais) {
+		this.pais = pais
+	}
+
+	String getDescricao() {
+		return descricao
+	}
+
+	void setDescricao(String descricao) {
+		this.descricao = descricao
+	}
+
+	@Override
+	def reagir(boolean reacao) {
+		return null
+	}
+
+	@Override
+	String toString() {
+		return [this.inscricao, this.CEP, this.cidade, this.pais, this.descricao]
+	}
 
 }
