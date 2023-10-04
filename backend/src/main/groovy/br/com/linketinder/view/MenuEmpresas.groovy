@@ -47,7 +47,7 @@ class MenuEmpresas {
                         atualizar()
                         break
                     case 5:
-                        criarCompetencias();
+                        MenuVagas.exibir();
                         break
                     case 6:
                         println "Saindo..."

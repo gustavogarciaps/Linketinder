@@ -6,21 +6,53 @@ import java.time.LocalDate
 
 class Vaga {
 
+    private Empresa empresa;
+    private Integer id;
     private String titulo;
     private String descricao;
+    private Integer modalidade;
+    private Integer cidade;
     private LocalDate dataCriacao;
     private GerenciamentoCompetencia competencias;
 
-    public Vaga(){}
+    public Vaga() {}
+
+    public Vaga(Integer id) {
+        this.id = id;
+    }
 
     public Vaga(
-            titulo,
-            descricao
-    ){
+            Empresa empresa,
+            Integer id,
+            String titulo,
+            String descricao,
+            Integer modalidade,
+            Integer cidade
+    ) {
+        this.empresa = empresa;
+        this.id = id
         this.titulo = titulo;
         this.descricao = descricao;
+        this.modalidade = modalidade;
+        this.cidade = cidade;
         this.dataCriacao = LocalDate.now();
         competencias = new Competencia();
+    }
+
+    Empresa getEmpresa() {
+        return empresa
+    }
+
+    void setEmpresa(Empresa empresa) {
+        this.empresa = empresa
+    }
+
+    Integer getId() {
+        return id
+    }
+
+    void setId(Integer id) {
+        this.id = id
     }
 
     String getTitulo() {
@@ -37,6 +69,22 @@ class Vaga {
 
     void setDescricao(String descricao) {
         this.descricao = descricao
+    }
+
+    Integer getModalidade() {
+        return modalidade
+    }
+
+    void setModalidade(Integer modalidade) {
+        this.modalidade = modalidade
+    }
+
+    Integer getCidade() {
+        return cidade
+    }
+
+    void setCidade(Integer cidade) {
+        this.cidade = cidade
     }
 
     LocalDate getDataCriacao() {
