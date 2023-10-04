@@ -62,7 +62,7 @@ class EmpresaDAO {
 
         sql.eachRow(query, [id]) { rs ->
 
-            String data = rs[7];
+            String data = rs[6];
             String[] conversaoDataFundacao = data.split("-");
             Integer ano = Integer.parseInt(conversaoDataFundacao[0]);
             Integer mes = Integer.parseInt(conversaoDataFundacao[1]);
@@ -77,6 +77,8 @@ class EmpresaDAO {
                     descricao: rs[3],
                     dataFundacao: LocalDate.of(ano, mes, dia),
             )
+
+            empresas.add(empresa)
         }
 
         return empresas
@@ -88,7 +90,7 @@ class EmpresaDAO {
     }
 
     static void update(Empresa e) throws Exception {
-        String query = "UPDATE empresas SET " + "razao_social = ?, " + "cnpj = ?, " + "descricao = ?, " + "cidades_id = ?, " + "cep = ?, " + "data_fundacao = ?, " + "WHERE usuarios_id = ?"
+        String query = "UPDATE empresas SET " + "razao_social = ?, " + "cnpj = ?, " + "descricao = ?, " + "cidades_id = ?, " + "cep = ?, " + "data_fundacao = ? " + "WHERE usuarios_id = ?"
 
         sql.execute(query, [
                 e.getRazaoSocial(),

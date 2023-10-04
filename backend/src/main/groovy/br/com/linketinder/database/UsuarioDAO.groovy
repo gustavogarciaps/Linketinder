@@ -18,7 +18,8 @@ class UsuarioDAO {
 		usuarios.clear()
 
 		String query = "SELECT * FROM usuarios"
-		sql.eachRow(query) { rs -> usuarios.add(new Usuario(rs.id, rs.email, rs.senha, rs.data_criacao))
+		sql.eachRow(query) { rs ->
+			usuarios.add(new Usuario(rs.id, rs.email, rs.senha, null))
 		}
 		return usuarios
 	}

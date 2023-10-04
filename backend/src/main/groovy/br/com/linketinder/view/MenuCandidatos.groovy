@@ -222,7 +222,7 @@ class MenuCandidatos {
             return
         }
         if (cidade.isEmpty()) {
-            cidade = candidato.getCEP()
+            cidade = candidato.getCidade()
         }
         print("Novo CEP: (${candidato.getCEP()}) ")
         def cep = scanner.nextLine()
@@ -251,7 +251,7 @@ class MenuCandidatos {
         def dataNascimentoConvertida;
 
         if (dataNascimento.isEmpty()) {
-            dataNascimentoConvertida = candidato.dataNascimento
+            dataNascimentoConvertida = candidato.getDataNascimento()
         } else {
             def ano = Integer.parseInt(dataNascimento.split("-")[0])
             def mes = Integer.parseInt(dataNascimento.split("-")[1])

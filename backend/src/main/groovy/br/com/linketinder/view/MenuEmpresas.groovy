@@ -144,120 +144,93 @@ class MenuEmpresas {
     }
 
     static void deletar() {
-        println("Deletar Candidato: (Escreva EXIT para voltar)")
+        println("Deletar Empresa: (Escreva EXIT para voltar)")
         carregar();
-        println("Qual o código (id) do Candidato?");
+        println("Qual o código (id) da Empresa?");
         print("Id: ")
         def id = scanner.nextLine();
         if (id.equals("EXIT")) {
             return
         }
-        println(FabricaCandidatos.deletar(Integer.parseInt(id)));
+        println(FabricaEmpresas.deletar(Integer.parseInt(id)));
     }
 
     static void atualizar() {
-        println("Alterar Dados do Candidato: (Escreva EXIT para voltar)")
+        println("Alterar Dados da Empresa: (Escreva EXIT para voltar)")
         carregar()
-        println("Qual o código (id) do candidato?")
+        println("Qual o código (id) da empresa?")
         print("Id: ")
         def id = scanner.nextInt()
         scanner.nextLine()
         if (id.equals("EXIT")) {
             return
         }
-        def candidato = CandidatoDAO.readOne(id)[0]
+        def empresa = EmpresaDAO.readOne(id)[0]
 
-        print("Novo Nome: (${candidato.getNome()}) ")
-        def nome = scanner.nextLine()
-        if (nome.equals("EXIT")) {
+        print("Novo Nome: (${empresa.getRazaoSocial()}) ")
+        def razaoSocial = scanner.nextLine()
+        if (razaoSocial.equals("EXIT")) {
             return
         }
-        if (nome.isEmpty()) {
-            nome = candidato.getNome()
+        if (razaoSocial.isEmpty()) {
+            razaoSocial = empresa.getRazaoSocial()
         }
 
-        print("Novo Sobrenome: (${candidato.getSobrenome()}) ")
-        def sobrenome = scanner.nextLine()
-        if (sobrenome.equals("EXIT")) {
+        print("Novo CNPJ: (${empresa.getInscricao()}) ")
+        def cnpj = scanner.nextLine()
+        if (cnpj.equals("EXIT")) {
             return
         }
-        if (sobrenome.isEmpty()) {
-            sobrenome = candidato.getSobrenome()
+        if (cnpj.isEmpty()) {
+            cnpj = empresa.getInscricao()
         }
 
-        print("Novo CPF: (${candidato.getInscricao()}) ")
-        def cpf = scanner.nextLine()
-        if (cpf.equals("EXIT")) {
-            return
-        }
-        if (cpf.isEmpty()) {
-            cpf = candidato.getInscricao()
-        }
-
-        print("Nova Descrição: (${candidato.getDescricao()}) ")
+        print("Nova Descrição: (${empresa.getDescricao()}) ")
         def descricao = scanner.nextLine()
         if (descricao.equals("EXIT")) {
             return
         }
         if (descricao.isEmpty()) {
-            descricao = candidato.getDescricao()
+            descricao = empresa.getDescricao()
         }
 
-        print("Nova Cidade: (${candidato.getCidade()}) ")
+        print("Nova Cidade: (${empresa.getCidade()}) ")
         def cidade = scanner.nextLine()
         if (cidade.equals("EXIT")) {
             return
         }
         if (cidade.isEmpty()) {
-            cidade = candidato.getCEP()
+            cidade = empresa.getCidade()
         }
-        print("Novo CEP: (${candidato.getCEP()}) ")
+        print("Novo CEP: (${empresa.getCEP()}) ")
         def cep = scanner.nextLine()
         if (cep.equals("EXIT")) {
             return
         }
         if (cep.isEmpty()) {
-            cep = candidato.getCEP()
+            cep = empresa.getCEP()
         }
 
-        print("Nova Formação: (${candidato.getFormacao()}) ")
-        def formacao = scanner.nextLine()
-        if (formacao.equals("EXIT")) {
-            return
-        }
-        if (formacao.isEmpty()) {
-            formacao = candidato.getFormacao()
-        }
-
-        print("Nova Data de Nascimento (AAAA-MM-DD): (${candidato.getDataNascimento()}) ")
-        def dataNascimento = scanner.nextLine()
-        if (dataNascimento.equals("EXIT")) {
+        print("Nova Data de Fundação (AAAA-MM-DD): (${empresa.getDataFundacao()}) ")
+        def dataFundacao = scanner.nextLine()
+        if (dataFundacao.equals("EXIT")) {
             return
         }
 
-        def dataNascimentoConvertida;
+        def dataFundacaoConvertida;
 
-        if (dataNascimento.isEmpty()) {
-            dataNascimentoConvertida = candidato.dataNascimento
+        if (dataFundacao.isEmpty()) {
+            dataFundacaoConvertida = empresa.getDataFundacao()
         } else {
-            def ano = Integer.parseInt(dataNascimento.split("-")[0])
-            def mes = Integer.parseInt(dataNascimento.split("-")[1])
-            def dia = Integer.parseInt(dataNascimento.split("-")[2])
+            def ano = Integer.parseInt(dataFundacao.split("-")[0])
+            def mes = Integer.parseInt(dataFundacao.split("-")[1])
+            def dia = Integer.parseInt(dataFundacao.split("-")[2])
 
-            dataNascimentoConvertida = LocalDate.of(ano, mes, dia)
-        }
-
-        print("Novo LinkedIn: (${candidato.getLinkedin()}) ")
-        def linkedin = scanner.nextLine()
-        if (linkedin.equals("EXIT")) {
-            return
-        }
-        if (linkedin.isEmpty()) {
-            linkedin = candidato.getLinkedin()
+            dataFundacaoConvertida = LocalDate.of(ano, mes, dia)
         }
 
         try {
-            FabricaCandidatos.atualizar(id, nome, sobrenome, cpf, descricao, Integer.parseInt(cidade), cep, formacao, dataNascimentoConvertida, linkedin)
+            FabricaEmpresas.atualizar(id, razaoSocial, cnpj, descricao, Integer.parseInt(cidade), cep, dataFundacaoConvertida)
             println("Candidato atualizado com sucesso!")
         } catch (Exception e) {
             println("Erro ao atualizar o candidato: " + e.getMessage())
