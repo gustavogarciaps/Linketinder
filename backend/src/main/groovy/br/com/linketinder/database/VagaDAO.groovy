@@ -1,11 +1,7 @@
 package br.com.linketinder.database
 
-import br.com.linketinder.model.Candidato
-import br.com.linketinder.model.Competencia
 import br.com.linketinder.model.Empresa
 import br.com.linketinder.model.Vaga
-
-import java.time.LocalDate
 
 class VagaDAO {
 
@@ -39,7 +35,6 @@ class VagaDAO {
             )
 
             vaga.setCompetencias(VagaCompetenciaDAO.read(rs[0]))
-            //vaga.setCompetencias(VagaCompetenciaDAO.read(Integer.parseInt(rs[0])))
 
             vagas.add(vaga)
         }

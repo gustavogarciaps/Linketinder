@@ -68,7 +68,7 @@ class MenuVagas {
         println("|id" + ("\t" * 2) + "|" + "Título" + ("\t" * 6) + "Empresa" + ("\t" * 4))
 
         vagas.each { v ->
-            pritnln("Vaga:")
+            println("Vaga:")
             println("|" + v.getId() + ("\t" * 2) + "|" + v.getTitulo() + ("\t" * 6) + "|" + v.getEmpresa().getId() + ("\t" * 4))
             println("Competências:")
 

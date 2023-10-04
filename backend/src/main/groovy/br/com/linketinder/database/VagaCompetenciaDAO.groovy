@@ -18,7 +18,6 @@ class VagaCompetenciaDAO {
 
     static GerenciamentoCompetencia read(Integer vagas_id) {
 
-        println(vagas_id)
         def vagas_competencias = new GerenciamentoCompetencia()
 
         String query = "SELECT * FROM vagas_competencias AS vc INNER JOIN competencias AS cs ON vc.competencias_id = cs.id WHERE vc.vagas_id = ?"
