@@ -3,20 +3,60 @@ package br.com.linketinder.model
 import br.com.linketinder.services.GerenciamentoVaga
 import groovy.transform.ToString
 
-@ToString
-class Empresa extends Pessoa{
+import java.time.LocalDate
 
+@ToString
+class Empresa extends Pessoa {
+
+    private Integer id;
+    private String razaoSocial;
+    private LocalDate dataFundacao;
     private GerenciamentoVaga vagas;
 
-    Empresa(){}
+    Empresa() {}
 
-    Empresa(String nome, String email, String inscricao, String CEP, String estado, String pais, String descricao) {
-        super(nome, email, inscricao, CEP, estado, pais, descricao)
+    Empresa(Integer id) {
+        super(id)
+    }
+
+    Empresa(Integer id, String razaoSocial,  String inscricao, String CEP, String cidade, String pais, String descricao,String dataFundacao) {
+        super(inscricao, CEP, cidade, pais, descricao)
+        this.id = id;
+        this.razaoSocial = razaoSocial;
+        this.dataFundacao = dataFundacao;
         vagas = new GerenciamentoVaga();
     }
 
-    @Override
-    public String toString() {
-        return "Empresa ${super.toString()} }";
+    Integer getId() {
+        return id
     }
+
+    void setId(Integer id) {
+        this.id = id
+    }
+
+    String getRazaoSocial() {
+        return razaoSocial
+    }
+
+    void setRazaoSocial(String razaoSocial) {
+        this.razaoSocial = razaoSocial
+    }
+
+    LocalDate getDataFundacao() {
+        return dataFundacao
+    }
+
+    void setDataFundacao(LocalDate dataFundacao) {
+        this.dataFundacao = dataFundacao
+    }
+
+    GerenciamentoVaga getVagas() {
+        return vagas
+    }
+
+    void setVagas(GerenciamentoVaga vagas) {
+        this.vagas = vagas
+    }
+
 }

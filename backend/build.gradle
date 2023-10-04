@@ -3,6 +3,10 @@ plugins {
     id 'application'
 }
 
+application {
+    mainClass = 'App'
+}
+
 group = 'br.com.linketinder'
 version = '1.0-SNAPSHOT'
 
@@ -27,9 +31,6 @@ test {
     }
 }
 
-run {
-    mainClass = 'br.com.linkedin.App.main'
-}
 
 
 

@@ -63,16 +63,23 @@ class MenuInicial {
 
 	static void acessar(){
 		println("Acessar:  (Escreva EXIT para voltar)");
-		print("email: ");
-		def email = scanner.nextLine();
-		if (email.equals("EXIT")) {
-			return
+		println "1. Candidato"
+		println "2. Empresa"
+		print "opção: "
+		def opcaoMenu = scanner.nextInt()
+		scanner.nextLine()
+
+		switch(opcaoMenu){
+			case 1:
+				MenuCandidatos.exibir()
+				break
+			case 2:
+				MenuEmpresas.exibir()
+				break
+			default:
+				println("Voltando...")
+				return
+				break;
 		}
-		print("senha: ");
-		def senha = scanner.nextLine();
-		if (senha.equals("EXIT")) {
-			return
-		}
-		println(FabricaUsuarios.validar(email, senha));
 	}
 }

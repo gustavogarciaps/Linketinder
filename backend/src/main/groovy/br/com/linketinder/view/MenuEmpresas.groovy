@@ -1,16 +1,18 @@
 package br.com.linketinder.view
 
 import br.com.linketinder.database.CandidatoDAO
-import br.com.linketinder.database.CompetenciaDAO
+import br.com.linketinder.database.EmpresaDAO
 import br.com.linketinder.model.Candidato
+import br.com.linketinder.model.Empresa
 import br.com.linketinder.services.FabricaCandidatos
 import br.com.linketinder.services.FabricaCandidatosCompetencias
+import br.com.linketinder.services.FabricaEmpresas
 
 import java.time.LocalDate
 
-class MenuCandidatos {
+class MenuEmpresas {
 
-    static private ArrayList<Candidato> candidatos;
+    static private ArrayList<Empresa> empresas;
     static private Scanner scanner = new Scanner(System.in)
 
     static void exibir() {
@@ -19,11 +21,11 @@ class MenuCandidatos {
 
         while (opcaoMenu != 6) {
             println "Menu de Opções:";
-            println "1. Visualizar Candidatos";
-            println "2. Cadastrar Novo Candidato";
-            println "3. Excluir Candidatos";
-            println "4. Atualizar Candidatos";
-            println "5. Vincular Competências à Candidatos";
+            println "1. Visualizar Empresas";
+            println "2. Cadastrar Nova Empresa";
+            println "3. Excluir Empresa";
+            println "4. Atualizar Empresa";
+            println "5. Vincular Vagas à Empresa";
             println "6. Sair"
             print "Escolha uma opção: "
 
@@ -62,20 +64,23 @@ class MenuCandidatos {
 
     static void carregar() {
 
-        candidatos = CandidatoDAO.read()
+        empresas = EmpresaDAO.read()
 
-        println("Candidatos Cadastrados:")
+        println("Empresas Cadastrados:")
         println("-" * 80);
         println("-" * 80);
         println("|id" + ("\t" * 2) + "|" + "nome" + ("\t" * 4))
 
-        candidatos.each { c ->
-            println("Candidato:")
-            println("|" + c.getId() + ("\t" * 2) + "|" + c.getNome() + ("\t" * 4) + "|" + c.getFormacao() + ("\t" * 4))
-            println("Competências:")
-            c.getCompetencias().getCompetencia().each { competencia ->
-                println("|" + competencia.getId() + ("\t" * 2) + "|" + competencia.getNome() + ("\t" * 4))
-            }
+        empresas.each { e ->
+            println("Empresa:")
+            println("|" + e.getId() + ("\t" * 2) + "|" + e.getRazaoSocial() + ("\t" * 4) + "|" + e.getDescricao() + ("\t" * 4))
+            println("Vagas:")
+            /*
+                    e.getVagas().getVagas().each { vaga ->
+                        println("|" + vaga.getId() + ("\t" * 2) + "|" + vaga.getTitulo() + ("\t" * 4))
+                    }
+                    */
+
         }
 
         println("-" * 80);
@@ -83,27 +88,21 @@ class MenuCandidatos {
     }
 
     static void criar() {
-        println("Cadastro de Candidato:  (Escreva EXIT para voltar)")
+        println("Cadastro de Empresa:  (Escreva EXIT para voltar)")
 
         print("Id: ")
         def id = scanner.nextInt()
         scanner.nextLine()
 
-        print("Nome: ")
-        def nome = scanner.nextLine()
-        if (nome.equals("EXIT")) {
+        print("Razao Social: ")
+        def razaoSocial = scanner.nextLine()
+        if (razaoSocial.equals("EXIT")) {
             return
         }
 
-        print("Sobrenome: ")
-        def sobrenome = scanner.nextLine()
-        if (sobrenome.equals("EXIT")) {
-            return
-        }
-
-        print("CPF: ")
-        def cpf = scanner.nextLine()
-        if (cpf.equals("EXIT")) {
+        print("CNPJ: ")
+        def cnpj = scanner.nextLine()
+        if (cnpj.equals("EXIT")) {
             return
         }
 
@@ -126,33 +125,21 @@ class MenuCandidatos {
             return
         }
 
-        print("Formação: ")
-        def formacao = scanner.nextLine()
-        if (formacao.equals("EXIT")) {
+        print("Data de Fundação (AAAA-MM-DD): ")
+        def dataFundacao = scanner.nextLine()
+        if (dataFundacao.equals("EXIT")) {
             return
         }
 
-        print("Data de Nascimento (AAAA-MM-DD): ")
-        def dataNascimento = scanner.nextLine()
-        if (dataNascimento.equals("EXIT")) {
-            return
-        }
-
-        print("LinkedIn: ")
-        def linkedin = scanner.nextLine()
-        if (linkedin.equals("EXIT")) {
-            return
-        }
-
-        def ano = Integer.parseInt(dataNascimento.split("-")[0])
-        def mes = Integer.parseInt(dataNascimento.split("-")[1])
-        def dia = Integer.parseInt(dataNascimento.split("-")[2])
+        def ano = Integer.parseInt(dataFundacao.split("-")[0])
+        def mes = Integer.parseInt(dataFundacao.split("-")[1])
+        def dia = Integer.parseInt(dataFundacao.split("-")[2])
 
         try {
-            FabricaCandidatos.criar(id, nome, sobrenome, cpf, descricao, cidade, cep, formacao, LocalDate.of(ano, mes, dia), linkedin)
-            println("Candidato cadastrado com sucesso!")
+            FabricaEmpresas.criar(id, razaoSocial, cnpj, descricao, cidade, cep, LocalDate.of(ano, mes, dia))
+            println("Empresa cadastrada com sucesso!")
         } catch (Exception e) {
-            println("Erro ao cadastrar o candidato: " + e.getMessage())
+            println("Erro ao cadastrar o empresa: " + e.getMessage())
         }
     }
 
@@ -313,3 +300,5 @@ class MenuCandidatos {
     }
 
 }
+
+

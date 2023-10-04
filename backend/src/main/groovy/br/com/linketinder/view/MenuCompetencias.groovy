@@ -19,7 +19,7 @@ class MenuCompetencias {
 			println "2. Cadastrar Nova Competência";
 			println "3. Excluir Competência";
 			println "4. Atualizar Competência";
-			println "5. Sair"
+			println "5. Voltar"
 			print "Escolha uma opção: "
 
 			try {
@@ -40,8 +40,7 @@ class MenuCompetencias {
 						atualizar()
 						break
 					case 5:
-						CompetenciaDAO.close();
-						println "Saindo..."
+						println "Voltando..."
 						break
 					default:
 						println "Opção inválida. Escolha novamente."
