@@ -1,8 +1,11 @@
 package br.com.linketinder.database
 
+import br.com.linketinder.model.Candidato
 import br.com.linketinder.model.Competencia
 import br.com.linketinder.model.Empresa
 import br.com.linketinder.model.Vaga
+
+import java.time.LocalDate
 
 class VagaDAO {
 
@@ -40,14 +43,42 @@ class VagaDAO {
         return vagas
     }
 
+    static ArrayList<Vaga> readOne(Integer id) throws Exception {
+        vagas.clear()
+
+        String query = "SELECT * FROM vagas WHERE id=?"
+
+        sql.eachRow(query, [id]) { rs ->
+
+            def vaga = new Vaga(
+                    empresa: new Empresa(id: rs[1]),
+                    id: rs[0],
+                    titulo: rs[2],
+                    descricao: rs[3],
+                    modalidade: rs[4],
+                    cidade: rs[5]
+            )
+
+            vagas.add(vaga)
+        }
+
+        return vagas
+    }
+
     static void delete(Vaga v) throws Exception {
         String query = "DELETE FROM vagas WHERE id = ?"
         sql.execute(query, [v.getId()])
     }
 
-    static void update(Competencia c) throws Exception {
-        String query = "UPDATE competencias SET nome =? WHERE id = ?"
-        sql.execute(query, [c.getNome(), c.getId()])
+    static void update(Vaga v) throws Exception {
+        String query = "UPDATE vagas SET titulo =?, descricao=?, modalidades_id =?, cidades_id=? WHERE id = ?"
+        sql.execute(query, [
+                v.getTitulo(),
+                v.getDescricao(),
+                v.getModalidade(),
+                v.getCidade(),
+                v.getId()
+        ])
     }
 
     static void close() {

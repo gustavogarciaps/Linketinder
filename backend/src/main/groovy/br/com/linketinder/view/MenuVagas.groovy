@@ -1,11 +1,15 @@
 package br.com.linketinder.view
 
+import br.com.linketinder.database.CandidatoDAO
 import br.com.linketinder.database.CompetenciaDAO
 import br.com.linketinder.database.VagaDAO
 import br.com.linketinder.model.Competencia
 import br.com.linketinder.model.Empresa
 import br.com.linketinder.model.Vaga
+import br.com.linketinder.services.FabricaCandidatos
 import br.com.linketinder.services.FabricaCompetencias
+
+import java.time.LocalDate
 
 class MenuVagas {
 
@@ -134,20 +138,65 @@ class MenuVagas {
     }
 
     static void atualizar() {
-        println("Alterar Nome da Competência: (Escreva EXIT para voltar)")
-        carregar();
-        println("Qual o código (id) da competência?");
+        println("Alterar Dados da Vaga: (Escreva EXIT para voltar)")
+        carregar()
+        println("Qual o código (id) da Vaga?")
         print("Id: ")
-        def id = scanner.nextLine();
+        def id = scanner.nextInt()
+        scanner.nextLine()
         if (id.equals("EXIT")) {
             return
         }
-        println("Qual o novo Nome?")
-        print("Nome: ")
-        def nome = scanner.nextLine();
-        if (nome.equals("EXIT")) {
+        def vaga = VagaDAO.readOne(id)[0]
+
+        print("Novo Título: (${vaga.getTitulo()}) ")
+        def titulo = scanner.nextLine()
+        if (titulo.equals("EXIT")) {
             return
         }
-        println(FabricaCompetencias.atualizar(Integer.parseInt(id), nome));
+        if (titulo.isEmpty()) {
+            titulo = vaga.getNome()
+        }
+
+        print("Nova Descrição: (${vaga.getDescricao()}) ")
+        def descricao = scanner.nextLine()
+        if (descricao.equals("EXIT")) {
+            return
+        }
+        if (descricao.isEmpty()) {
+            descricao = vaga.getDescricao()
+        }
+
+        print("Modalidade: (${vaga.getModalidade()}) ")
+        def modalidade = scanner.nextLine()
+        if (modalidade.equals("EXIT")) {
+            return
+        }
+        if (modalidade.isEmpty()) {
+            modalidade = vaga.getModalidade()
+        }
+
+        print("Cidade: (${vaga.getCidade()}) ")
+        def cidade = scanner.nextLine()
+        if (cidade.equals("EXIT")) {
+            return
+        }
+        if (cidade.isEmpty()) {
+            cidade = vaga.getCidade()
+        }
+
+        vaga.setTitulo(titulo);
+        vaga.setDescricao(descricao);
+        vaga.setModalidade(modalidade);
+        vaga.setCidade(cidade);
+
+        try {
+
+            VagaDAO.update(vaga)
+
+            println("Candidato atualizado com sucesso!")
+        } catch (Exception e) {
+            println("Erro ao atualizar o candidato: " + e.getMessage())
+        }
     }
 }
