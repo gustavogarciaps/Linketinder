@@ -111,9 +111,4 @@ class Candidato extends Pessoa{
         return this.dataNascimento == null ? 0 : atualizarDataNascimento()
     }
 
-    @Override
-    String toString() {
-        return "Candidato ${super.toString()} idade=${getIdade()} }"
-    }
-
 }
