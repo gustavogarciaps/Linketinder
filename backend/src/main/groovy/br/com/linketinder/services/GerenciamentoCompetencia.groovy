@@ -12,10 +12,12 @@ class GerenciamentoCompetencia {
         this.competencia = competencias
     }
 
-    def setCompetencia(String s){
-        def c = new Competencia()
-        c.setNome(s.toUpperCase())
+    def setCompetencia(Competencia c){
         this.competencia.add(c)
+    }
+
+    ArrayList<Competencia> getCompetencia() {
+        return competencia
     }
 
     @Override

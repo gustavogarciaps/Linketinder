@@ -4,8 +4,7 @@ import br.com.linketinder.database.CandidatoDAO
 import br.com.linketinder.database.CompetenciaDAO
 import br.com.linketinder.model.Candidato
 import br.com.linketinder.services.FabricaCandidatos
-import br.com.linketinder.services.FabricaCompetencias
-import org.apache.tools.ant.taskdefs.Local
+import br.com.linketinder.services.FabricaCandidatosCompetencias
 
 import java.time.LocalDate
 
@@ -18,13 +17,14 @@ class MenuCandidatos {
 
         def opcaoMenu = 0
 
-        while (opcaoMenu != 5) {
+        while (opcaoMenu != 6) {
             println "Menu de Opções:";
             println "1. Visualizar Candidatos";
             println "2. Cadastrar Novo Candidatos";
             println "3. Excluir Candidatos";
             println "4. Atualizar Candidatos";
-            println "5. Sair"
+            println "5. Vincular Competências à Candidatos";
+            println "6. Sair"
             print "Escolha uma opção: "
 
             try {
@@ -45,7 +45,9 @@ class MenuCandidatos {
                         atualizar()
                         break
                     case 5:
-                        CompetenciaDAO.close();
+                        criarCompetencias();
+                        break
+                    case 6:
                         println "Saindo..."
                         break
                     default:
@@ -68,7 +70,12 @@ class MenuCandidatos {
         println("|id" + ("\t" * 2) + "|" + "nome" + ("\t" * 4))
 
         candidatos.each { c ->
+            println("Candidato:")
             println("|" + c.getId() + ("\t" * 2) + "|" + c.getNome() + ("\t" * 4) + "|" + c.getFormacao() + ("\t" * 4))
+            println("Competências:")
+            c.getCompetencias().getCompetencia().each { competencia ->
+                println("|" + competencia.getId() + ("\t" * 2) + "|" + competencia.getNome() + ("\t" * 4))
+            }
         }
 
         println("-" * 80);
@@ -148,7 +155,6 @@ class MenuCandidatos {
             println("Erro ao cadastrar o candidato: " + e.getMessage())
         }
     }
-
 
     static void deletar() {
         println("Deletar Candidato: (Escreva EXIT para voltar)")
@@ -268,6 +274,41 @@ class MenuCandidatos {
             println("Candidato atualizado com sucesso!")
         } catch (Exception e) {
             println("Erro ao atualizar o candidato: " + e.getMessage())
+        }
+    }
+
+    static void criarCompetencias() {
+        println("Adicionar Competências: (Escreva EXIT para voltar)")
+        MenuCompetencias.carregar();
+        println("1. Vincular competências")
+        println "2. Acessar o Menu de Competências"
+        print "Opção: "
+        def opcaoMenu = scanner.nextInt()
+        scanner.nextLine()
+
+        if (opcaoMenu == 1) {
+            "Vincular Competência"
+            print "Código do Candidato: "
+            Integer candidatos_id = scanner.nextInt()
+            scanner.nextLine()
+            println "Digite o código das Competências que serão adicionadas. "
+            println "(Digite uma por vez (Para sair Digite 0)"
+            ArrayList<Integer> competencias = new ArrayList<>();
+            Integer competencias_id
+
+            while (competencias_id != 0) {
+                print "Competência: "
+                competencias_id = scanner.nextInt()
+                scanner.nextLine()
+                if (competencias_id != 0) {
+                    competencias.add(competencias_id)
+                }
+            }
+
+            FabricaCandidatosCompetencias.criar(candidatos_id, competencias)
+
+        } else if (opcaoMenu == 2) {
+            MenuCompetencias.exibir()
         }
     }
 

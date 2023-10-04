@@ -13,7 +13,6 @@ class MenuCompetencias {
 
 		def opcaoMenu = 0
 
-
 		while (opcaoMenu != 5) {
 			println "Menu de Opções:";
 			println "1. Visualizar Competências";
