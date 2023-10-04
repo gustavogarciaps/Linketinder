@@ -3,8 +3,8 @@ package br.com.linketinder.view
 import br.com.linketinder.database.CandidatoDAO
 import br.com.linketinder.database.CompetenciaDAO
 import br.com.linketinder.model.Candidato
-import br.com.linketinder.model.Competencia
 import br.com.linketinder.services.FabricaCompetencias
+
 
 import java.time.LocalDate
 
@@ -105,6 +105,7 @@ class MenuCandidatos {
         }
 
         print("Cidade: ")
+
         def cidade = scanner.nextInt()
         scanner.nextLine()
         if (cidade.equals("EXIT")) {
@@ -135,6 +136,9 @@ class MenuCandidatos {
             return
         }
 
+        def ano = Integer.parseInt(dataNascimento.split("-")[0])
+        def mes = Integer.parseInt(dataNascimento.split("-")[1])
+        def dia = Integer.parseInt(dataNascimento.split("-")[2])
 
         def candidato = new Candidato(
                 id: id,
@@ -145,7 +149,7 @@ class MenuCandidatos {
                 cidade: cidade,
                 CEP: cep,
                 formacao: formacao,
-                dataNascimento: new LocalDate(dataNascimento),
+                dataNascimento: LocalDate.of(ano, mes, dia),
                 linkedin: linkedin
         )
 

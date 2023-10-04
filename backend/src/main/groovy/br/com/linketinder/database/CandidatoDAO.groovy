@@ -44,8 +44,6 @@ class CandidatoDAO {
             Integer mes = Integer.parseInt(conversaoDataNascimento[1]);
             Integer dia = Integer.parseInt(conversaoDataNascimento[2]);
 
-            println(rs)
-
             candidatos.add(new Candidato(
                     id: rs.usuarios_id,
                     nome: rs.nome,
