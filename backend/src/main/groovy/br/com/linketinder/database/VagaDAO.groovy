@@ -10,6 +10,8 @@ class VagaDAO {
     static ArrayList<Vaga> vagas = new ArrayList<>()
 
     static void create(Vaga v) throws Exception {
+        println(v)
+
         String query = "INSERT INTO vagas (empresas_id, titulo, descricao, modalidades_id, cidades_id) VALUES (?,?,?,?,?)"
         sql.executeInsert(query, [
                 v.getEmpresa().getId(),

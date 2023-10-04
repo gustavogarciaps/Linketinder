@@ -95,18 +95,21 @@ class MenuVagas {
 
         print("Modalidade: ");
         def modalidade = scanner.nextLine();
-        if (descricao.equals("EXIT")) {
+        if (modalidade.equals("EXIT")) {
             return
         }
 
         print("Cidade: ");
         def cidade = scanner.nextLine();
-        if (descricao.equals("EXIT")) {
+        if (cidade.equals("EXIT")) {
             return
         }
 
-        def vaga = new Vaga(
-                new Empresa(id: Integer.parseInt(empresas_id)),
+        println("Até aqui Ok")
+
+        Empresa empresa = new Empresa(id: Integer.parseInt(empresas_id))
+        Vaga vaga = new Vaga(
+                empresa: empresa,
                 id: null,
                 titulo: titulo,
                 descricao: descricao,
@@ -114,6 +117,9 @@ class MenuVagas {
                 cidade: Integer.parseInt(cidade)
         )
 
+        println("Até aqui Ok 2")
+
+        println(vaga)
         println(VagaDAO.create(vaga));
     }
 

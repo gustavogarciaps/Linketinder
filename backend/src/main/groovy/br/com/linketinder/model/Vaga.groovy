@@ -102,4 +102,19 @@ class Vaga {
     void setCompetencias(GerenciamentoCompetencia competencias) {
         this.competencias = competencias
     }
+
+
+    @Override
+    public String toString() {
+        return "Vaga{" +
+                "empresa=" + empresa +
+                ", id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", descricao='" + descricao + '\'' +
+                ", modalidade=" + modalidade +
+                ", cidade=" + cidade +
+                ", dataCriacao=" + dataCriacao +
+                ", competencias=" + competencias +
+                '}';
+    }
 }
