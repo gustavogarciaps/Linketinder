@@ -63,7 +63,7 @@ class CandidatoDAO {
     }
 
     static void delete(Candidato c) throws Exception {
-        String query = "DELETE FROM competencias WHERE id = ?"
+        String query = "DELETE FROM candidatos WHERE usuarios_id = ?"
         sql.execute(query, [c.getId()])
     }
 

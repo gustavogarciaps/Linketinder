@@ -1,5 +1,6 @@
 package br.com.linketinder.model
 
+import br.com.linketinder.database.CandidatoDAO
 import br.com.linketinder.services.GerenciamentoCompetencia
 import groovy.transform.ToString
 
@@ -16,6 +17,10 @@ class Candidato extends Pessoa{
     private GerenciamentoCompetencia competencias;
 
     Candidato(){}
+
+    Candidato(Integer id){
+        super(id)
+    }
 
     Candidato(
             Integer id,

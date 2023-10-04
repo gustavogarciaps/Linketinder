@@ -34,7 +34,7 @@ class FabricaCandidatos {
 
     static String deletar(Integer id) {
         try {
-            CompetenciaDAO.delete(new Competencia(id, null));
+            CandidatoDAO.delete(new Candidato(id));
             return "Concluído";
         } catch (Exception e) {
             e.printStackTrace();

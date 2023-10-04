@@ -3,6 +3,7 @@ package br.com.linketinder.view
 import br.com.linketinder.database.CandidatoDAO
 import br.com.linketinder.database.CompetenciaDAO
 import br.com.linketinder.model.Candidato
+import br.com.linketinder.services.FabricaCandidatos
 import br.com.linketinder.services.FabricaCompetencias
 
 
@@ -65,11 +66,11 @@ class MenuCandidatos {
         candidatos = CandidatoDAO.read()
 
         println("Candidatos Cadastrados:")
-        println("-" * 30);
+        println("-" * 50);
         println("|id" + ("\t" * 2) + "|" + "nome" + ("\t" * 4))
 
         candidatos.each { c ->
-            println("|" + c.getId() + ("\t" * 2) + "|" + c.getNome() + ("\t" * 4))
+            println("|" + c.getId() + ("\t" * 2) + "|" + c.getNome() + ("\t" * 4)+ "|" + c.getFormacao() + ("\t" * 4))
         }
     }
 
@@ -163,15 +164,15 @@ class MenuCandidatos {
 
 
     static void deletar() {
-        println("Deletar Competência: (Escreva EXIT para voltar)")
+        println("Deletar Candidato: (Escreva EXIT para voltar)")
         carregar();
-        println("Qual o código (id) da competência?");
+        println("Qual o código (id) do Candidato?");
         print("Id: ")
         def id = scanner.nextLine();
         if (id.equals("EXIT")) {
             return
         }
-        println(FabricaCompetencias.deletar(Integer.parseInt(id)));
+        println(FabricaCandidatos.deletar(Integer.parseInt(id)));
     }
 
     static void atualizar() {

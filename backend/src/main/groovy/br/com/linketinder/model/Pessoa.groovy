@@ -15,6 +15,10 @@ class Pessoa implements PessoaHabilidades {
 
 	Pessoa() {}
 
+	Pessoa(Integer id){
+		this.id = id;
+	}
+
 	Pessoa(Integer id, String inscricao, String CEP, Integer cidade, String pais, String descricao) {
 		this.id = id
 		this.inscricao = inscricao
