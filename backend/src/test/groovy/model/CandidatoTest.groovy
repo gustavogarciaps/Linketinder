@@ -1,6 +1,5 @@
 package model
 
-import br.com.linketinder.model.Candidato
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test

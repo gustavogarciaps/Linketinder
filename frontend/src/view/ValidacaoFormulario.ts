@@ -14,7 +14,7 @@ export const campoVazio = (campo: string) => {
 }
 
 export const validarLinkedin = (linkedin: string): boolean => {
-    const regex: RegExp = /^https?:\/\/(www\.)?linkedin\.com\/in\//i;
+    const regex: RegExp = /^https?:\/\/(www\.)?linkedin\.com\/in\//gi;
     return regex.test(linkedin);
 }
 

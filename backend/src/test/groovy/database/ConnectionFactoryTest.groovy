@@ -1,4 +1,4 @@
-import br.com.linketinder.database.ConnectionFactory
+import database.ConnectionFactory
 import org.junit.jupiter.api.Test
 
 class ConnectionFactoryTest {

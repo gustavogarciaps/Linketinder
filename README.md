@@ -67,7 +67,7 @@ Executando a aplicação backend:
 ```bash
   cd backend
   gradle build
-  gradle start
+  gradle run
 ```
 
 ## Modelo Lógico do Banco de Dados

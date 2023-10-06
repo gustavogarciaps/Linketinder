@@ -1,6 +1,6 @@
 package model
 
-import br.com.linketinder.model.Empresa
+
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 
