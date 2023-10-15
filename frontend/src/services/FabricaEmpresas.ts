@@ -1,5 +1,5 @@
 import { Empresa } from "../models/Empresa";
-import { invalido, validarCEP, validarCNPJ, validarEmail, validarNome, valido } from "../view/ValidacaoFormulario";
+import { invalido, validarCEP, validarCNPJ, validarEmail, validarNome, valido } from "../utils/ValidacaoFormulario";
 import { guardarCadastro, deletarChaveCadastro } from "./ServicoArmazenamento"
 
 

@@ -60,7 +60,4 @@ export class Candidato extends Pessoa {
           this._competencias = competencias;
      }
 
-     static fromJSON(json: any): Candidato {
-          return new Candidato(json);
-     }
 }

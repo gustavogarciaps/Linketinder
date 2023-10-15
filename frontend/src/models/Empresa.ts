@@ -29,7 +29,4 @@ export class Empresa extends Pessoa {
                     this._vagas = vagas;
           }
 
-          static fromJSON(json: any): Empresa {
-                    return new Empresa(json);
-          }
 }

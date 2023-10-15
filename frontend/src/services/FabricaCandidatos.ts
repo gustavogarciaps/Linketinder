@@ -2,7 +2,7 @@ import { Candidato } from "../models/Candidato";
 import { Competencia } from "../models/Competencia";
 import { guardarCadastro, recuperarCadastro } from "./ServicoArmazenamento"
 import { instanciarCompetencias } from "./FabricaCompetencias";
-import { invalido, valido, validarEmail, validarNome, validarLinkedin, validarCPF, validarCEP } from "../view/ValidacaoFormulario";
+import { invalido, valido, validarEmail, validarNome, validarLinkedin, validarCPF, validarCEP } from "../utils/ValidacaoFormulario";
 
 export const capturarCandidato = (forms: HTMLFormElement): any => {
 
@@ -25,7 +25,8 @@ export const capturarCandidato = (forms: HTMLFormElement): any => {
 
 export const validacaoCandidato = (): Boolean => {
 
-     let forms = document.getElementById('forms_candidato') as HTMLFormElement;
+     const forms = document.getElementById('forms_candidato') as HTMLFormElement;
+
      let nome: any = forms.querySelector('[name="nome_candidato"]') as HTMLInputElement
      let email: any = forms.querySelector('[name="email_candidato"]') as HTMLInputElement
      let linkedin: any = forms.querySelector('[name="linkedin_candidato"]') as HTMLInputElement
@@ -35,51 +36,51 @@ export const validacaoCandidato = (): Boolean => {
      let descricao: any = forms.querySelector('[name="descricao_candidato"]') as HTMLInputElement
 
      if (validarNome(nome.value)) {
-          nome = valido(nome);
+          valido(nome);
      } else {
-          nome = invalido(nome);
+          invalido(nome);
           return false;
      }
 
      if (validarEmail(email.value)) {
-          email = valido(email);
+          valido(email);
      } else {
-          email = invalido(email);
+          invalido(email);
           return false;
      }
 
      if (validarLinkedin(linkedin.value)) {
-          linkedin = valido(linkedin);
+          valido(linkedin);
      } else {
-          linkedin = invalido(linkedin);
+          invalido(linkedin);
           return false;
      }
 
      if(validarCPF(inscricao.value)){
-          inscricao = valido(inscricao);
+          valido(inscricao);
      }else{
-          inscricao = invalido(inscricao);
+          invalido(inscricao);
           return false;
      }
 
      if(validarCEP(cep.value)){
-          cep = valido(cep);
+          valido(cep);
      }else{
-          cep = invalido(cep);
+          invalido(cep);
           return false;
      }
 
      if (formacao.value) {
-          formacao = valido(formacao);
+          valido(formacao);
      } else {
-          formacao = invalido(formacao);
+          invalido(formacao);
           return false;
      }
 
      if (descricao.value) {
-          descricao = valido(descricao);
+          valido(descricao);
      } else {
-          descricao = invalido(descricao);
+          invalido(descricao);
           return false;
      }
 
