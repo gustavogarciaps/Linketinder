@@ -1,10 +1,9 @@
 package view
 
-
+import database.CandidatoCompetenciaDAO
 import database.EmpresaDAO
 import model.Empresa
-import services.FabricaCandidatosCompetencias
-import services.FabricaEmpresas
+
 
 import java.time.LocalDate
 
@@ -45,7 +44,7 @@ class MenuEmpresas {
                         atualizar()
                         break
                     case 5:
-                        MenuVagas.exibir();
+                        criarCompetencias();
                         break
                     case 6:
                         println "Saindo..."
@@ -89,52 +88,64 @@ class MenuEmpresas {
         println("Cadastro de Empresa:  (Escreva EXIT para voltar)")
 
         print("Id: ")
-        def id = scanner.nextInt()
+        int id = scanner.nextInt()
         scanner.nextLine()
 
         print("Razao Social: ")
-        def razaoSocial = scanner.nextLine()
+        String razaoSocial = scanner.nextLine()
         if (razaoSocial.equals("EXIT")) {
             return
         }
 
         print("CNPJ: ")
-        def cnpj = scanner.nextLine()
+        String cnpj = scanner.nextLine()
         if (cnpj.equals("EXIT")) {
             return
         }
 
         print("Descrição: ")
-        def descricao = scanner.nextLine()
+        String descricao = scanner.nextLine()
         if (descricao.equals("EXIT")) {
             return
         }
 
         print("Cidade: ")
-        def cidade = scanner.nextInt()
+        int cidade = scanner.nextInt()
         scanner.nextLine()
         if (cidade.equals("EXIT")) {
             return
         }
 
         print("CEP: ")
-        def cep = scanner.nextLine()
+        String cep = scanner.nextLine()
         if (cep.equals("EXIT")) {
             return
         }
 
         print("Data de Fundação (AAAA-MM-DD): ")
-        def dataFundacao = scanner.nextLine()
+        String dataFundacao = scanner.nextLine()
         if (dataFundacao.equals("EXIT")) {
             return
         }
 
-        def ano = Integer.parseInt(dataFundacao.split("-")[0])
-        def mes = Integer.parseInt(dataFundacao.split("-")[1])
-        def dia = Integer.parseInt(dataFundacao.split("-")[2])
+        int ano = Integer.parseInt(dataFundacao.split("-")[0])
+        int mes = Integer.parseInt(dataFundacao.split("-")[1])
+        int dia = Integer.parseInt(dataFundacao.split("-")[2])
+
+        LocalDate dataFundacaoConvertida = LocalDate.of(ano,mes,dia)
 
         try {
-            FabricaEmpresas.criar(id, razaoSocial, cnpj, descricao, cidade, cep, LocalDate.of(ano, mes, dia))
+            EmpresaDAO.create(new Empresa(
+                    id: Integer.parseInt(id),
+                    razaoSocial: razaoSocial,
+                    inscricao: cnpj,
+                    CEP: cep,
+                    cidade: Integer.parseInt(cidade),
+                    pais: null,
+                    descricao: descricao,
+                    dataFundacao: dataFundacaoConvertida,
+                    vagas: null));
+
             println("Empresa cadastrada com sucesso!")
         } catch (Exception e) {
             println("Erro ao cadastrar o empresa: " + e.getMessage())
@@ -146,11 +157,11 @@ class MenuEmpresas {
         carregar();
         println("Qual o código (id) da Empresa?");
         print("Id: ")
-        def id = scanner.nextLine();
+        String id = scanner.nextLine();
         if (id.equals("EXIT")) {
             return
         }
-        println(FabricaEmpresas.deletar(Integer.parseInt(id)));
+        EmpresaDAO.delete(new Empresa(id: Integer.parseInt(id)))
     }
 
     static void atualizar() {
@@ -158,15 +169,14 @@ class MenuEmpresas {
         carregar()
         println("Qual o código (id) da empresa?")
         print("Id: ")
-        def id = scanner.nextInt()
-        scanner.nextLine()
+        String id = scanner.nextInt()
         if (id.equals("EXIT")) {
             return
         }
-        def empresa = EmpresaDAO.readOne(id)[0]
+        Empresa empresa = EmpresaDAO.readOne(Integer.parseInt(id))[0]
 
         print("Novo Nome: (${empresa.getRazaoSocial()}) ")
-        def razaoSocial = scanner.nextLine()
+        String razaoSocial = scanner.nextLine()
         if (razaoSocial.equals("EXIT")) {
             return
         }
@@ -175,7 +185,7 @@ class MenuEmpresas {
         }
 
         print("Novo CNPJ: (${empresa.getInscricao()}) ")
-        def cnpj = scanner.nextLine()
+        String cnpj = scanner.nextLine()
         if (cnpj.equals("EXIT")) {
             return
         }
@@ -184,7 +194,7 @@ class MenuEmpresas {
         }
 
         print("Nova Descrição: (${empresa.getDescricao()}) ")
-        def descricao = scanner.nextLine()
+        String descricao = scanner.nextLine()
         if (descricao.equals("EXIT")) {
             return
         }
@@ -193,7 +203,7 @@ class MenuEmpresas {
         }
 
         print("Nova Cidade: (${empresa.getCidade()}) ")
-        def cidade = scanner.nextLine()
+        String cidade = scanner.nextLine()
         if (cidade.equals("EXIT")) {
             return
         }
@@ -201,7 +211,7 @@ class MenuEmpresas {
             cidade = empresa.getCidade()
         }
         print("Novo CEP: (${empresa.getCEP()}) ")
-        def cep = scanner.nextLine()
+        String cep = scanner.nextLine()
         if (cep.equals("EXIT")) {
             return
         }
@@ -210,25 +220,36 @@ class MenuEmpresas {
         }
 
         print("Nova Data de Fundação (AAAA-MM-DD): (${empresa.getDataFundacao()}) ")
-        def dataFundacao = scanner.nextLine()
+        String dataFundacao = scanner.nextLine()
         if (dataFundacao.equals("EXIT")) {
             return
         }
 
-        def dataFundacaoConvertida;
+        LocalDate dataFundacaoConvertida;
 
         if (dataFundacao.isEmpty()) {
             dataFundacaoConvertida = empresa.getDataFundacao()
         } else {
-            def ano = Integer.parseInt(dataFundacao.split("-")[0])
-            def mes = Integer.parseInt(dataFundacao.split("-")[1])
-            def dia = Integer.parseInt(dataFundacao.split("-")[2])
+            int ano = Integer.parseInt(dataFundacao.split("-")[0])
+            int mes = Integer.parseInt(dataFundacao.split("-")[1])
+            int dia = Integer.parseInt(dataFundacao.split("-")[2])
 
             dataFundacaoConvertida = LocalDate.of(ano, mes, dia)
         }
 
         try {
-            FabricaEmpresas.atualizar(id, razaoSocial, cnpj, descricao, Integer.parseInt(cidade), cep, dataFundacaoConvertida)
+
+            EmpresaDAO.update(new Empresa(
+                    id: Integer.parseInt(id),
+                    razaoSocial: razaoSocial,
+                    inscricao: cnpj,
+                    CEP: cep,
+                    cidade: Integer.parseInt(cidade),
+                    pais: null,
+                    descricao: descricao,
+                    dataFundacao: dataFundacaoConvertida,
+                    vagas: null));
+
             println("Candidato atualizado com sucesso!")
         } catch (Exception e) {
             println("Erro ao atualizar o candidato: " + e.getMessage())
@@ -241,7 +262,7 @@ class MenuEmpresas {
         println("1. Vincular competências")
         println "2. Acessar o Menu de Competências"
         print "Opção: "
-        def opcaoMenu = scanner.nextInt()
+        int opcaoMenu = scanner.nextInt()
         scanner.nextLine()
 
         if (opcaoMenu == 1) {
@@ -263,7 +284,9 @@ class MenuEmpresas {
                 }
             }
 
-            FabricaCandidatosCompetencias.criar(candidatos_id, competencias)
+            competencias.forEach {it ->
+                CandidatoCompetenciaDAO.create(candidatos_id, it)
+            }
 
         } else if (opcaoMenu == 2) {
             MenuCompetencias.exibir()

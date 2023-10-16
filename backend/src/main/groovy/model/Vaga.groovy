@@ -1,6 +1,5 @@
 package model
 
-import services.GerenciamentoCompetencia
 
 import java.time.LocalDate
 
@@ -13,7 +12,7 @@ class Vaga {
     private Integer modalidade;
     private Integer cidade;
     private LocalDate dataCriacao;
-    private GerenciamentoCompetencia competencias;
+    private ArrayList<Competencia> competencias;
 
     public Vaga() {}
 
@@ -27,7 +26,8 @@ class Vaga {
             String titulo,
             String descricao,
             Integer modalidade,
-            Integer cidade
+            Integer cidade,
+            ArrayList<Competencia> competencias
     ) {
         this.empresa = empresa;
         this.id = id
@@ -36,7 +36,7 @@ class Vaga {
         this.modalidade = modalidade;
         this.cidade = cidade;
         this.dataCriacao = LocalDate.now();
-        competencias = new Competencia();
+        this.competencias = competencias;
     }
 
     Empresa getEmpresa() {
@@ -95,14 +95,13 @@ class Vaga {
         this.dataCriacao = dataCriacao
     }
 
-    GerenciamentoCompetencia getCompetencias() {
-        return competencias
-    }
-
-    void setCompetencias(GerenciamentoCompetencia competencias) {
+    void setCompetencias(ArrayList<Competencia> competencias) {
         this.competencias = competencias
     }
 
+    ArrayList<Competencia> getCompetencias() {
+        return competencias
+    }
 
     @Override
     public String toString() {

@@ -2,7 +2,6 @@ package view
 
 import database.CompetenciaDAO
 import model.Competencia
-import services.FabricaCompetencias
 
 class MenuCompetencias {
 
@@ -11,7 +10,7 @@ class MenuCompetencias {
 
 	static void exibir() {
 
-		def opcaoMenu = 0
+		int opcaoMenu = 0
 
 		while (opcaoMenu != 5) {
 			println "Menu de Opções:";
@@ -75,7 +74,8 @@ class MenuCompetencias {
 		if (nome.equals("EXIT")) {
 			return
 		}
-		println(FabricaCompetencias.criar(nome));
+		CompetenciaDAO.create(new Competencia(nome: nome))
+
 	}
 
 	static void deletar() {
@@ -83,11 +83,12 @@ class MenuCompetencias {
 		carregar();
 		println("Qual o código (id) da competência?");
 		print("Id: ")
-		def id = scanner.nextLine();
+		String id = scanner.nextLine();
 		if (id.equals("EXIT")) {
 			return
 		}
-		println(FabricaCompetencias.deletar(Integer.parseInt(id)));
+
+		CompetenciaDAO.delete(new Competencia(id: Integer.parseInt(id)))
 	}
 
 	static void atualizar() {
@@ -95,17 +96,18 @@ class MenuCompetencias {
 		carregar();
 		println("Qual o código (id) da competência?");
 		print("Id: ")
-		def id = scanner.nextLine();
+		String id = scanner.nextLine();
 		if (id.equals("EXIT")) {
 			return
 		}
 		println("Qual o novo Nome?")
 		print("Nome: ")
-		def nome = scanner.nextLine();
+		String nome = scanner.nextLine();
 		if (nome.equals("EXIT")) {
 			return
 		}
-		println(FabricaCompetencias.atualizar(Integer.parseInt(id), nome));
+
+		CompetenciaDAO.update(new Competencia(id:Integer.parseInt(id), nome: nome ))
 	}
 
 }

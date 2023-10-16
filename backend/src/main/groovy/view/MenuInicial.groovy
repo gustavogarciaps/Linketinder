@@ -3,7 +3,6 @@ package view
 
 import database.UsuarioDAO
 import model.Usuario
-import services.FabricaUsuarios
 
 class MenuInicial {
 
@@ -12,7 +11,7 @@ class MenuInicial {
 
 	static void exibir() {
 
-		def opcaoMenu = 0
+		Integer opcaoMenu = 0
 
 		while (opcaoMenu != 4) {
 
@@ -54,16 +53,17 @@ class MenuInicial {
 	static void criar() {
 		println("Cadastrar Novo Usuário:  (Escreva EXIT para voltar)");
 		print("email: ");
-		def email = scanner.nextLine();
+		String email = scanner.nextLine();
 		if (email.equals("EXIT")) {
 			return
 		}
 		print("senha: ");
-		def senha = scanner.nextLine();
+		String senha = scanner.nextLine();
 		if (senha.equals("EXIT")) {
 			return
 		}
-		println(FabricaUsuarios.criar(email, senha));
+
+		UsuarioDAO.create(new Usuario(null, email, senha, null));
 	}
 
 	static void acessar(){

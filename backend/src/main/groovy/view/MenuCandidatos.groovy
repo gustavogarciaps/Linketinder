@@ -1,9 +1,8 @@
 package view
 
+import database.CandidatoCompetenciaDAO
 import database.CandidatoDAO
 import model.Candidato
-import services.FabricaCandidatos
-import services.FabricaCandidatosCompetencias
 
 import java.time.LocalDate
 
@@ -14,7 +13,7 @@ class MenuCandidatos {
 
     static void exibir() {
 
-        def opcaoMenu = 0
+        Integer opcaoMenu = 0
 
         while (opcaoMenu != 6) {
             println "Menu de Opções:";
@@ -72,7 +71,7 @@ class MenuCandidatos {
             println("Candidato:")
             println("|" + c.getId() + ("\t" * 2) + "|" + c.getNome() + ("\t" * 4) + "|" + c.getFormacao() + ("\t" * 4))
             println("Competências:")
-            c.getCompetencias().getCompetencia().each { competencia ->
+            c.getCompetencias().each { competencia ->
                 println("|" + competencia.getId() + ("\t" * 2) + "|" + competencia.getNome() + ("\t" * 4))
             }
         }
@@ -85,70 +84,86 @@ class MenuCandidatos {
         println("Cadastro de Candidato:  (Escreva EXIT para voltar)")
 
         print("Id: ")
-        def id = scanner.nextInt()
+        int id = scanner.nextInt()
         scanner.nextLine()
 
         print("Nome: ")
-        def nome = scanner.nextLine()
+        String nome = scanner.nextLine()
         if (nome.equals("EXIT")) {
             return
         }
 
         print("Sobrenome: ")
-        def sobrenome = scanner.nextLine()
+        String sobrenome = scanner.nextLine()
         if (sobrenome.equals("EXIT")) {
             return
         }
 
         print("CPF: ")
-        def cpf = scanner.nextLine()
+        String cpf = scanner.nextLine()
         if (cpf.equals("EXIT")) {
             return
         }
 
         print("Descrição: ")
-        def descricao = scanner.nextLine()
+        String descricao = scanner.nextLine()
         if (descricao.equals("EXIT")) {
             return
         }
 
         print("Cidade: ")
-        def cidade = scanner.nextInt()
+        int cidade = scanner.nextInt()
         scanner.nextLine()
         if (cidade.equals("EXIT")) {
             return
         }
 
         print("CEP: ")
-        def cep = scanner.nextLine()
+        String cep = scanner.nextLine()
         if (cep.equals("EXIT")) {
             return
         }
 
         print("Formação: ")
-        def formacao = scanner.nextLine()
+        String formacao = scanner.nextLine()
         if (formacao.equals("EXIT")) {
             return
         }
 
         print("Data de Nascimento (AAAA-MM-DD): ")
-        def dataNascimento = scanner.nextLine()
+        String dataNascimento = scanner.nextLine()
         if (dataNascimento.equals("EXIT")) {
             return
         }
 
         print("LinkedIn: ")
-        def linkedin = scanner.nextLine()
+        String linkedin = scanner.nextLine()
         if (linkedin.equals("EXIT")) {
             return
         }
 
-        def ano = Integer.parseInt(dataNascimento.split("-")[0])
-        def mes = Integer.parseInt(dataNascimento.split("-")[1])
-        def dia = Integer.parseInt(dataNascimento.split("-")[2])
+        int ano = Integer.parseInt(dataNascimento.split("-")[0])
+        int mes = Integer.parseInt(dataNascimento.split("-")[1])
+        int dia = Integer.parseInt(dataNascimento.split("-")[2])
 
         try {
-            FabricaCandidatos.criar(id, nome, sobrenome, cpf, descricao, cidade, cep, formacao, LocalDate.of(ano, mes, dia), linkedin)
+
+            Candidato candidato = new Candidato(
+                    id: id,
+                    nome: nome,
+                    sobrenome: sobrenome,
+                    inscricao: cpf,
+                    descricao: descricao,
+                    cidade: cidade,
+                    CEP: cep,
+                    formacao:formacao,
+                    dataNascimento: LocalDate.of(ano, mes, dia),
+                    linkedin: linkedin,
+                    pais: null,
+                    competencias: null)
+
+            CandidatoDAO.create(candidato);
+
             println("Candidato cadastrado com sucesso!")
         } catch (Exception e) {
             println("Erro ao cadastrar o candidato: " + e.getMessage())
@@ -160,11 +175,13 @@ class MenuCandidatos {
         carregar();
         println("Qual o código (id) do Candidato?");
         print("Id: ")
-        def id = scanner.nextLine();
+        String id = scanner.nextLine();
         if (id.equals("EXIT")) {
             return
         }
-        println(FabricaCandidatos.deletar(Integer.parseInt(id)));
+
+        CandidatoDAO.delete(new Candidato(id: Integer.parseInt(id)))
+
     }
 
     static void atualizar() {
@@ -172,15 +189,15 @@ class MenuCandidatos {
         carregar()
         println("Qual o código (id) do candidato?")
         print("Id: ")
-        def id = scanner.nextInt()
+        int id = scanner.nextInt()
         scanner.nextLine()
         if (id.equals("EXIT")) {
             return
         }
-        def candidato = CandidatoDAO.readOne(id)[0]
+        Candidato candidato = CandidatoDAO.readOne(id)[0]
 
         print("Novo Nome: (${candidato.getNome()}) ")
-        def nome = scanner.nextLine()
+        String nome = scanner.nextLine()
         if (nome.equals("EXIT")) {
             return
         }
@@ -189,7 +206,7 @@ class MenuCandidatos {
         }
 
         print("Novo Sobrenome: (${candidato.getSobrenome()}) ")
-        def sobrenome = scanner.nextLine()
+        String sobrenome = scanner.nextLine()
         if (sobrenome.equals("EXIT")) {
             return
         }
@@ -198,7 +215,7 @@ class MenuCandidatos {
         }
 
         print("Novo CPF: (${candidato.getInscricao()}) ")
-        def cpf = scanner.nextLine()
+        String cpf = scanner.nextLine()
         if (cpf.equals("EXIT")) {
             return
         }
@@ -207,7 +224,7 @@ class MenuCandidatos {
         }
 
         print("Nova Descrição: (${candidato.getDescricao()}) ")
-        def descricao = scanner.nextLine()
+        String descricao = scanner.nextLine()
         if (descricao.equals("EXIT")) {
             return
         }
@@ -216,7 +233,7 @@ class MenuCandidatos {
         }
 
         print("Nova Cidade: (${candidato.getCidade()}) ")
-        def cidade = scanner.nextLine()
+        String cidade = scanner.nextLine()
         if (cidade.equals("EXIT")) {
             return
         }
@@ -224,7 +241,7 @@ class MenuCandidatos {
             cidade = candidato.getCidade()
         }
         print("Novo CEP: (${candidato.getCEP()}) ")
-        def cep = scanner.nextLine()
+        String cep = scanner.nextLine()
         if (cep.equals("EXIT")) {
             return
         }
@@ -233,7 +250,7 @@ class MenuCandidatos {
         }
 
         print("Nova Formação: (${candidato.getFormacao()}) ")
-        def formacao = scanner.nextLine()
+        String formacao = scanner.nextLine()
         if (formacao.equals("EXIT")) {
             return
         }
@@ -242,7 +259,7 @@ class MenuCandidatos {
         }
 
         print("Nova Data de Nascimento (AAAA-MM-DD): (${candidato.getDataNascimento()}) ")
-        def dataNascimento = scanner.nextLine()
+        String dataNascimento = scanner.nextLine()
         if (dataNascimento.equals("EXIT")) {
             return
         }
@@ -252,15 +269,15 @@ class MenuCandidatos {
         if (dataNascimento.isEmpty()) {
             dataNascimentoConvertida = candidato.getDataNascimento()
         } else {
-            def ano = Integer.parseInt(dataNascimento.split("-")[0])
-            def mes = Integer.parseInt(dataNascimento.split("-")[1])
-            def dia = Integer.parseInt(dataNascimento.split("-")[2])
+            int ano = Integer.parseInt(dataNascimento.split("-")[0])
+            int mes = Integer.parseInt(dataNascimento.split("-")[1])
+            int dia = Integer.parseInt(dataNascimento.split("-")[2])
 
             dataNascimentoConvertida = LocalDate.of(ano, mes, dia)
         }
 
         print("Novo LinkedIn: (${candidato.getLinkedin()}) ")
-        def linkedin = scanner.nextLine()
+        String linkedin = scanner.nextLine()
         if (linkedin.equals("EXIT")) {
             return
         }
@@ -269,7 +286,21 @@ class MenuCandidatos {
         }
 
         try {
-            FabricaCandidatos.atualizar(id, nome, sobrenome, cpf, descricao, Integer.parseInt(cidade), cep, formacao, dataNascimentoConvertida, linkedin)
+            CandidatoDAO.update(new Candidato(
+                    id: id,
+                    nome: nome,
+                    sobrenome: sobrenome,
+                    inscricao: cpf,
+                    descricao: descricao,
+                    cidade: Integer.parseInt(cidade),
+                    CEP: cep,
+                    formacao:formacao,
+                    dataNascimento: dataNascimentoConvertida,
+                    linkedin: linkedin,
+                    pais: null,
+                    competencias: null
+            ))
+
             println("Candidato atualizado com sucesso!")
         } catch (Exception e) {
             println("Erro ao atualizar o candidato: " + e.getMessage())
@@ -282,7 +313,7 @@ class MenuCandidatos {
         println("1. Vincular competências")
         println "2. Acessar o Menu de Competências"
         print "Opção: "
-        def opcaoMenu = scanner.nextInt()
+        int opcaoMenu = scanner.nextInt()
         scanner.nextLine()
 
         if (opcaoMenu == 1) {
@@ -304,7 +335,9 @@ class MenuCandidatos {
                 }
             }
 
-            FabricaCandidatosCompetencias.criar(candidatos_id, competencias)
+            competencias.each { competencia ->
+                CandidatoCompetenciaDAO.create(candidatos_id, competencia)
+            }
 
         } else if (opcaoMenu == 2) {
             MenuCompetencias.exibir()

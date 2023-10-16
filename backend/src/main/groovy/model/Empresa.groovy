@@ -1,6 +1,6 @@
 package model
 
-import services.GerenciamentoVaga
+
 import groovy.transform.ToString
 
 import java.time.LocalDate
@@ -8,10 +8,9 @@ import java.time.LocalDate
 @ToString
 class Empresa extends Pessoa {
 
-    private Integer id;
     private String razaoSocial;
     private LocalDate dataFundacao;
-    private GerenciamentoVaga vagas;
+    private ArrayList<Competencia> vagas;
 
     Empresa() {}
 
@@ -19,12 +18,20 @@ class Empresa extends Pessoa {
         super(id)
     }
 
-    Empresa(Integer id, String razaoSocial,  String inscricao, String CEP, String cidade, String pais, String descricao,String dataFundacao) {
-        super(inscricao, CEP, cidade, pais, descricao)
-        this.id = id;
+    Empresa(Integer id,
+            String razaoSocial,
+            String inscricao,
+            String CEP, String cidade,
+            String pais,
+            String descricao,
+            String dataFundacao,
+            List<Vaga> vagas) {
+
+        super(id, inscricao, CEP, cidade, pais, descricao)
+
         this.razaoSocial = razaoSocial;
         this.dataFundacao = dataFundacao;
-        vagas = new GerenciamentoVaga();
+        this.vagas = vagas;
     }
 
     Integer getId() {
@@ -51,12 +58,11 @@ class Empresa extends Pessoa {
         this.dataFundacao = dataFundacao
     }
 
-    GerenciamentoVaga getVagas() {
+    ArrayList<Vaga> getVagas() {
         return vagas
     }
 
-    void setVagas(GerenciamentoVaga vagas) {
+    void setVagas(ArrayList<Vaga> vagas) {
         this.vagas = vagas
     }
-
 }

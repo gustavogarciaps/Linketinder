@@ -1,8 +1,6 @@
 package database
 
-
 import model.Competencia
-import services.GerenciamentoCompetencia
 
 class CandidatoCompetenciaDAO {
 
@@ -17,9 +15,9 @@ class CandidatoCompetenciaDAO {
                                   competencias_id])
     }
 
-    static GerenciamentoCompetencia read(Integer candidatos_id) {
+    static ArrayList<Competencia> read(Integer candidatos_id) {
 
-        GerenciamentoCompetencia candidatos_competencias = new GerenciamentoCompetencia()
+        ArrayList<Competencia> candidatos_competencias = new ArrayList<>()
 
         String query = "SELECT * FROM candidatos_competencias AS cc " +
                 "INNER JOIN competencias AS cs " +
@@ -28,9 +26,9 @@ class CandidatoCompetenciaDAO {
 
         sql.eachRow(query, [candidatos_id]) { rs ->
 
-            def competencia = new Competencia(id: rs[2],
+            Competencia competencia = new Competencia(id: rs[2],
                     nome: rs[3])
-            candidatos_competencias.setCompetencia(competencia)
+            candidatos_competencias.add(competencia)
         }
 
         return candidatos_competencias

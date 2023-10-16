@@ -37,7 +37,7 @@ class CandidatoDAO {
             Integer mes = Integer.parseInt(conversaoDataNascimento[1]);
             Integer dia = Integer.parseInt(conversaoDataNascimento[2]);
 
-            def candidato = new Candidato(id: rs[0],
+            Candidato candidato = new Candidato(id: rs[0],
                     nome: rs[1],
                     sobrenome: rs[2],
                     inscricao: rs[3],
@@ -47,7 +47,8 @@ class CandidatoDAO {
                     formacao: rs[7],
                     dataNascimento: LocalDate.of(ano, mes, dia),
                     linkedin: rs[9],
-                    pais: null
+                    pais: null,
+                    competencias: null
             )
 
             candidato.setCompetencias(CandidatoCompetenciaDAO.read(candidato.getId()))

@@ -1,7 +1,5 @@
 package model
 
-
-import services.GerenciamentoCompetencia
 import groovy.transform.ToString
 
 import java.time.LocalDate
@@ -14,7 +12,7 @@ class Candidato extends Pessoa{
     private String linkedin;
     private LocalDate dataNascimento;
     private String formacao;
-    private GerenciamentoCompetencia competencias;
+    private ArrayList<Competencia> competencias;
 
     Candidato(){}
 
@@ -33,7 +31,8 @@ class Candidato extends Pessoa{
             String formacao,
             LocalDate dataNascimento,
             String linkedin,
-            String pais
+            String pais,
+            ArrayList<Competencia> competencias
     ) {
         super(id, inscricao, CEP, cidade, pais, descricao)
         this.nome = nome;
@@ -41,7 +40,7 @@ class Candidato extends Pessoa{
         this.linkedin = linkedin;
         this.dataNascimento = dataNascimento;
         this.formacao = formacao;
-        competencias = new GerenciamentoCompetencia();
+        this.competencias = competencias;
     }
 
     def atualizarDataNascimento(){
@@ -99,11 +98,11 @@ class Candidato extends Pessoa{
         this.formacao = formacao
     }
 
-    GerenciamentoCompetencia getCompetencias() {
+    ArrayList<Competencia> getCompetencias() {
         return competencias
     }
 
-    void setCompetencias(GerenciamentoCompetencia competencias) {
+    void setCompetencias(ArrayList<Competencia> competencias) {
         this.competencias = competencias
     }
 
