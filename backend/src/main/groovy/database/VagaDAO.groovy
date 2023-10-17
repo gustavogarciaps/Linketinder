@@ -25,7 +25,7 @@ class VagaDAO {
 
         String query = "SELECT * FROM vagas"
         sql.eachRow(query) { rs ->
-            def vaga = new Vaga(
+            Vaga vaga = new Vaga(
                     empresa: new Empresa(id: rs[1]),
                     id: rs[0],
                     titulo: rs[2],
@@ -35,9 +35,9 @@ class VagaDAO {
             )
 
             vaga.setCompetencias(VagaCompetenciaDAO.read(rs[0]))
-
             vagas.add(vaga)
         }
+
         return vagas
     }
 

@@ -34,14 +34,6 @@ class Empresa extends Pessoa {
         this.vagas = vagas;
     }
 
-    Integer getId() {
-        return id
-    }
-
-    void setId(Integer id) {
-        this.id = id
-    }
-
     String getRazaoSocial() {
         return razaoSocial
     }

@@ -22,7 +22,7 @@ class MenuEmpresas {
             println "2. Cadastrar Nova Empresa";
             println "3. Excluir Empresa";
             println "4. Atualizar Empresa";
-            println "5. Vincular Vagas à Empresa";
+            println "5. Manipular Vagas";
             println "6. Sair"
             print "Escolha uma opção: "
 
@@ -44,7 +44,7 @@ class MenuEmpresas {
                         atualizar()
                         break
                     case 5:
-                        criarCompetencias();
+                        MenuVagas.exibir();
                         break
                     case 6:
                         println "Saindo..."
@@ -136,11 +136,11 @@ class MenuEmpresas {
 
         try {
             EmpresaDAO.create(new Empresa(
-                    id: Integer.parseInt(id),
+                    id: id,
                     razaoSocial: razaoSocial,
                     inscricao: cnpj,
                     CEP: cep,
-                    cidade: Integer.parseInt(cidade),
+                    cidade: cidade,
                     pais: null,
                     descricao: descricao,
                     dataFundacao: dataFundacaoConvertida,
@@ -169,7 +169,8 @@ class MenuEmpresas {
         carregar()
         println("Qual o código (id) da empresa?")
         print("Id: ")
-        String id = scanner.nextInt()
+        String id = scanner.nextLine();
+
         if (id.equals("EXIT")) {
             return
         }
@@ -253,43 +254,6 @@ class MenuEmpresas {
             println("Candidato atualizado com sucesso!")
         } catch (Exception e) {
             println("Erro ao atualizar o candidato: " + e.getMessage())
-        }
-    }
-
-    static void criarCompetencias() {
-        println("Adicionar Competências: (Escreva EXIT para voltar)")
-        MenuCompetencias.carregar();
-        println("1. Vincular competências")
-        println "2. Acessar o Menu de Competências"
-        print "Opção: "
-        int opcaoMenu = scanner.nextInt()
-        scanner.nextLine()
-
-        if (opcaoMenu == 1) {
-            "Vincular Competência"
-            print "Código do Candidato: "
-            Integer candidatos_id = scanner.nextInt()
-            scanner.nextLine()
-            println "Digite o código das Competências que serão adicionadas. "
-            println "(Digite uma por vez (Para sair Digite 0)"
-            ArrayList<Integer> competencias = new ArrayList<>();
-            Integer competencias_id
-
-            while (competencias_id != 0) {
-                print "Competência: "
-                competencias_id = scanner.nextInt()
-                scanner.nextLine()
-                if (competencias_id != 0) {
-                    competencias.add(competencias_id)
-                }
-            }
-
-            competencias.forEach {it ->
-                CandidatoCompetenciaDAO.create(candidatos_id, it)
-            }
-
-        } else if (opcaoMenu == 2) {
-            MenuCompetencias.exibir()
         }
     }
 

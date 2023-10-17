@@ -72,7 +72,7 @@ class MenuVagas {
             println("|" + v.getId() + ("\t" * 2) + "|" + v.getTitulo() + ("\t" * 6) + "|" + v.getEmpresa().getId() + ("\t" * 4))
             println("Competências:")
 
-            v.getCompetencias().getCompetencia().each { competencia ->
+            v.getCompetencias().each { competencia ->
                 println("|" + competencia.getId() + ("\t" * 2) + "|" + competencia.getNome() + ("\t" * 4))
             }
         }
