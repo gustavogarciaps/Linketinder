@@ -1,7 +1,7 @@
 package view
 
 
-import database.UsuarioDAO
+import dao.UsuarioDAO
 import model.Usuario
 
 class MenuInicial {

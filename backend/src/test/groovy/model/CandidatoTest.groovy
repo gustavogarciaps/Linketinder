@@ -4,6 +4,7 @@ package model
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test
 
+import java.lang.reflect.Array
 import java.time.LocalDate
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,10 +15,11 @@ class CandidatoTest {
 
     @BeforeAll
     static void instanciaCandidato(){
+
         candidato = new Candidato()
 
         candidato.setNome("GUSTAVO")
-        candidato.setSobrenome("gustavo@gmail.com")
+        candidato.setSobrenome("GARCIA")
         candidato.setInscricao("123.456.789-10")
         candidato.setCEP("38.200-000")
         candidato.setCidade(1)
@@ -27,22 +29,17 @@ class CandidatoTest {
     }
 
     @Test
-    void cadastrarCompetenciaString(){
-        candidato.getCompetencia().setCompetencia("JAVA")
-        candidato.getCompetencia().setCompetencia("PYTHON")
+    void cadastrarCompetencias(){
+
+        ArrayList<Competencia> competencia = new ArrayList<>()
+
+        competencia.add("JAVA");
+        competencia.add("PYTHON")
+
+        candidato.setCompetencias(competencia)
 
         def expect = new ArrayList(["JAVA","PYTHON"])
-        def result = candidato.getCompetencia().getCompetencia()
-
-        assertEquals(expect, result)
-    }
-
-    @Test
-    void cadastrarCompetenciaArray(){
-        candidato.getCompetencia().setCompetencia(new ArrayList(["JAVA", "PYTHON"]))
-
-        def expect = new ArrayList(["JAVA","PYTHON"])
-        def result = candidato.getCompetencia().getCompetencia()
+        def result = candidato.getCompetencias()
 
         assertEquals(expect, result)
     }
@@ -50,10 +47,10 @@ class CandidatoTest {
     @Test
     void consultarCandidato(){
         assertEquals("GUSTAVO",candidato.getNome())
-        assertEquals("gustavo@gmail.com",candidato.getEmail())
+        assertEquals("GARCIA",candidato.getSobrenome())
         assertEquals("123.456.789-10",candidato.getInscricao())
         assertEquals("38.200-000",candidato.getCEP())
-        assertEquals("MG",candidato.getEstado())
+        assertEquals(1,candidato.getCidade())
         assertEquals("BRASIL",candidato.getPais())
         assertEquals("SOU O GUSTAVO",candidato.getDescricao())
         assertEquals(LocalDate.of(2001,6,9),candidato.getDataNascimento())

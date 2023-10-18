@@ -1,4 +1,4 @@
-package database
+package dao
 
 import groovy.sql.Sql
 import groovy.transform.CompileStatic

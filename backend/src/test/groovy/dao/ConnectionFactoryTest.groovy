@@ -1,4 +1,4 @@
-import database.ConnectionFactory
+import dao.ConnectionFactory
 import org.junit.jupiter.api.Test
 
 class ConnectionFactoryTest {

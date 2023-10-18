@@ -1,7 +1,7 @@
 package view
 
-import database.VagaCompetenciaDAO
-import database.VagaDAO
+import dao.VagaCompetenciaDAO
+import dao.VagaDAO
 import model.Empresa
 import model.Vaga
 

@@ -1,7 +1,7 @@
 package view
 
-import database.CandidatoCompetenciaDAO
-import database.EmpresaDAO
+
+import dao.EmpresaDAO
 import model.Empresa
 
 

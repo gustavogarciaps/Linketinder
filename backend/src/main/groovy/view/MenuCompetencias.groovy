@@ -1,6 +1,6 @@
 package view
 
-import database.CompetenciaDAO
+import dao.CompetenciaDAO
 import model.Competencia
 
 class MenuCompetencias {

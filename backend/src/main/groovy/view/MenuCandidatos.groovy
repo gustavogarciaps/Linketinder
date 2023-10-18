@@ -1,7 +1,7 @@
 package view
 
-import database.CandidatoCompetenciaDAO
-import database.CandidatoDAO
+import dao.CandidatoCompetenciaDAO
+import dao.CandidatoDAO
 import model.Candidato
 
 import java.time.LocalDate
