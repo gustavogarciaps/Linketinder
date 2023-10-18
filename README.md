@@ -36,17 +36,17 @@ Linketinder é uma plataforma que combina a abordagem profissional do LinkedIn c
 - Java
 
 ```bash
-  $ sdk install java <version>
+  $ sdk install java 17.0.8
 ```
 - Groovy
 
 ```bash
-  $ sdk install groovy <version>
+  $ sdk install groovy 4.0.15
 ```
 - Gradle
 
 ```bash
-  $ sdk install gradle <version>
+  $ sdk install gradle 8.3
 ```
  - Postgres
 ```bash
@@ -121,4 +121,8 @@ Nesse script, foi declarado a variável ```empresas_candidatos_id``` para armaze
 
 O Trigger para a tabela ```empresas_candidatos``` segue quase o mesmo raciocínio, com a diferença que eu não preciso criar uma variável para armazenar o id do candidato, pois eu consigo consultar direto na tabela ```empresas_candidatos```.
 
+## Refatoração do Código seguindo Clean Code
 
+Houve a avaliação da estrutura do código e a renomeação de variáveis que estavam com uma nomenclatura genérica. Foi refatorado deixando com nomes mais expressivos e declarativos. Além disso, foi descartado algumas Classes que não faziam mais sentido no contexto da aplicação. Essas classes estavam deixando o código com uma intepretação mais complexa.
+
+O maior desafio dessa refatoração, é a análise autocrítica, pois às vezes não é possível identificar uma variável ou função que está ambígua ou com a nomenclatura sem sentido. Isso se deve pois quando você cria a lógica da aplicação, tudo parece fazer muito sentido. Entretanto, quando você analisa de maneira externa, sem nenhuma paixão no código, vai percebendo MUITOS detalhes que poderiam ser melhorados. Porém, como é o primeiro Code Review que eu faço, ainda não consegui achar tantos pontos de melhoria. 

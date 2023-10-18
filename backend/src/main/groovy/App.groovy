@@ -1,5 +1,3 @@
-
-
 import view.MenuInicial
 
 class App {
