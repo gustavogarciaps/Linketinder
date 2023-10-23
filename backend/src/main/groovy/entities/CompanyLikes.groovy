@@ -9,8 +9,9 @@ class CompanyLikes implements InterfacePersonLikes {
     List<Candidate> candidates = new ArrayList<>()
 
     @Override
-    void like(Person person) {
+    void like(PersonDTO person) {
         this.candidates.push(person as Candidate)
     }
+
 }
 

@@ -5,7 +5,7 @@ import groovy.transform.Canonical
 import java.time.LocalDate
 
 @Canonical
-class Candidate extends Person {
+class Candidate extends PersonDTO {
 
     String linkedin
     LocalDate dateOfBirth

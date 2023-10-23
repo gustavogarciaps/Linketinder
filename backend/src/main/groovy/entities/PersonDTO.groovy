@@ -3,7 +3,7 @@ package entities
 import groovy.transform.Canonical
 
 @Canonical
-abstract class Person{
+class PersonDTO {
 
     Integer id
     String name

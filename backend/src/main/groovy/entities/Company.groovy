@@ -5,7 +5,7 @@ import groovy.transform.Canonical
 import java.time.LocalDate
 
 @Canonical
-class Company extends Person{
+class Company extends PersonDTO{
 
     LocalDate creationDate
     List<Jobs> jobs = new ArrayList<>()

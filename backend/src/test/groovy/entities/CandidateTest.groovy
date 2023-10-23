@@ -17,7 +17,7 @@ class CandidateTest {
 
     @Test
     void shouldBeInstanceOfPerson() {
-        assertTrue(candidate instanceof Person)
+        assertTrue(candidate instanceof PersonDTO)
     }
 
     @Test

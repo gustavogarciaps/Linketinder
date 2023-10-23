@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test
 
 import static org.junit.jupiter.api.Assertions.assertEquals
 import static org.junit.jupiter.api.Assertions.assertTrue
-import static org.junit.jupiter.api.Assertions.assertTrue
 
 class CompanyTest {
 
@@ -18,7 +17,7 @@ class CompanyTest {
 
     @Test
     void shouldBeInstanceOfPerson() {
-        assertTrue(company instanceof Person)
+        assertTrue(company instanceof PersonDTO)
     }
 
     @Test
@@ -40,6 +39,18 @@ class CompanyTest {
 
         Jobs job = company.getJobs()[0]
         assertEquals("Desenvolvedor HTML", job.getTitle())
+    }
+
+    @Test
+    void companyLikeToCandidate(){
+
+        Candidate candidate = new Candidate(name: "Gustavo")
+        CompanyLikes companyLikes = new CompanyLikes(company: company)
+
+        companyLikes.like(candidate)
+
+        assertEquals(candidate, companyLikes.getCandidates()[0])
+
     }
 
 }
