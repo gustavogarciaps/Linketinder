@@ -5,9 +5,10 @@ import groovy.transform.Canonical
 import java.time.LocalDate
 
 @Canonical
-class Candidate extends PersonDTO {
+class CandidateDTO extends PersonDTO {
 
     String linkedin
+    String cpf
     LocalDate dateOfBirth
     String academicEduation
     List<Skills> skills = new ArrayList<>()

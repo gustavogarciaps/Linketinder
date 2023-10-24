@@ -1,6 +1,7 @@
 package view
 
 import entities.PersonDTO
+import exceptions.QuitException
 import persistencies.ConnectionFactory
 import persistencies.PersonDAO
 import utils.InputHelper
@@ -24,13 +25,8 @@ class MainMenu {
                 println("[$key] - $value")
             }
 
-            String userInput = InputHelper.getInput("Opção (ou 'q' para sair)")
-
-            if (userInput.equals('q')) {
-                break
-            }
-
             try {
+                String userInput = InputHelper.getInputString("Opção")
 
                 Integer choice = userInput.toInteger()
 
@@ -53,6 +49,8 @@ class MainMenu {
 
             } catch (NumberFormatException e) {
                 println("\nDigite apenas o número das opções informadas no menu.\n")
+            } catch (QuitException e) {
+                e.getMessage()
             }
         }
 
@@ -61,20 +59,26 @@ class MainMenu {
     static void createPerson() {
 
         println("****** CADASTRAR NOVO USUÁRIO ******");
-        String email = InputHelper.getInput("email");
-        String password = InputHelper.getInput("senha");
+        try {
+            String email = InputHelper.getInputString("email");
+            String password = InputHelper.getInputString("senha");
 
-        PersonDTO personDTO = new PersonDTO(email: email, password: password)
-        PersonDAO personDAO = new PersonDAO(sql: ConnectionFactory.newInstance());
+            PersonDTO personDTO = new PersonDTO(email: email, password: password)
+            PersonDAO personDAO = new PersonDAO(sql: ConnectionFactory.newInstance());
 
-        personDAO.save(personDTO)
+            personDAO.save(personDTO)
+
+        } catch (QuitException e) {
+            e.getMessage()
+        }
     }
 
     static void accessPlatform() {
 
         HashMap<Integer, String> menu = [
                 1: "Acessar como Empresa",
-                2: "Acessar como Candidato"
+                2: "Acessar como Candidato",
+                3: "Voltar ao menu anterior"
         ]
 
         while (true) {
@@ -85,29 +89,26 @@ class MainMenu {
                 println("[$key] - $value")
             }
 
-            String userInput = InputHelper.getInput("Opção (ou 'q' para sair)")
-
-            if (userInput.equals('q')) {
-                break
-            }
-
             try {
-
+                String userInput = InputHelper.getInputString("Opção")
                 Integer choice = userInput.toInteger()
 
                 switch (choice) {
                     case 1:
-
                         break
                     case 2:
-                        println(2)
+                        CandidatesMenu.showOptions()
                         break
+                    case 3:
+                        return
                     default:
                         break
                 }
 
             } catch (NumberFormatException e) {
                 println("\nDigite apenas o número das opções informadas no menu.\n")
+            } catch (QuitException e) {
+                e.getMessage()
             }
         }
 

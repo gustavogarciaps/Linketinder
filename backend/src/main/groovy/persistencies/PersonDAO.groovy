@@ -28,9 +28,11 @@ class PersonDAO {
         return result ? person : null
     }
 
-    void save(PersonDTO person) {
-        sql.executeInsert("INSERT INTO usuarios (email, senha) VALUES (?, ?)",
+    boolean save(PersonDTO person) {
+        def result = sql.executeInsert("INSERT INTO usuarios (email, senha) VALUES (?, ?)",
                 [person.email, person.password])
+
+        return result ? true : false
     }
 
 }

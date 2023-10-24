@@ -44,7 +44,7 @@ class CompanyTest {
     @Test
     void companyLikeToCandidate(){
 
-        Candidate candidate = new Candidate(name: "Gustavo")
+        CandidateDTO candidate = new CandidateDTO(name: "Gustavo")
         CompanyLikes companyLikes = new CompanyLikes(company: company)
 
         companyLikes.like(candidate)

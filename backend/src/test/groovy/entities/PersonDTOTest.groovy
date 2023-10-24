@@ -46,14 +46,14 @@ class PersonDTOTest {
         PersonDAO personDAO = new PersonDAO(sql: ConnectionFactory.newInstance())
         List<PersonDTO> personList = personDAO.findAll()
         personList.forEach { it ->
-            println("${it.getId()} ${it.getEmail()}")
+            println("recoverPersonFromDatabase: ${it.getId()} ${it.getEmail()}")
         }
     }
 
     @Test
     void findPerson() {
         PersonDAO personDAO = new PersonDAO(sql: ConnectionFactory.newInstance())
-        println(personDAO.findById(18))
+        println("findPerson ${personDAO.findById(18)}")
     }
 
     @Test

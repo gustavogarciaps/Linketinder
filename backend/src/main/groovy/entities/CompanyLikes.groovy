@@ -6,11 +6,11 @@ import groovy.transform.Canonical
 class CompanyLikes implements InterfacePersonLikes {
 
     Company company
-    List<Candidate> candidates = new ArrayList<>()
+    List<CandidateDTO> candidates = new ArrayList<>()
 
     @Override
     void like(PersonDTO person) {
-        this.candidates.push(person as Candidate)
+        this.candidates.push(person as CandidateDTO)
     }
 
 }
