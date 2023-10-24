@@ -52,6 +52,14 @@ class CandidateDTOTest {
     @Test
     void deleteCandidateById() {
         CandidateDAO candidateDAO = new CandidateDAO(sql: ConnectionFactory.newInstance())
-        assert (candidateDAO.deleteById(21))
+        assertTrue(candidateDAO.deleteById(21))
+    }
+
+    @Test
+    void updateCandidateById() {
+        CandidateDAO candidateDAO = new CandidateDAO(sql: ConnectionFactory.newInstance())
+
+        CandidateDTO candidateDTO = new CandidateDTO(id: 19, name: "Osvaldo Cruz")
+        assertTrue(candidateDAO.updateById(candidateDTO))
     }
 }

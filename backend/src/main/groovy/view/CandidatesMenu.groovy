@@ -4,7 +4,6 @@ import entities.CandidateDTO
 import exceptions.QuitException
 import persistencies.CandidateDAO
 import persistencies.ConnectionFactory
-import persistencies.PersonDAO
 import utils.DateTimeHelper
 import utils.InputHelper
 
@@ -50,7 +49,10 @@ class CandidatesMenu {
                         break
                     case 4:
                         deleteCandidateById(new CandidateDAO(sql: ConnectionFactory.newInstance()))
-                        return
+                        break
+                    case 5:
+                        updateCandidateById(new CandidateDAO(sql: ConnectionFactory.newInstance()))
+                        break
                     default:
                         break
                 }
@@ -82,7 +84,6 @@ class CandidatesMenu {
             e.getMessage()
         }
     }
-
 
     static void loadCandidates(CandidateDAO candidateDAO) {
 
@@ -120,7 +121,7 @@ class CandidatesMenu {
 
         try {
             String id = InputHelper.getInputString("id")
-            candidateDAO.deleteById(id) ? println("Excluído com sucesso. Código ${id}") : println("Falha ao Excluir código ${id}")
+            candidateDAO.deleteById(id.toInteger()) ? println("Excluído com sucesso. Código ${id}") : println("Falha ao Excluir código ${id}")
 
         } catch (QuitException e) {
             e.getMessage()
@@ -128,4 +129,22 @@ class CandidatesMenu {
 
     }
 
+    static void updateCandidateById(CandidateDAO candidateDAO) {
+        println("Atualizar Candidato")
+
+        try {
+            String id = InputHelper.getInputString("id")
+            CandidateDTO candidateDTO = candidateDAO.findById(id.toInteger())
+
+            candidateDTO.setName(InputHelper.getInputString("nome",candidateDTO.getName()))
+            candidateDTO.setDescription(InputHelper.getInputString("descrição:",candidateDTO.getDescription()))
+            candidateDTO.setCity(InputHelper.getInputString("cidade:",candidateDTO.getCity()))
+
+            candidateDAO.updateById(candidateDTO) ? println("Atualizado com sucesso. Código ${id}") : println("Falha ao atualizar o código ${id}")
+
+        } catch (QuitException e) {
+            e.getMessage()
+        }
+
+    }
 }

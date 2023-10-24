@@ -4,6 +4,8 @@ import entities.CandidateDTO
 import groovy.sql.Sql
 import groovy.transform.Canonical
 
+import java.sql.SQLException
+
 @Canonical
 class CandidateDAO {
 
@@ -32,8 +34,12 @@ class CandidateDAO {
     }
 
     boolean deleteById(int id) {
-        def result = sql.execute("DELETE FROM candidatos WHERE usuarios_id = ?", [c.getId()])
-        return result
+        return sql.execute("DELETE FROM candidatos WHERE usuarios_id = ?", [id])
+    }
+
+    boolean updateById(CandidateDTO candidate) throws SQLException {
+        return sql.execute("UPDATE candidatos SET nome = ?, sobrenome = ?, cpf = ?, descricao = ?, cidades_id = ?, cep = ?, formacao = ?, data_nascimento = ?, linkedin = ? WHERE usuarios_id = ?",
+                [candidate.getName(), candidate.getName(), candidate.getCpf(), candidate.getDescription(), candidate.getCity().toInteger(), candidate.getZipCode(), candidate.getAcademicEduation(), candidate.getDateOfBirth(), candidate.getLinkedin(), candidate.getId()])
     }
 
 }
