@@ -16,9 +16,9 @@ class Jobs {
     String state
     String country
     LocalDate dateOfCreate
-    List<Skills> skills = new ArrayList<>()
+    List<SkillsDTO> skills = new ArrayList<>()
 
-    void addSkills(Skills skill) {
+    void addSkills(SkillsDTO skill) {
         this.skills.push(skill)
     }
 

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import persistencies.CandidateDAO
 import persistencies.ConnectionFactory
-import persistencies.PersonDAO
 
 import static org.junit.jupiter.api.Assertions.assertEquals
 import static org.junit.jupiter.api.Assertions.assertTrue
@@ -26,10 +25,10 @@ class CandidateDTOTest {
     @Test
     void addSkillToCandidate() {
         candidate.addSkills(
-                new Skills(id: 1, name: "Java", level: 2)
+                new SkillsDTO(id: 1, name: "Java", level: 2)
         )
-        Skills skill = candidate.getSkills()[0]
-        assertTrue(skill instanceof Skills)
+        SkillsDTO skill = candidate.getSkills()[0]
+        assertTrue(skill instanceof SkillsDTO)
         assertEquals("Java", skill.getName())
     }
 

@@ -53,6 +53,9 @@ class CandidatesMenu {
                     case 5:
                         updateCandidateById(new CandidateDAO(sql: ConnectionFactory.newInstance()))
                         break
+                    case 6:
+                        SkillsMenu.showOptions()
+                        break
                     default:
                         break
                 }
