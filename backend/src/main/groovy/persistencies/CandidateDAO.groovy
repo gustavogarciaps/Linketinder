@@ -1,6 +1,7 @@
 package persistencies
 
 import entities.CandidateDTO
+import entities.SkillsDTO
 import groovy.sql.Sql
 import groovy.transform.Canonical
 
@@ -13,12 +14,22 @@ class CandidateDAO {
 
     List<CandidateDTO> findAll() {
         def results = sql.rows("SELECT * FROM candidatos AS c INNER JOIN usuarios AS u ON c.usuarios_id = u.id;")
-        List<CandidateDTO> candidates = []
+        List<CandidateDTO> candidatesDTO = []
         results.each { row ->
             CandidateDTO candidate = new CandidateDTO(id: row.usuarios_id, name: row.nome, linkedin: row.linkedin)
-            candidates.add(candidate)
+            candidatesDTO.add(candidate)
         }
-        return candidates
+        return candidatesDTO
+    }
+
+    CandidateDTO findAll(CandidateDTO candidateDTO) throws SQLException {
+        List<SkillsDTO> skillsDTOS = []
+        sql.eachRow("SELECT * FROM candidatos_competencias AS cc INNER JOIN competencias AS cs ON cc.competencias_id = cs.id WHERE cc.candidatos_id = ?;", [candidateDTO.getId()]) { rs ->
+            skillsDTOS.add(new SkillsDTO(id: rs.id, name: rs.nome))
+        }
+        candidateDTO.setSkills(skillsDTOS)
+
+        return candidateDTO
     }
 
     CandidateDTO findById(int id) {

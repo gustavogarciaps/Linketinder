@@ -61,4 +61,20 @@ class CandidateDTOTest {
         CandidateDTO candidateDTO = new CandidateDTO(id: 19, name: "Osvaldo Cruz")
         assertTrue(candidateDAO.updateById(candidateDTO))
     }
+
+    @Test
+    void findAllCandidateSkills() {
+        CandidateDAO candidateDAO = new CandidateDAO(sql: ConnectionFactory.newInstance())
+
+        CandidateDTO candidateDTO = candidateDAO.findAll(new CandidateDTO(id: 5))
+
+        candidateDTO.each {
+            candidate->
+                println(candidate.getSkills().each{ it ->
+                    println(it.getName())
+                })
+        }
+    }
+
+
 }

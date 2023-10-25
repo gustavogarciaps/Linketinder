@@ -3,6 +3,7 @@ package entities
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import persistencies.CandidateDAO
+import persistencies.CandidateSkillsDAO
 import persistencies.ConnectionFactory
 import persistencies.SkillsDAO
 
@@ -51,7 +52,7 @@ class SkillsDTOTest {
     }
 
     @Test
-    void saveSkillInDatabase(){
+    void saveSkillInDatabase() {
         SkillsDAO skillsDAO = new SkillsDAO(sql: ConnectionFactory.newInstance())
         skillsDAO.save(new SkillsDTO(name: "CSS 256"))
     }
@@ -63,4 +64,27 @@ class SkillsDTOTest {
         SkillsDTO skillsDTO = new SkillsDTO(id: 19, name: "Osvaldo Cruz")
         assertTrue(skillsDAO.updateById(skillsDTO))
     }
+
+    @Test
+    void loadAssociateSkillsWithUsers() {
+        CandidateSkillsDAO candidateSkillsDAO = new CandidateSkillsDAO(sql: ConnectionFactory.newInstance())
+
+        CandidateDTO candidateDTO = new CandidateDTO(id: 5)
+        candidateSkillsDAO.findAll(candidateDTO).each {
+            it ->
+                println(it)
+        }
+    }
+
+    @Test
+    void creatingAssociateSkillsWithUsers() {
+        CandidateSkillsDAO candidateSkillsDAO = new CandidateSkillsDAO(sql: ConnectionFactory.newInstance())
+
+        CandidateDTO candidateDTO = new CandidateDTO(id: 5)
+        SkillsDTO skillsDTO = new SkillsDTO(id: 20)
+
+        candidateSkillsDAO.save(candidateDTO, skillsDTO)
+    }
+
+
 }

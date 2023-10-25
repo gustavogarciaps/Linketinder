@@ -54,8 +54,10 @@ class CandidatesMenu {
                         updateCandidateById(new CandidateDAO(sql: ConnectionFactory.newInstance()))
                         break
                     case 6:
-                        SkillsMenu.showOptions()
+                        CandidateSkillsMenu.showOptions()
                         break
+                    case 7:
+                        return
                     default:
                         break
                 }
@@ -97,7 +99,15 @@ class CandidatesMenu {
         InputHelper.creatingTable(columns)
 
         candidateDAO.findAll().forEach { it ->
-            InputHelper.creatingTable([it.getId(), it.getName(), it.getLinkedin()])
+
+            CandidateDTO candidateDTO = candidateDAO.findAll(it)
+            InputHelper.creatingTable([candidateDTO.getId(), candidateDTO.getName(), candidateDTO.getLinkedin()])
+
+            println("Competências do candidato")
+            candidateDTO.getSkills().each {skillDTO ->
+                InputHelper.creatingTable([skillDTO.getId(),skillDTO.getName()])
+            }
+            InputHelper.divider(80)
         }
 
         InputHelper.divider(80)
@@ -139,9 +149,9 @@ class CandidatesMenu {
             String id = InputHelper.getInputString("id")
             CandidateDTO candidateDTO = candidateDAO.findById(id.toInteger())
 
-            candidateDTO.setName(InputHelper.getInputString("nome",candidateDTO.getName()))
-            candidateDTO.setDescription(InputHelper.getInputString("descrição:",candidateDTO.getDescription()))
-            candidateDTO.setCity(InputHelper.getInputString("cidade:",candidateDTO.getCity()))
+            candidateDTO.setName(InputHelper.getInputString("nome", candidateDTO.getName()))
+            candidateDTO.setDescription(InputHelper.getInputString("descrição:", candidateDTO.getDescription()))
+            candidateDTO.setCity(InputHelper.getInputString("cidade:", candidateDTO.getCity()))
 
             candidateDAO.updateById(candidateDTO) ? println("Atualizado com sucesso. Código ${id}") : println("Falha ao atualizar o código ${id}")
 
