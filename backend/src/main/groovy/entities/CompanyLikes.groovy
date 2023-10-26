@@ -5,7 +5,7 @@ import groovy.transform.Canonical
 @Canonical
 class CompanyLikes implements InterfacePersonLikes {
 
-    Company company
+    CompanyDTO company
     List<CandidateDTO> candidates = new ArrayList<>()
 
     @Override

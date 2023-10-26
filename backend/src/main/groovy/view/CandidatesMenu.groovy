@@ -124,7 +124,13 @@ class CandidatesMenu {
         InputHelper.creatingTable(columns)
 
         CandidateDTO candidateDTO = candidateDAO.findById(id.toInteger())
+        candidateDTO = candidateDAO.findAll(candidateDTO)
+
         InputHelper.creatingTable([candidateDTO.getId(), candidateDTO.getName(), candidateDTO.getLinkedin()])
+        println("Competências do candidato")
+        candidateDTO.getSkills().each {skillDTO ->
+            InputHelper.creatingTable([skillDTO.getId(),skillDTO.getName()])
+        }
 
         InputHelper.divider(80)
     }
@@ -136,7 +142,7 @@ class CandidatesMenu {
             String id = InputHelper.getInputString("id")
             candidateDAO.deleteById(id.toInteger()) ? println("Excluído com sucesso. Código ${id}") : println("Falha ao Excluir código ${id}")
 
-        } catch (QuitException e) {
+        } catch (Exception e) {
             e.getMessage()
         }
 

@@ -10,8 +10,6 @@ class CandidateSkillsDAO {
 
     Sql sql
 
-
-
     boolean save(CandidateDTO candidateDTO, SkillsDTO skillsDTO) throws SQLException {
         def result = sql.executeInsert("INSERT INTO candidatos_competencias (candidatos_id,competencias_id) VALUES (?, ?)",
                 [candidateDTO.getId(),skillsDTO.getId()])

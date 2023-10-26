@@ -59,7 +59,7 @@ class PersonDTOTest {
     @Test
     void insertPersonToDataBase() {
         PersonDAO personDAO = new PersonDAO(sql: ConnectionFactory.newInstance())
-        PersonDTO personDTO = new PersonDTO(email: "teste@gmail.com", password: "10987")
+        PersonDTO personDTO = new PersonDTO(email: "teste${Math.random()}@gmail.com", password: "10987")
         personDAO.save(personDTO)
     }
 }

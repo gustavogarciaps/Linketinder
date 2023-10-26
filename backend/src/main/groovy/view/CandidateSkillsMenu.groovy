@@ -2,7 +2,6 @@ package view
 
 import entities.CandidateDTO
 import entities.SkillsDTO
-import persistencies.CandidateDAO
 import persistencies.CandidateSkillsDAO
 import persistencies.ConnectionFactory
 import utils.InputHelper

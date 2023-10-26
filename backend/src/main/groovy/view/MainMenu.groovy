@@ -95,6 +95,7 @@ class MainMenu {
 
                 switch (choice) {
                     case 1:
+                        CompanysMenu.showOptions()
                         break
                     case 2:
                         CandidatesMenu.showOptions()

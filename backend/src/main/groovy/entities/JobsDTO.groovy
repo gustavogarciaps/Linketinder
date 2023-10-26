@@ -5,10 +5,10 @@ import groovy.transform.Canonical
 import java.time.LocalDate
 
 @Canonical
-class Jobs {
+class JobsDTO {
 
     Integer id
-    Company company
+    CompanyDTO company
     String title
     String description
     String modality

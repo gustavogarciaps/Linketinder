@@ -14,27 +14,27 @@ class CandidateDAO {
 
     List<CandidateDTO> findAll() {
         def results = sql.rows("SELECT * FROM candidatos AS c INNER JOIN usuarios AS u ON c.usuarios_id = u.id;")
-        List<CandidateDTO> candidatesDTO = []
+        List<CandidateDTO> candidates = []
         results.each { row ->
             CandidateDTO candidate = new CandidateDTO(id: row.usuarios_id, name: row.nome, linkedin: row.linkedin)
-            candidatesDTO.add(candidate)
+            candidates.add(candidate)
         }
-        return candidatesDTO
+        return candidates
     }
 
-    CandidateDTO findAll(CandidateDTO candidateDTO) throws SQLException {
-        List<SkillsDTO> skillsDTOS = []
-        sql.eachRow("SELECT * FROM candidatos_competencias AS cc INNER JOIN competencias AS cs ON cc.competencias_id = cs.id WHERE cc.candidatos_id = ?;", [candidateDTO.getId()]) { rs ->
-            skillsDTOS.add(new SkillsDTO(id: rs.id, name: rs.nome))
+    CandidateDTO findAll(CandidateDTO candidate) throws SQLException {
+        List<SkillsDTO> skills = []
+        sql.eachRow("SELECT * FROM candidatos_competencias AS cc INNER JOIN competencias AS cs ON cc.competencias_id = cs.id WHERE cc.candidatos_id = ?;", [candidate.getId()]) { rs ->
+            skills.add(new SkillsDTO(id: rs.id, name: rs.nome))
         }
-        candidateDTO.setSkills(skillsDTOS)
+        candidate.setSkills(skills)
 
-        return candidateDTO
+        return candidate
     }
 
     CandidateDTO findById(int id) {
         def result = sql.firstRow("SELECT * FROM candidatos AS c INNER JOIN usuarios AS u ON c.usuarios_id = u.id WHERE id = ?", id)
-        CandidateDTO candidate = new CandidateDTO(id: result.id, name: result.nome, linkedin: result.linkedin)
+        CandidateDTO candidate = new CandidateDTO(id: result.id, name: result.razao_social, linkedin: result.linkedin)
         return result ? candidate : null
     }
 

@@ -8,6 +8,7 @@ import persistencies.ConnectionFactory
 import persistencies.SkillsDAO
 
 import static org.junit.jupiter.api.Assertions.assertEquals
+import static org.junit.jupiter.api.Assertions.assertFalse
 import static org.junit.jupiter.api.Assertions.assertTrue
 
 class SkillsDTOTest {
@@ -48,7 +49,7 @@ class SkillsDTOTest {
     @Test
     void deleteSkillById() {
         SkillsDAO skillsDAO = new SkillsDAO(sql: ConnectionFactory.newInstance())
-        assertTrue(skillsDAO.deleteById(21))
+        assertFalse(skillsDAO.deleteById(26))
     }
 
     @Test
@@ -58,7 +59,7 @@ class SkillsDTOTest {
     }
 
     @Test
-    void updateCandidateById() {
+    void updateJobsById() {
         SkillsDAO skillsDAO = new SkillsDAO(sql: ConnectionFactory.newInstance())
 
         SkillsDTO skillsDTO = new SkillsDTO(id: 19, name: "Osvaldo Cruz")
@@ -66,7 +67,7 @@ class SkillsDTOTest {
     }
 
     @Test
-    void loadAssociateSkillsWithUsers() {
+    void loadAssociateSkillsWithJobs() {
         CandidateSkillsDAO candidateSkillsDAO = new CandidateSkillsDAO(sql: ConnectionFactory.newInstance())
 
         CandidateDTO candidateDTO = new CandidateDTO(id: 5)
