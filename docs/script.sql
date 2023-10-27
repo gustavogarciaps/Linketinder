@@ -16,14 +16,14 @@ CREATE TABLE IF NOT EXISTS estados (
     pais_id integer,
     nome varchar,
     sigla varchar,
-    FOREIGN KEY (pais_id) REFERENCES paises (id)
+    FOREIGN KEY (pais_id) REFERENCES paises (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS cidades (
     id serial PRIMARY KEY,
     estados_id integer,
     nome varchar,
-    FOREIGN KEY (estados_id) REFERENCES estados (id)
+    FOREIGN KEY (estados_id) REFERENCES estados (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS candidatos (
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS candidatos (
     formacao varchar,
     data_nascimento date,
     linkedin varchar,
-    FOREIGN KEY (usuarios_id) REFERENCES usuarios (id),
+    FOREIGN KEY (usuarios_id) REFERENCES usuarios (id) ON DELETE CASCADE,
     FOREIGN KEY (cidades_id) REFERENCES cidades (id)
 );
 
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS empresas (
     cidades_id integer,
     cep varchar,
     data_fundacao date,
-    FOREIGN KEY (usuarios_id) REFERENCES usuarios (id),
+    FOREIGN KEY (usuarios_id) REFERENCES usuarios (id) ON DELETE CASCADE,
     FOREIGN KEY (cidades_id) REFERENCES cidades (id)
 );
 
@@ -62,8 +62,8 @@ CREATE TABLE IF NOT EXISTS candidatos_competencias (
     candidatos_id integer,
     competencias_id integer,
     PRIMARY KEY (candidatos_id, competencias_id),
-    FOREIGN KEY (candidatos_id) REFERENCES candidatos (usuarios_id),
-    FOREIGN KEY (competencias_id) REFERENCES competencias (id)
+    FOREIGN KEY (candidatos_id) REFERENCES candidatos (usuarios_id) ON DELETE CASCADE,
+    FOREIGN KEY (competencias_id) REFERENCES competencias (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS modalidades (
@@ -78,17 +78,17 @@ CREATE TABLE IF NOT EXISTS vagas (
     descricao varchar,
     modalidades_id integer,
     cidades_id integer,
-    FOREIGN KEY (empresas_id) REFERENCES empresas (usuarios_id),
-    FOREIGN KEY (modalidades_id) REFERENCES modalidades (id),
-    FOREIGN KEY (cidades_id) REFERENCES cidades (id)
+    FOREIGN KEY (empresas_id) REFERENCES empresas (usuarios_id) ON DELETE CASCADE,
+    FOREIGN KEY (modalidades_id) REFERENCES modalidades (id) ON DELETE CASCADE,
+    FOREIGN KEY (cidades_id) REFERENCES cidades (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS vagas_competencias (
     vagas_id integer,
     competencias_id integer,
     PRIMARY KEY (vagas_id, competencias_id),
-    FOREIGN KEY (vagas_id) REFERENCES vagas (id),
-    FOREIGN KEY (competencias_id) REFERENCES competencias (id)
+    FOREIGN KEY (vagas_id) REFERENCES vagas (id) ON DELETE CASCADE,
+    FOREIGN KEY (competencias_id) REFERENCES competencias (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS candidatos_vagas (
@@ -97,8 +97,8 @@ CREATE TABLE IF NOT EXISTS candidatos_vagas (
     candidatos_id integer,
     curtida boolean,
     data_curtida timestamp DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (vagas_id) REFERENCES vagas (id),
-    FOREIGN KEY (candidatos_id) REFERENCES candidatos (usuarios_id)
+    FOREIGN KEY (vagas_id) REFERENCES vagas (id) ON DELETE CASCADE,
+    FOREIGN KEY (candidatos_id) REFERENCES candidatos (usuarios_id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS empresas_candidatos (
@@ -107,16 +107,16 @@ CREATE TABLE IF NOT EXISTS empresas_candidatos (
     empresas_id integer,
     curtida boolean,
     data_curtida timestamp DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (candidatos_id) REFERENCES candidatos (usuarios_id),
-    FOREIGN KEY (empresas_id) REFERENCES empresas (usuarios_id)
+    FOREIGN KEY (candidatos_id) REFERENCES candidatos (usuarios_id) ON DELETE CASCADE,
+    FOREIGN KEY (empresas_id) REFERENCES empresas (usuarios_id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS correspondencias (
     id serial PRIMARY KEY,
     empresas_candidatos_id integer,
     candidatos_vagas_id integer,
-    FOREIGN KEY (empresas_candidatos_id) REFERENCES empresas_candidatos (id),
-    FOREIGN KEY (candidatos_vagas_id) REFERENCES candidatos_vagas (id)
+    FOREIGN KEY (empresas_candidatos_id) REFERENCES empresas_candidatos (id) ON DELETE CASCADE,
+    FOREIGN KEY (candidatos_vagas_id) REFERENCES candidatos_vagas (id) ON DELETE CASCADE
 );
 
 CREATE OR REPLACE FUNCTION criar_correspondencia_candidato_vaga()
@@ -134,7 +134,7 @@ BEGIN
     )
       AND ec.curtida = TRUE;
 
-    IF empresa_candidato_id IS NOT NULL THEN
+    IF empresas_candidatos_id IS NOT NULL THEN
       INSERT INTO correspondencias (empresas_candidatos_id, candidatos_vagas_id)
       VALUES (empresas_candidatos_id, NEW.id);
     END IF;
@@ -154,19 +154,19 @@ DECLARE
   candidatos_vagas_id INTEGER;
 BEGIN
   IF NEW.curtida = TRUE THEN
-	IF EXISTS(
-    SELECT 1 FROM candidatos_vagas cv
-    WHERE cv.candidatos_id = NEW.candidatos_vagas_id
-	AND cv.curtida = TRUE;
-	); THEN
+    SELECT cv.id INTO candidatos_vagas_id
+    FROM candidatos_vagas cv
+    WHERE cv.candidatos_id = NEW.candidatos_id
+      AND cv.curtida = TRUE;
+    
+    IF candidatos_vagas_id IS NOT NULL THEN
       INSERT INTO correspondencias (empresas_candidatos_id, candidatos_vagas_id)
-      VALUES (NEW.id, NEW.candidatos_vagas_id);
+      VALUES (NEW.id, candidatos_vagas_id);
     END IF;
   END IF;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
-
 
 CREATE TRIGGER empresas_candidatos_trigger
 AFTER INSERT ON empresas_candidatos
@@ -291,5 +291,4 @@ INNER JOIN
 empresas e
 ON e.usuarios_id = ec.id
   
-
 
