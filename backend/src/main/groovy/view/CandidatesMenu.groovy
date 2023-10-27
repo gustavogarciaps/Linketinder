@@ -85,7 +85,7 @@ class CandidatesMenu {
 
             candidateDAO.save(candidateDTO) ? println("Candidato registrado com sucesso") : println("Falha ao registrar candidato")
 
-        } catch (QuitException e) {
+        } catch (Exception e) {
             e.getMessage()
         }
     }
@@ -109,7 +109,6 @@ class CandidatesMenu {
             }
             InputHelper.divider(80)
         }
-
         InputHelper.divider(80)
     }
 
@@ -131,7 +130,6 @@ class CandidatesMenu {
         candidateDTO.getSkills().each {skillDTO ->
             InputHelper.creatingTable([skillDTO.getId(),skillDTO.getName()])
         }
-
         InputHelper.divider(80)
     }
 
@@ -141,11 +139,9 @@ class CandidatesMenu {
         try {
             String id = InputHelper.getInputString("id")
             candidateDAO.deleteById(id.toInteger()) ? println("Excluído com sucesso. Código ${id}") : println("Falha ao Excluir código ${id}")
-
         } catch (Exception e) {
             e.getMessage()
         }
-
     }
 
     static void updateCandidateById(CandidateDAO candidateDAO) {
@@ -161,9 +157,8 @@ class CandidatesMenu {
 
             candidateDAO.updateById(candidateDTO) ? println("Atualizado com sucesso. Código ${id}") : println("Falha ao atualizar o código ${id}")
 
-        } catch (QuitException e) {
+        } catch (Exception e) {
             e.getMessage()
         }
-
     }
 }

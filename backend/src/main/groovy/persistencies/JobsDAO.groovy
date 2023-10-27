@@ -50,6 +50,6 @@ class JobsDAO {
 
     boolean updateById(JobsDTO job) throws SQLException {
         return sql.execute("UPDATE vagas SET titulo =?, descricao=?, modalidades_id =?, cidades_id=? WHERE id = ?",
-                [job.getTitle(), job.getTitle(), job.getModality(), job.getCity().toInteger(), job.getId()])
+                [job.getTitle(), job.getTitle(), 1, job.getCity().toInteger(), job.getId()])
     }
 }

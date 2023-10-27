@@ -46,14 +46,12 @@ class MainMenu {
                     default:
                         break
                 }
-
             } catch (NumberFormatException e) {
                 println("\nDigite apenas o número das opções informadas no menu.\n")
-            } catch (QuitException e) {
+            } catch (Exception e) {
                 e.getMessage()
             }
         }
-
     }
 
     static void createPerson() {
@@ -68,7 +66,7 @@ class MainMenu {
 
             personDAO.save(personDTO)
 
-        } catch (QuitException e) {
+        } catch (Exception e) {
             e.getMessage()
         }
     }
@@ -105,14 +103,12 @@ class MainMenu {
                     default:
                         break
                 }
-
             } catch (NumberFormatException e) {
                 println("\nDigite apenas o número das opções informadas no menu.\n")
-            } catch (QuitException e) {
+            } catch (Exception e) {
                 e.getMessage()
             }
         }
-
     }
 
     static void loadPerson() {

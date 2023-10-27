@@ -102,7 +102,6 @@ class CompanysMenu {
         companyDAO.findAll().forEach { it ->
             InputHelper.creatingTable([it.getId().toString(), it.getName(), it.getDescription()])
         }
-
         InputHelper.divider(80)
     }
 
@@ -127,11 +126,9 @@ class CompanysMenu {
         try {
             String id = InputHelper.getInputString("id")
             companyDAO.deleteById(id.toInteger()) ? println("Excluído com sucesso. Código ${id}") : println("Falha ao Excluir código ${id}")
-
         } catch (Exception e) {
             e.getMessage()
         }
-
     }
 
     static void updateCompanyById(CompanyDAO companyDAO) {
@@ -150,6 +147,5 @@ class CompanysMenu {
         } catch (QuitException e) {
             e.getMessage()
         }
-
     }
 }

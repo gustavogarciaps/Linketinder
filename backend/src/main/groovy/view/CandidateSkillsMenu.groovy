@@ -43,7 +43,6 @@ class CandidateSkillsMenu {
                     default:
                         break
                 }
-
             } catch (NumberFormatException e) {
                 println("\nDigite apenas o número das opções informadas no menu.\n")
             }
@@ -63,7 +62,5 @@ class CandidateSkillsMenu {
         }catch(Exception e){
             println(e.getMessage())
         }
-
     }
-
 }

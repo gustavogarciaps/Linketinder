@@ -1,16 +1,11 @@
 package view
 
-import entities.CandidateDTO
 import entities.CompanyDTO
 import entities.JobsDTO
 import exceptions.QuitException
-import persistencies.CandidateDAO
 import persistencies.ConnectionFactory
 import persistencies.JobsDAO
-import utils.DateTimeHelper
 import utils.InputHelper
-
-import java.time.LocalDate
 
 class JobsMenu {
 
@@ -57,7 +52,7 @@ class JobsMenu {
                         updateJobById(new JobsDAO(sql: ConnectionFactory.newInstance()))
                         break
                     case 6:
-                        CandidateSkillsMenu.showOptions()
+                        JobsSkillsMenu.showOptions()
                         break
                     case 7:
                         return
@@ -102,6 +97,7 @@ class JobsMenu {
 
                 println("Competências Requisitadas")
                 InputHelper.creatingTable(["id", "nome"])
+
                 jobsDAO.findAll(job).getSkills().each { it ->
                     InputHelper.creatingTable([it.getId(), it.getName()])
                 }
@@ -122,11 +118,11 @@ class JobsMenu {
 
         println("Competências Requisitadas")
         InputHelper.creatingTable(["id", "nome"])
+
         jobsDAO.findAll(job).getSkills().each { it ->
             InputHelper.creatingTable([it.getId(), it.getName()])
         }
         InputHelper.divider(80)
-
     }
 
     static void deleteJobById(JobsDAO jobsDAO) {
@@ -139,7 +135,6 @@ class JobsMenu {
         } catch (Exception e) {
             e.getMessage()
         }
-
     }
 
     static void updateJobById(JobsDAO jobsDAO) {
@@ -149,14 +144,13 @@ class JobsMenu {
             String id = InputHelper.getInputString("id")
             JobsDTO job = jobsDAO.findById(id.toInteger())
 
-            job.setTitle(InputHelper.getInputString("titulo"))
-            job.setDescription(InputHelper.getInputString("descrição"))
-            job.setModality(1)
-            job.setCity(InputHelper.getInputString("cidade"))
+            job.setTitle(InputHelper.getInputString("titulo", job.getTitle()))
+            job.setDescription(InputHelper.getInputString("descrição", job.getDescription()))
+            job.setCity(InputHelper.getInputString("cidade", job.getCity()))
 
             jobsDAO.updateById(job) ? println("Atualizado com sucesso. Código ${id}") : println("Falha ao atualizar o código ${id}")
 
-        } catch (QuitException e) {
+        } catch (Exception e) {
             e.getMessage()
         }
 

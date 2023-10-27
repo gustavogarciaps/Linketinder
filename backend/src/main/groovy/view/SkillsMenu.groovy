@@ -69,14 +69,11 @@ class SkillsMenu {
 
         println("****** CADASTRAR NOVA COMPETÊNCIA ******");
         try {
-
             String name = InputHelper.getInputString("nome");
-
             SkillsDTO skillsDTO = new SkillsDTO(name: name)
 
             skillsDAO.save(skillsDTO) ? println("Competência registrada com sucesso") : println("Falha ao registrar competência")
-
-        } catch (QuitException e) {
+        } catch (Exception e) {
             e.getMessage()
         }
     }
@@ -119,7 +116,7 @@ class SkillsMenu {
             String id = InputHelper.getInputString("id")
             skillsDAO.deleteById(id.toInteger()) ? println("Excluído com sucesso. Código ${id}") : println("Falha ao Excluir código ${id}")
 
-        } catch (QuitException e) {
+        } catch (Exception e) {
             e.getMessage()
         }
 
@@ -136,7 +133,7 @@ class SkillsMenu {
 
             skillsDAO.updateById(skillsDTO) ? println("Atualizado com sucesso. Código ${id}") : println("Falha ao atualizar o código ${id}")
 
-        } catch (QuitException e) {
+        } catch (Exception e) {
             e.getMessage()
         }
 

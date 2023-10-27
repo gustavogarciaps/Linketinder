@@ -23,6 +23,21 @@ class DateTimeHelper {
 
     }
 
+    static LocalDate getInputDate(String prompt, String args) {
+        System.out.print(prompt + ": ");
+        String input = scanner.nextLine();
+
+        if (input.equals("q") || input.isEmpty()) {
+            throw new QuitException("Usuário escolheu sair.")
+        }
+
+        if(input.isEmpty()){
+            return args
+        }
+
+        return convertStringToTime(input);
+    }
+
     static LocalDate convertStringToTime(String date) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")

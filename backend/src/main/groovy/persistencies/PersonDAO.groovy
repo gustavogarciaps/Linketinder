@@ -20,18 +20,14 @@ class PersonDAO {
     }
 
     PersonDTO findById(int id) {
-
         def result = sql.firstRow("SELECT * FROM usuarios WHERE id = ?", id)
-
         PersonDTO person = new PersonDTO(id: result.id, email: result.email, password: result.senha)
-
         return result ? person : null
     }
 
     boolean save(PersonDTO person) {
         def result = sql.executeInsert("INSERT INTO usuarios (email, senha) VALUES (?, ?)",
                 [person.email, person.password])
-
         return result ? true : false
     }
 
