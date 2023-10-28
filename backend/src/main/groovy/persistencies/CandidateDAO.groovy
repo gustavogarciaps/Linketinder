@@ -2,6 +2,7 @@ package persistencies
 
 import entities.CandidateDTO
 import entities.SkillsDTO
+import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import groovy.transform.Canonical
 
@@ -13,7 +14,7 @@ class CandidateDAO {
     Sql sql
 
     List<CandidateDTO> findAll() {
-        def results = sql.rows("SELECT * FROM candidatos AS c INNER JOIN usuarios AS u ON c.usuarios_id = u.id;")
+        GroovyRowResult results = sql.rows("SELECT * FROM candidatos AS c INNER JOIN usuarios AS u ON c.usuarios_id = u.id;") as GroovyRowResult
         List<CandidateDTO> candidates = []
         results.each { row ->
             CandidateDTO candidate = new CandidateDTO(id: row.usuarios_id, name: row.nome, linkedin: row.linkedin)
@@ -33,13 +34,13 @@ class CandidateDAO {
     }
 
     CandidateDTO findById(int id) {
-        def result = sql.firstRow("SELECT * FROM candidatos AS c INNER JOIN usuarios AS u ON c.usuarios_id = u.id WHERE id = ?", id)
+        GroovyRowResult result = sql.firstRow("SELECT * FROM candidatos AS c INNER JOIN usuarios AS u ON c.usuarios_id = u.id WHERE id = ?", id)
         CandidateDTO candidate = new CandidateDTO(id: result.id, name: result.razao_social, linkedin: result.linkedin)
         return result ? candidate : null
     }
 
     boolean save(CandidateDTO candidate) {
-        def result = sql.executeInsert("INSERT INTO candidatos (usuarios_id, nome, linkedin, data_nascimento) VALUES (?, ?, ?, ?)",
+        List<List<Object>> result = sql.executeInsert("INSERT INTO candidatos (usuarios_id, nome, linkedin, data_nascimento) VALUES (?, ?, ?, ?)",
                 [candidate.getId(), candidate.getName(), candidate.getLinkedin(), candidate.getDateOfBirth()])
         return result ? true : false
     }

@@ -2,6 +2,7 @@ package persistencies
 
 import entities.CandidateDTO
 import entities.SkillsDTO
+import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import groovy.transform.Canonical
 
@@ -13,7 +14,7 @@ class SkillsDAO {
     Sql sql
 
     List<SkillsDTO> findAll() throws SQLException {
-        def results = sql.rows("SELECT * FROM competencias")
+        List<GroovyRowResult> results = sql.rows("SELECT * FROM competencias")
         List<SkillsDTO> skills = []
         results.each { row ->
             SkillsDTO skill = new SkillsDTO(id: row.id, name: row.nome)
@@ -23,13 +24,13 @@ class SkillsDAO {
     }
 
     SkillsDTO findById(int id) throws SQLException {
-        def result = sql.firstRow("SELECT * FROM competencias WHERE id = ?", id)
+        GroovyRowResult result = sql.firstRow("SELECT * FROM competencias WHERE id = ?", id)
         SkillsDTO skill = new SkillsDTO(id: result.id, name: result.nome)
         return result ? skill : null
     }
 
     boolean save(SkillsDTO skill) throws SQLException {
-        def result = sql.executeInsert("INSERT INTO competencias (nome) VALUES (?)",
+        List<List<Object>> result = sql.executeInsert("INSERT INTO competencias (nome) VALUES (?)",
                 [skill.getName()])
         return result ? true : false
     }

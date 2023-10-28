@@ -6,8 +6,6 @@ import persistencies.ConnectionFactory
 import persistencies.SkillsDAO
 import utils.InputHelper
 
-import java.time.LocalDate
-
 class SkillsMenu {
 
     static void showOptions() {
@@ -30,7 +28,7 @@ class SkillsMenu {
             }
 
             try {
-                String userInput = InputHelper.getInputString("Opção")
+                String userInput = InputHelper.getInputStringWithDefault("Opção")
 
                 Integer choice = userInput.toInteger()
 
@@ -69,7 +67,7 @@ class SkillsMenu {
 
         println("****** CADASTRAR NOVA COMPETÊNCIA ******");
         try {
-            String name = InputHelper.getInputString("nome");
+            String name = InputHelper.getInputStringWithDefault("nome");
             SkillsDTO skillsDTO = new SkillsDTO(name: name)
 
             skillsDAO.save(skillsDTO) ? println("Competência registrada com sucesso") : println("Falha ao registrar competência")
@@ -81,39 +79,39 @@ class SkillsMenu {
     static void loadSkills(SkillsDAO skillsDAO) {
 
         println("Competências Cadastradas:")
-        InputHelper.divider(80)
+        InputHelper.printDivider(80)
 
         def columns = ["id", "nome"]
-        InputHelper.creatingTable(columns)
+        InputHelper.printColumns(columns)
 
         skillsDAO.findAll().forEach { it ->
-            InputHelper.creatingTable([it.getId().toString(), it.getName()])
+            InputHelper.printColumns([it.getId().toString(), it.getName()])
         }
 
-        InputHelper.divider(80)
+        InputHelper.printDivider(80)
     }
 
     static void loadSkillById(SkillsDAO skillsDAO) {
 
         println("Competência")
-        String id = InputHelper.getInputString("id")
+        String id = InputHelper.getInputStringWithDefault("id")
 
-        InputHelper.divider(80)
+        InputHelper.printDivider(80)
 
         def columns = ["id", "nome"]
-        InputHelper.creatingTable(columns)
+        InputHelper.printColumns(columns)
 
         SkillsDTO skillsDTO = skillsDAO.findById(id.toInteger())
-        InputHelper.creatingTable([skillsDTO.getId().toString(), skillsDTO.getName()])
+        InputHelper.printColumns([skillsDTO.getId().toString(), skillsDTO.getName()])
 
-        InputHelper.divider(80)
+        InputHelper.printDivider(80)
     }
 
     static void deleteSkillById(SkillsDAO skillsDAO) {
         println("Excluir Competência")
 
         try {
-            String id = InputHelper.getInputString("id")
+            String id = InputHelper.getInputStringWithDefault("id")
             skillsDAO.deleteById(id.toInteger()) ? println("Excluído com sucesso. Código ${id}") : println("Falha ao Excluir código ${id}")
 
         } catch (Exception e) {
@@ -126,10 +124,10 @@ class SkillsMenu {
         println("Atualizar Competência")
 
         try {
-            String id = InputHelper.getInputString("id")
+            String id = InputHelper.getInputStringWithDefault("id")
             SkillsDTO skillsDTO = skillsDAO.findById(id.toInteger())
 
-            skillsDTO.setName(InputHelper.getInputString("nome", skillsDTO.getName()))
+            skillsDTO.setName(InputHelper.getInputStringWithDefault("nome", skillsDTO.getName()))
 
             skillsDAO.updateById(skillsDTO) ? println("Atualizado com sucesso. Código ${id}") : println("Falha ao atualizar o código ${id}")
 

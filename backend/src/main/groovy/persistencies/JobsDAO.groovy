@@ -4,6 +4,7 @@ import entities.CandidateDTO
 import entities.CompanyDTO
 import entities.JobsDTO
 import entities.SkillsDTO
+import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 
 import java.sql.SQLException
@@ -13,7 +14,7 @@ class JobsDAO {
     Sql sql
 
     List<JobsDTO> findAll() {
-        def results = sql.rows("SELECT * FROM vagas;")
+        List<GroovyRowResult> results = sql.rows("SELECT * FROM vagas;")
         List<JobsDTO> jobs = []
         results.each { row ->
             JobsDTO job = new JobsDTO(id: row.id as Integer, company: new CompanyDTO(id: row.empresas_id as Integer), title: row.titulo, description: row.descricao, city: row.cidades_id)
@@ -33,13 +34,13 @@ class JobsDAO {
     }
 
     JobsDTO findById(int id) {
-        def result = sql.firstRow("SELECT * FROM vagas WHERE id = ?", id)
+        GroovyRowResult result = sql.firstRow("SELECT * FROM vagas WHERE id = ?", id)
         JobsDTO job = new JobsDTO(id: result.id as Integer, company: new CompanyDTO(id: result.empresas_id as Integer), title: result.titulo, description: result.descricao, city: result.cidades_id)
         return result ? job : null
     }
 
     boolean save(JobsDTO job) {
-        def result = sql.executeInsert("INSERT INTO vagas (empresas_id, titulo, descricao, cidades_id) VALUES (?,?,?,?)",
+        List<List<Object>> result = sql.executeInsert("INSERT INTO vagas (empresas_id, titulo, descricao, cidades_id) VALUES (?,?,?,?)",
                 [job.getCompany().getId(), job.getTitle(), job.getDescription(), job.getCity().toInteger()])
         return result ? true : false
     }

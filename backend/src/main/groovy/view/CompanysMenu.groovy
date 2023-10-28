@@ -1,9 +1,8 @@
 package view
 
-import entities.CandidateDTO
+
 import entities.CompanyDTO
 import exceptions.QuitException
-import persistencies.CandidateDAO
 import persistencies.CompanyDAO
 import persistencies.ConnectionFactory
 import utils.DateTimeHelper
@@ -33,7 +32,7 @@ class CompanysMenu {
                 println("[$key] - $value")
             }
 
-            String userInput = InputHelper.getInputString("Opção (ou 'q' para sair)")
+            String userInput = InputHelper.getInputStringWithDefault("Opção (ou 'q' para sair)")
 
             try {
 
@@ -74,12 +73,12 @@ class CompanysMenu {
 
         println("****** CADASTRAR NOVA EMPRESA ******");
         try {
-            String id = InputHelper.getInputString("id")
-            String name = InputHelper.getInputString("nome");
-            String description = InputHelper.getInputString("descrição");
-            String city = InputHelper.getInputString("cidade (número)");
-            LocalDate creationDate = DateTimeHelper.getInputDate("data de fundação (dd/mm/aaaa)");
-            String cnpj = InputHelper.getInputString("cnpj");
+            String id = InputHelper.getInputStringWithDefault("id")
+            String name = InputHelper.getInputStringWithDefault("nome");
+            String description = InputHelper.getInputStringWithDefault("descrição");
+            String city = InputHelper.getInputStringWithDefault("cidade (número)");
+            LocalDate creationDate = DateTimeHelper.getInputDateWithDefault("data de fundação (dd/mm/aaaa)");
+            String cnpj = InputHelper.getInputStringWithDefault("cnpj");
 
             CompanyDTO company = new CompanyDTO(
                     id: id.toInteger(), name: name, description: description, city: city, creationDate: creationDate, cnpj: cnpj)
@@ -94,37 +93,37 @@ class CompanysMenu {
     static void loadCompany(CompanyDAO companyDAO) {
 
         println("Empresas Cadastradas:")
-        InputHelper.divider(80)
+        InputHelper.printDivider(80)
 
         def columns = ["id", "nome", "linkedin"]
-        InputHelper.creatingTable(columns)
+        InputHelper.printColumns(columns)
 
         companyDAO.findAll().forEach { it ->
-            InputHelper.creatingTable([it.getId().toString(), it.getName(), it.getDescription()])
+            InputHelper.printColumns([it.getId().toString(), it.getName(), it.getDescription()])
         }
-        InputHelper.divider(80)
+        InputHelper.printDivider(80)
     }
 
     static void loadCompanyById(CompanyDAO companyDAO) {
 
         println("Empresa:")
-        String id = InputHelper.getInputString("id")
+        String id = InputHelper.getInputStringWithDefault("id")
 
-        InputHelper.divider(80)
+        InputHelper.printDivider(80)
 
         def columns = ["id", "nome", "linkedin"]
-        InputHelper.creatingTable(columns)
+        InputHelper.printColumns(columns)
 
         CompanyDTO company = companyDAO.findById(id.toInteger())
-        InputHelper.creatingTable([company.getId().toString(), company.getName(), company.getDescription()])
-        InputHelper.divider(80)
+        InputHelper.printColumns([company.getId().toString(), company.getName(), company.getDescription()])
+        InputHelper.printDivider(80)
     }
 
     static void deleteCompanyById(CompanyDAO companyDAO) {
         println("Excluir Empresa")
 
         try {
-            String id = InputHelper.getInputString("id")
+            String id = InputHelper.getInputStringWithDefault("id")
             companyDAO.deleteById(id.toInteger()) ? println("Excluído com sucesso. Código ${id}") : println("Falha ao Excluir código ${id}")
         } catch (Exception e) {
             e.getMessage()
@@ -135,12 +134,12 @@ class CompanysMenu {
         println("Atualizar Empresa")
 
         try {
-            String id = InputHelper.getInputString("id")
+            String id = InputHelper.getInputStringWithDefault("id")
             CompanyDTO company = companyDAO.findById(id.toInteger())
 
-            company.setName(InputHelper.getInputString("nome", company.getName()))
-            company.setDescription(InputHelper.getInputString("descrição:", company.getDescription()))
-            company.setCity(InputHelper.getInputString("cidade:", company.getCity()))
+            company.setName(InputHelper.getInputStringWithDefault("nome", company.getName()))
+            company.setDescription(InputHelper.getInputStringWithDefault("descrição:", company.getDescription()))
+            company.setCity(InputHelper.getInputStringWithDefault("cidade:", company.getCity()))
 
             companyDAO.updateById(company) ? println("Atualizado com sucesso. Código ${id}") : println("Falha ao atualizar o código ${id}")
 

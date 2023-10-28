@@ -4,6 +4,7 @@ import entities.CandidateDTO
 import entities.CompanyDTO
 import entities.JobsDTO
 import entities.SkillsDTO
+import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 
 import java.sql.SQLException
@@ -13,7 +14,7 @@ class CompanyDAO {
     Sql sql
 
     List<CompanyDTO> findAll() {
-        def results = sql.rows("SELECT * FROM empresas AS e INNER JOIN usuarios AS u ON e.usuarios_id = u.id;")
+        List<GroovyRowResult> results = sql.rows("SELECT * FROM empresas AS e INNER JOIN usuarios AS u ON e.usuarios_id = u.id;")
         List<CompanyDTO> companies = []
         results.each { row ->
             CompanyDTO company = new CompanyDTO(id: row.usuarios_id, name: row.razao_social, description: row.descricao)
@@ -23,13 +24,13 @@ class CompanyDAO {
     }
 
     CompanyDTO findById(int id) {
-        def result = sql.firstRow("SELECT * FROM empresas AS e INNER JOIN usuarios AS u ON e.usuarios_id = u.id WHERE id = ?", id)
+        GroovyRowResult result = sql.firstRow("SELECT * FROM empresas AS e INNER JOIN usuarios AS u ON e.usuarios_id = u.id WHERE id = ?", id)
         CompanyDTO company = new CompanyDTO(id: result.id, name: result.razao_social, description: result.descricao)
         return result ? company : null
     }
 
     boolean save(CompanyDTO company) {
-        def result = sql.executeInsert("INSERT INTO empresas (usuarios_id, razao_social, descricao, data_fundacao) VALUES (?, ?, ?, ?)",
+        List<List<Object>> result = sql.executeInsert("INSERT INTO empresas (usuarios_id, razao_social, descricao, data_fundacao) VALUES (?, ?, ?, ?)",
                 [company.getId(), company.getName(), company.getDescription(), company.getCreationDate()])
         return result ? true : false
     }

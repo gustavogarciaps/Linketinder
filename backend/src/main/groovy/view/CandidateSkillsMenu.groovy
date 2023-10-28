@@ -24,7 +24,7 @@ class CandidateSkillsMenu {
                 println("[$key] - $value")
             }
 
-            String userInput = InputHelper.getInputString("Opção (ou 'q' para sair)")
+            String userInput = InputHelper.getInputStringWithDefault("Opção (ou 'q' para sair)")
 
             try {
 
@@ -54,8 +54,8 @@ class CandidateSkillsMenu {
         CandidateDTO candidateDTO = new CandidateDTO()
         SkillsDTO skillsDTO = new SkillsDTO()
 
-        candidateDTO.setId(InputHelper.getInputString("id candidato").toInteger())
-        skillsDTO.setId(InputHelper.getInputString("id competência").toInteger())
+        candidateDTO.setId(InputHelper.getInputStringWithDefault("id candidato").toInteger())
+        skillsDTO.setId(InputHelper.getInputStringWithDefault("id competência").toInteger())
 
         try{
             candidateSkillsDAO.save(candidateDTO, skillsDTO)

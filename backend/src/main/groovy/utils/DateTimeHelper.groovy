@@ -10,44 +10,39 @@ class DateTimeHelper {
 
     static final Scanner scanner = new Scanner(System.in);
 
-    static LocalDate getInputDate(String prompt) {
+    static LocalDate getInputDateWithDefault(String prompt) {
+        String input = getInput(prompt);
+        return convertStringToDate(input);
+    }
 
-        System.out.print(prompt + ": ");
+    static LocalDate getInputDateWithDefault(String prompt, String defaultValue) {
+        String input = getInput(prompt + " (" + defaultValue + "): ");
+        if (input.isEmpty()) {
+            input = defaultValue;
+        }
+        return convertStringToDate(input);
+    }
+
+    private static String getInput(String prompt) {
+        print(prompt);
         String input = scanner.nextLine();
+        checkForQuit(input);
+        return input;
+    }
 
-        if (input.equals("q") || input.isEmpty()) {
-            throw new QuitException("Usuário escolheu sair.")
+    private static void checkForQuit(String input) {
+        if (input.equals("q")) {
+            throw new QuitException("Usuário escolheu sair.");
         }
-
-        return convertStringToTime(input)
-
     }
 
-    static LocalDate getInputDate(String prompt, String args) {
-        System.out.print(prompt + ": ");
-        String input = scanner.nextLine();
-
-        if (input.equals("q") || input.isEmpty()) {
-            throw new QuitException("Usuário escolheu sair.")
+    private static LocalDate convertStringToDate(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            return LocalDate.parse(date, formatter);
+        } catch (Exception ignored) {
+            System.err.println("Formato de data inválido. Use o formato dd/MM/yyyy.");
+            return null;
         }
-
-        if(input.isEmpty()){
-            return args
-        }
-
-        return convertStringToTime(input);
     }
-
-    static LocalDate convertStringToTime(String date) {
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        LocalDate dateFormatter = LocalDate.parse(date, formatter)
-
-        return dateFormatter ? dateFormatter : null;
-    }
-
-    static void checkDateFormat() {
-
-    }
-
 }

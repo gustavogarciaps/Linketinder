@@ -1,7 +1,6 @@
 package view
 
 import entities.PersonDTO
-import exceptions.QuitException
 import persistencies.ConnectionFactory
 import persistencies.PersonDAO
 import utils.InputHelper
@@ -26,7 +25,7 @@ class MainMenu {
             }
 
             try {
-                String userInput = InputHelper.getInputString("Opção")
+                String userInput = InputHelper.getInputStringWithDefault("Opção")
 
                 Integer choice = userInput.toInteger()
 
@@ -58,8 +57,8 @@ class MainMenu {
 
         println("****** CADASTRAR NOVO USUÁRIO ******");
         try {
-            String email = InputHelper.getInputString("email");
-            String password = InputHelper.getInputString("senha");
+            String email = InputHelper.getInputStringWithDefault("email");
+            String password = InputHelper.getInputStringWithDefault("senha");
 
             PersonDTO personDTO = new PersonDTO(email: email, password: password)
             PersonDAO personDAO = new PersonDAO(sql: ConnectionFactory.newInstance());
@@ -88,7 +87,7 @@ class MainMenu {
             }
 
             try {
-                String userInput = InputHelper.getInputString("Opção")
+                String userInput = InputHelper.getInputStringWithDefault("Opção")
                 Integer choice = userInput.toInteger()
 
                 switch (choice) {
@@ -116,15 +115,15 @@ class MainMenu {
         PersonDAO personDAO = new PersonDAO(sql: ConnectionFactory.newInstance())
 
         println("Usuários Cadastrados:")
-        InputHelper.divider(80)
+        InputHelper.printDivider(80)
 
         def columns = ["id", "email", "password"]
-        InputHelper.creatingTable(columns)
+        InputHelper.printColumns(columns)
 
         personDAO.findAll().forEach { it ->
-            InputHelper.creatingTable([it.getId(), it.getEmail(), it.getPassword()])
+            InputHelper.printColumns([it.getId(), it.getEmail(), it.getPassword()])
         }
 
-        InputHelper.divider(80)
+        InputHelper.printDivider(80)
     }
 }
