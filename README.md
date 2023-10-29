@@ -154,7 +154,7 @@ Antes:
     }
 ```
 
-Depois: ([conferir métodos]([ela](https://github.com/gustavogarciaps/Linketinder/blob/K2-T2/backend/src/main/groovy/utils/InputHelper.groovy)))
+Depois: ([conferir métodos]([ela](https://github.com/gustavogarciaps/Linketinder/blob/K2-T1/backend/src/main/groovy/utils/InputHelper.groovy)))
 ```groovy
     static void loadJobs(JobsDAO jobsDAO) {
 
@@ -177,6 +177,6 @@ Depois: ([conferir métodos]([ela](https://github.com/gustavogarciaps/Linketinde
     }
 ```
 
-Além disso, algumas conversões ou formatações de data que eu anexava à classe específica, eu criei uma Classe apenas para [ela](https://github.com/gustavogarciaps/Linketinder/blob/K2-T2/backend/src/main/groovy/utils/DateTimeHelper.groovy).
+Além disso, algumas conversões ou formatações de data que eu anexava à classe específica, eu criei uma Classe apenas para [ela](https://github.com/gustavogarciaps/Linketinder/blob/K2-T1/backend/src/main/groovy/utils/DateTimeHelper.groovy).
 
 As demais alterações foram mais simplórias, como renomeação das classes para a língua inglesa, a criação de Exceções e o tratamento delas, e a utilização de annotations do groovy (@Canonical) para criação dos getters e setters.
