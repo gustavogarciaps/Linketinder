@@ -3,7 +3,7 @@ package view
 import entities.Candidate
 import entities.Skills
 import DAO.CandidateSkillsDAO
-import DAO.ConnectionFactory
+import DAO.Connection
 import utils.InputHelper
 
 class CandidateSkillsMenu {
@@ -35,7 +35,7 @@ class CandidateSkillsMenu {
                         SkillsMenu.showOptions()
                         break
                     case 2:
-                        associateSkillWithCandidate(new CandidateSkillsDAO(sql: ConnectionFactory.newInstance()))
+                        associateSkillWithCandidate(new CandidateSkillsDAO(sql: Connection.newInstance()))
                         break
                     case 3:
                         return

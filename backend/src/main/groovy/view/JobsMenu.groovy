@@ -2,7 +2,7 @@ package view
 
 import entities.Company
 import entities.Jobs
-import DAO.ConnectionFactory
+import DAO.Connection
 import DAO.JobsDAO
 import utils.InputHelper
 
@@ -36,19 +36,19 @@ class JobsMenu {
 
                 switch (choice) {
                     case 1:
-                        createJob(new JobsDAO(sql: ConnectionFactory.newInstance()))
+                        createJob(new JobsDAO(sql: Connection.newInstance()))
                         break
                     case 2:
-                        loadJobs(new JobsDAO(sql: ConnectionFactory.newInstance()))
+                        loadJobs(new JobsDAO(sql: Connection.newInstance()))
                         break
                     case 3:
-                        loadJobById(new JobsDAO(sql: ConnectionFactory.newInstance()))
+                        loadJobById(new JobsDAO(sql: Connection.newInstance()))
                         break
                     case 4:
-                        deleteJobById(new JobsDAO(sql: ConnectionFactory.newInstance()))
+                        deleteJobById(new JobsDAO(sql: Connection.newInstance()))
                         break
                     case 5:
-                        updateJobById(new JobsDAO(sql: ConnectionFactory.newInstance()))
+                        updateJobById(new JobsDAO(sql: Connection.newInstance()))
                         break
                     case 6:
                         JobsSkillsMenu.showOptions()

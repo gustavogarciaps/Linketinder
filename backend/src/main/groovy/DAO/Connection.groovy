@@ -2,7 +2,7 @@ package DAO
 
 import groovy.sql.Sql
 
-class ConnectionFactory {
+class Connection {
 
     static Sql newInstance() {
         final String url = 'jdbc:postgresql://localhost:5432/linketinder'

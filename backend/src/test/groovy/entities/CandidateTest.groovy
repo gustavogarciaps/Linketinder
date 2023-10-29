@@ -3,7 +3,7 @@ package entities
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import DAO.CandidateDAO
-import DAO.ConnectionFactory
+import DAO.Connection
 
 import static org.junit.jupiter.api.Assertions.assertEquals
 import static org.junit.jupiter.api.Assertions.assertTrue
@@ -35,7 +35,7 @@ class CandidateTest {
     @Test
     void recoverCandidateFromDatabase() {
 
-        CandidateDAO candidateDAO = new CandidateDAO(sql: ConnectionFactory.newInstance())
+        CandidateDAO candidateDAO = new CandidateDAO(sql: Connection.newInstance())
         List<Candidate> candidateList = candidateDAO.findAll()
         candidateList.forEach { it ->
             println("recoverCandidateFromDatabase: ${it.getId()} ${it.getName()}")
@@ -44,19 +44,19 @@ class CandidateTest {
 
     @Test
     void findCandidate() {
-        CandidateDAO candidateDAO = new CandidateDAO(sql: ConnectionFactory.newInstance())
+        CandidateDAO candidateDAO = new CandidateDAO(sql: Connection.newInstance())
         println("findCandidate: ${candidateDAO.findById(19)}")
     }
 
     @Test
     void deleteCandidateById() {
-        CandidateDAO candidateDAO = new CandidateDAO(sql: ConnectionFactory.newInstance())
+        CandidateDAO candidateDAO = new CandidateDAO(sql: Connection.newInstance())
         assertTrue(candidateDAO.deleteById(21))
     }
 
     @Test
     void updateCandidateById() {
-        CandidateDAO candidateDAO = new CandidateDAO(sql: ConnectionFactory.newInstance())
+        CandidateDAO candidateDAO = new CandidateDAO(sql: Connection.newInstance())
 
         Candidate candidateDTO = new Candidate(id: 19, name: "Osvaldo Cruz")
         assertTrue(candidateDAO.updateById(candidateDTO))
@@ -64,7 +64,7 @@ class CandidateTest {
 
     @Test
     void findAllCandidateSkills() {
-        CandidateDAO candidateDAO = new CandidateDAO(sql: ConnectionFactory.newInstance())
+        CandidateDAO candidateDAO = new CandidateDAO(sql: Connection.newInstance())
 
         Candidate candidateDTO = candidateDAO.findAll(new Candidate(id: 5))
 

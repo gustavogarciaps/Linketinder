@@ -2,7 +2,7 @@ package view
 
 import entities.Jobs
 import entities.Skills
-import DAO.ConnectionFactory
+import DAO.Connection
 import DAO.JobsSkillsDAO
 import utils.InputHelper
 
@@ -34,7 +34,7 @@ class JobsSkillsMenu {
                         SkillsMenu.showOptions()
                         break
                     case 2:
-                        associateSkillWithJob(new JobsSkillsDAO(sql: ConnectionFactory.newInstance()))
+                        associateSkillWithJob(new JobsSkillsDAO(sql: Connection.newInstance()))
                         break
                     case 3:
                         return

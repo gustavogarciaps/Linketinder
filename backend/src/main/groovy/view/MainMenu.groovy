@@ -1,7 +1,7 @@
 package view
 
 import entities.Person
-import DAO.ConnectionFactory
+import DAO.Connection
 import DAO.PersonDAO
 import utils.InputHelper
 
@@ -61,7 +61,7 @@ class MainMenu {
             String password = InputHelper.getInputStringWithDefault("senha");
 
             Person personDTO = new Person(email: email, password: password)
-            PersonDAO personDAO = new PersonDAO(sql: ConnectionFactory.newInstance());
+            PersonDAO personDAO = new PersonDAO(sql: Connection.newInstance());
 
             personDAO.save(personDTO)
 
@@ -112,7 +112,7 @@ class MainMenu {
 
     static void loadPerson() {
 
-        PersonDAO personDAO = new PersonDAO(sql: ConnectionFactory.newInstance())
+        PersonDAO personDAO = new PersonDAO(sql: Connection.newInstance())
 
         println("Usuários Cadastrados:")
         InputHelper.printDivider(80)

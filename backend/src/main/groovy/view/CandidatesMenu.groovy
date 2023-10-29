@@ -2,7 +2,7 @@ package view
 
 import entities.Candidate
 import DAO.CandidateDAO
-import DAO.ConnectionFactory
+import DAO.Connection
 import utils.DateTimeHelper
 import utils.InputHelper
 
@@ -38,19 +38,19 @@ class CandidatesMenu {
 
                 switch (choice) {
                     case 1:
-                        createCandidate(new CandidateDAO(sql: ConnectionFactory.newInstance()))
+                        createCandidate(new CandidateDAO(sql: Connection.newInstance()))
                         break
                     case 2:
-                        loadCandidates(new CandidateDAO(sql: ConnectionFactory.newInstance()))
+                        loadCandidates(new CandidateDAO(sql: Connection.newInstance()))
                         break
                     case 3:
-                        loadCandidateById(new CandidateDAO(sql: ConnectionFactory.newInstance()))
+                        loadCandidateById(new CandidateDAO(sql: Connection.newInstance()))
                         break
                     case 4:
-                        deleteCandidateById(new CandidateDAO(sql: ConnectionFactory.newInstance()))
+                        deleteCandidateById(new CandidateDAO(sql: Connection.newInstance()))
                         break
                     case 5:
-                        updateCandidateById(new CandidateDAO(sql: ConnectionFactory.newInstance()))
+                        updateCandidateById(new CandidateDAO(sql: Connection.newInstance()))
                         break
                     case 6:
                         CandidateSkillsMenu.showOptions()

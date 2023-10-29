@@ -3,7 +3,7 @@ package entities
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import DAO.CompanyDAO
-import DAO.ConnectionFactory
+import DAO.Connection
 
 import java.time.LocalDate
 
@@ -60,7 +60,7 @@ class CompanyTest {
     @Test
     void recoverCompaniesFromDatabase() {
 
-        CompanyDAO companyDAO = new CompanyDAO(sql: ConnectionFactory.newInstance())
+        CompanyDAO companyDAO = new CompanyDAO(sql: Connection.newInstance())
         List<Company> companies = companyDAO.findAll()
         companies.forEach { it ->
             println("recoverCompaniesFromDatabase: ${it.getId()} ${it.getName()}")
@@ -69,20 +69,20 @@ class CompanyTest {
 
     @Test
     void findCompany() {
-        CompanyDAO companyDAO = new CompanyDAO(sql: ConnectionFactory.newInstance())
+        CompanyDAO companyDAO = new CompanyDAO(sql: Connection.newInstance())
         println("findCompany: ${companyDAO.findById(22).getName()}")
     }
 
     @Test
     void insertCompanyToDataBase() {
-        CompanyDAO companyDAO = new CompanyDAO(sql: ConnectionFactory.newInstance())
+        CompanyDAO companyDAO = new CompanyDAO(sql: Connection.newInstance())
         Company company = new Company(id: 22, name: "Sorvetes e Tech Solutions", description: "10987", creationDate: LocalDate.of(2022,6,9))
         companyDAO.save(company)
     }
 
     @Test
     void updateCompanyById() {
-        CompanyDAO companyDAO = new CompanyDAO(sql: ConnectionFactory.newInstance())
+        CompanyDAO companyDAO = new CompanyDAO(sql: Connection.newInstance())
         Company company = companyDAO.findById(22)
         company.setName( "Sorvetes e Tech")
         company.setCity("1")
@@ -92,7 +92,7 @@ class CompanyTest {
 
     @Test
     void deleteCompanyById() {
-        CompanyDAO companyDAO = new CompanyDAO(sql: ConnectionFactory.newInstance())
+        CompanyDAO companyDAO = new CompanyDAO(sql: Connection.newInstance())
         assertTrue(companyDAO.deleteById(22))
     }
 
