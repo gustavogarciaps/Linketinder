@@ -154,7 +154,7 @@ Antes:
     }
 ```
 
-Depois: ([conferir métodos]([ela](https://github.com/gustavogarciaps/Linketinder/blob/K2-T1/backend/src/main/groovy/utils/InputHelper.groovy)))
+Depois: [conferir métodos]([ela](https://github.com/gustavogarciaps/Linketinder/blob/K2-T1/backend/src/main/groovy/utils/InputHelper.groovy))
 ```groovy
     static void loadJobs(JobsDAO jobsDAO) {
 
