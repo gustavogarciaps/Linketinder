@@ -1,10 +1,10 @@
 package view
 
 
-import entities.CompanyDTO
+import entities.Company
 import exceptions.QuitException
-import persistencies.CompanyDAO
-import persistencies.ConnectionFactory
+import DAO.CompanyDAO
+import DAO.ConnectionFactory
 import utils.DateTimeHelper
 import utils.InputHelper
 
@@ -80,7 +80,7 @@ class CompanysMenu {
             LocalDate creationDate = DateTimeHelper.getInputDateWithDefault("data de fundação (dd/mm/aaaa)");
             String cnpj = InputHelper.getInputStringWithDefault("cnpj");
 
-            CompanyDTO company = new CompanyDTO(
+            Company company = new Company(
                     id: id.toInteger(), name: name, description: description, city: city, creationDate: creationDate, cnpj: cnpj)
 
             companyDAO.save(company) ? println("Empresa registrada com sucesso") : println("Falha ao registrar empresa")
@@ -114,7 +114,7 @@ class CompanysMenu {
         def columns = ["id", "nome", "linkedin"]
         InputHelper.printColumns(columns)
 
-        CompanyDTO company = companyDAO.findById(id.toInteger())
+        Company company = companyDAO.findById(id.toInteger())
         InputHelper.printColumns([company.getId().toString(), company.getName(), company.getDescription()])
         InputHelper.printDivider(80)
     }
@@ -135,7 +135,7 @@ class CompanysMenu {
 
         try {
             String id = InputHelper.getInputStringWithDefault("id")
-            CompanyDTO company = companyDAO.findById(id.toInteger())
+            Company company = companyDAO.findById(id.toInteger())
 
             company.setName(InputHelper.getInputStringWithDefault("nome", company.getName()))
             company.setDescription(InputHelper.getInputStringWithDefault("descrição:", company.getDescription()))

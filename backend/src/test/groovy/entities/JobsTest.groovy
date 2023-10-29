@@ -2,44 +2,41 @@ package entities
 
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import persistencies.CandidateDAO
-import persistencies.ConnectionFactory
-import persistencies.JobsDAO
+import DAO.CandidateDAO
+import DAO.ConnectionFactory
+import DAO.JobsDAO
 
 import static org.junit.jupiter.api.Assertions.assertEquals
 import static org.junit.jupiter.api.Assertions.assertTrue
-import static org.junit.jupiter.api.Assertions.assertTrue
-import static org.junit.jupiter.api.Assertions.assertTrue
-import static org.junit.jupiter.api.Assertions.assertTrue
 
-class JobsDTOTest {
+class JobsTest {
 
-    JobsDTO job
+    Jobs job
 
     @BeforeEach
     void setUp() {
-        job = new JobsDTO()
+        job = new Jobs()
     }
 
     @Test
     void shouldBeInstanceOfJobs() {
-        assertTrue(job instanceof JobsDTO)
+        assertTrue(job instanceof Jobs)
     }
 
     @Test
     void addSkillToJobs() {
         job.addSkills(
-                new SkillsDTO(id: 1, name: "Java", level: 2)
+                new Skills(id: 1, name: "Java", level: 2)
         )
-        SkillsDTO skill = job.getSkills()[0]
-        assertTrue(skill instanceof SkillsDTO)
+        Skills skill = job.getSkills()[0]
+        assertTrue(skill instanceof Skills)
         assertEquals("Java", skill.getName())
     }
 
     @Test
     void recoverJobsFromDatabase() {
         JobsDAO jobsDAO = new JobsDAO(sql: ConnectionFactory.newInstance())
-        List<JobsDTO> jobs = jobsDAO.findAll()
+        List<Jobs> jobs = jobsDAO.findAll()
         jobs.forEach { it ->
             println("recoverJobsFromDatabase: ${it.getId()} ${it.getTitle()} ${it.getCompany().getId()}")
         }
@@ -60,7 +57,7 @@ class JobsDTOTest {
     @Test
     void updateJobById() {
         JobsDAO jobsDAO = new JobsDAO(sql: ConnectionFactory.newInstance())
-        JobsDTO job = jobsDAO.findById(9)
+        Jobs job = jobsDAO.findById(9)
         job.setTitle("Desenvolvedor Java Sr.")
         jobsDAO.updateById(job)
         recoverJobsFromDatabase()

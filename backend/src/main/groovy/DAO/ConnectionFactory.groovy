@@ -1,4 +1,4 @@
-package persistencies
+package DAO
 
 import groovy.sql.Sql
 

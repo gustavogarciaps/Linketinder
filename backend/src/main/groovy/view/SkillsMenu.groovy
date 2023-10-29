@@ -1,9 +1,9 @@
 package view
 
-import entities.SkillsDTO
+import entities.Skills
 import exceptions.QuitException
-import persistencies.ConnectionFactory
-import persistencies.SkillsDAO
+import DAO.ConnectionFactory
+import DAO.SkillsDAO
 import utils.InputHelper
 
 class SkillsMenu {
@@ -68,7 +68,7 @@ class SkillsMenu {
         println("****** CADASTRAR NOVA COMPETÊNCIA ******");
         try {
             String name = InputHelper.getInputStringWithDefault("nome");
-            SkillsDTO skillsDTO = new SkillsDTO(name: name)
+            Skills skillsDTO = new Skills(name: name)
 
             skillsDAO.save(skillsDTO) ? println("Competência registrada com sucesso") : println("Falha ao registrar competência")
         } catch (Exception e) {
@@ -101,7 +101,7 @@ class SkillsMenu {
         def columns = ["id", "nome"]
         InputHelper.printColumns(columns)
 
-        SkillsDTO skillsDTO = skillsDAO.findById(id.toInteger())
+        Skills skillsDTO = skillsDAO.findById(id.toInteger())
         InputHelper.printColumns([skillsDTO.getId().toString(), skillsDTO.getName()])
 
         InputHelper.printDivider(80)
@@ -125,7 +125,7 @@ class SkillsMenu {
 
         try {
             String id = InputHelper.getInputStringWithDefault("id")
-            SkillsDTO skillsDTO = skillsDAO.findById(id.toInteger())
+            Skills skillsDTO = skillsDAO.findById(id.toInteger())
 
             skillsDTO.setName(InputHelper.getInputStringWithDefault("nome", skillsDTO.getName()))
 

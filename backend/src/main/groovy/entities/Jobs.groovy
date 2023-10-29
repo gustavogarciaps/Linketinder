@@ -5,10 +5,10 @@ import groovy.transform.Canonical
 import java.time.LocalDate
 
 @Canonical
-class JobsDTO {
+class Jobs {
 
     Integer id
-    CompanyDTO company
+    Company company
     String title
     String description
     String modality
@@ -16,9 +16,9 @@ class JobsDTO {
     String state
     String country
     LocalDate dateOfCreate
-    List<SkillsDTO> skills = new ArrayList<>()
+    List<Skills> skills = new ArrayList<>()
 
-    void addSkills(SkillsDTO skill) {
+    void addSkills(Skills skill) {
         this.skills.push(skill)
     }
 

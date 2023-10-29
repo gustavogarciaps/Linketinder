@@ -1,8 +1,8 @@
 package view
 
-import entities.CandidateDTO
-import persistencies.CandidateDAO
-import persistencies.ConnectionFactory
+import entities.Candidate
+import DAO.CandidateDAO
+import DAO.ConnectionFactory
 import utils.DateTimeHelper
 import utils.InputHelper
 
@@ -79,7 +79,7 @@ class CandidatesMenu {
             LocalDate dateOfBirth = DateTimeHelper.getInputDateWithDefault("data de aniversário (dd/mm/aaaa)");
             String cpf = InputHelper.getInputStringWithDefault("cpf");
 
-            CandidateDTO candidateDTO = new CandidateDTO(
+            Candidate candidateDTO = new Candidate(
                     id: id.toInteger(), name: name, description: description, city: city, linkedin: linkedin, dateOfBirth: dateOfBirth, cpf: cpf)
 
             candidateDAO.save(candidateDTO) ? println("Candidato registrado com sucesso") : println("Falha ao registrar candidato")
@@ -99,7 +99,7 @@ class CandidatesMenu {
 
         candidateDAO.findAll().forEach { it ->
 
-            CandidateDTO candidateDTO = candidateDAO.findAll(it)
+            Candidate candidateDTO = candidateDAO.findAll(it)
             InputHelper.printColumns([candidateDTO.getId(), candidateDTO.getName(), candidateDTO.getLinkedin()])
 
             println("Competências do candidato")
@@ -121,7 +121,7 @@ class CandidatesMenu {
         def columns = ["id", "nome", "linkedin"]
         InputHelper.printColumns(columns)
 
-        CandidateDTO candidateDTO = candidateDAO.findById(id.toInteger())
+        Candidate candidateDTO = candidateDAO.findById(id.toInteger())
         candidateDTO = candidateDAO.findAll(candidateDTO)
 
         InputHelper.printColumns([candidateDTO.getId(), candidateDTO.getName(), candidateDTO.getLinkedin()])
@@ -148,7 +148,7 @@ class CandidatesMenu {
 
         try {
             String id = InputHelper.getInputStringWithDefault("id")
-            CandidateDTO candidateDTO = candidateDAO.findById(id.toInteger())
+            Candidate candidateDTO = candidateDAO.findById(id.toInteger())
 
             candidateDTO.setName(InputHelper.getInputStringWithDefault("nome", candidateDTO.getName()))
             candidateDTO.setDescription(InputHelper.getInputStringWithDefault("descrição:", candidateDTO.getDescription()))

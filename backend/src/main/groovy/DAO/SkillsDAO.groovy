@@ -1,7 +1,7 @@
-package persistencies
+package DAO
 
-import entities.CandidateDTO
-import entities.SkillsDTO
+
+import entities.Skills
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import groovy.transform.Canonical
@@ -13,23 +13,23 @@ class SkillsDAO {
 
     Sql sql
 
-    List<SkillsDTO> findAll() throws SQLException {
+    List<Skills> findAll() throws SQLException {
         List<GroovyRowResult> results = sql.rows("SELECT * FROM competencias")
-        List<SkillsDTO> skills = []
+        List<Skills> skills = []
         results.each { row ->
-            SkillsDTO skill = new SkillsDTO(id: row.id, name: row.nome)
+            Skills skill = new Skills(id: row.id, name: row.nome)
             skills.add(skill)
         }
         return skills
     }
 
-    SkillsDTO findById(int id) throws SQLException {
+    Skills findById(int id) throws SQLException {
         GroovyRowResult result = sql.firstRow("SELECT * FROM competencias WHERE id = ?", id)
-        SkillsDTO skill = new SkillsDTO(id: result.id, name: result.nome)
+        Skills skill = new Skills(id: result.id, name: result.nome)
         return result ? skill : null
     }
 
-    boolean save(SkillsDTO skill) throws SQLException {
+    boolean save(Skills skill) throws SQLException {
         List<List<Object>> result = sql.executeInsert("INSERT INTO competencias (nome) VALUES (?)",
                 [skill.getName()])
         return result ? true : false
@@ -39,7 +39,7 @@ class SkillsDAO {
         return sql.execute("DELETE FROM competencias WHERE id = ?", [id])
     }
 
-    boolean updateById(SkillsDTO skill) throws SQLException {
+    boolean updateById(Skills skill) throws SQLException {
         return sql.execute("UPDATE competencias SET nome = ? WHERE id = ?",
                 [skill.getName(), skill.getId()])
     }

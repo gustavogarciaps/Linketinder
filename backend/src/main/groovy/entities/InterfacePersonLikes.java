@@ -2,5 +2,5 @@ package entities;
 
 public interface InterfacePersonLikes {
 
-    void like(PersonDTO person);
+    void like(Person person);
 }

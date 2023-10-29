@@ -5,13 +5,13 @@ import groovy.transform.Canonical
 import java.time.LocalDate
 
 @Canonical
-class CompanyDTO extends PersonDTO{
+class Company extends Person{
 
     String cnpj
     LocalDate creationDate
-    List<JobsDTO> jobs = new ArrayList<>()
+    List<Jobs> jobs = new ArrayList<>()
 
-    void addJobs (JobsDTO job){
+    void addJobs (Jobs job){
         this.jobs.push(job)
     }
 

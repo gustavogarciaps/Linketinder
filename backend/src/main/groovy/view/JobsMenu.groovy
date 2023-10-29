@@ -1,9 +1,9 @@
 package view
 
-import entities.CompanyDTO
-import entities.JobsDTO
-import persistencies.ConnectionFactory
-import persistencies.JobsDAO
+import entities.Company
+import entities.Jobs
+import DAO.ConnectionFactory
+import DAO.JobsDAO
 import utils.InputHelper
 
 class JobsMenu {
@@ -74,8 +74,8 @@ class JobsMenu {
             String company = InputHelper.getInputStringWithDefault("empresa (número)");
             String city = InputHelper.getInputStringWithDefault("cidade");
 
-            JobsDTO job = new JobsDTO(
-                    title: title, description: description, city: city, company: new CompanyDTO(id: company.toInteger()))
+            Jobs job = new Jobs(
+                    title: title, description: description, city: city, company: new Company(id: company.toInteger()))
 
             jobsDAO.save(job) ? println("Vaga registrada com sucesso") : println("Falha ao registrar vaga")
 
@@ -107,7 +107,7 @@ class JobsMenu {
     static void loadJobById(JobsDAO jobsDAO) {
 
         String id = InputHelper.getInputStringWithDefault("id")
-        JobsDTO job = jobsDAO.findById(id.toInteger())
+        Jobs job = jobsDAO.findById(id.toInteger())
 
         println("Vaga Cadastrada:")
         InputHelper.printDivider(80)
@@ -141,7 +141,7 @@ class JobsMenu {
 
         try {
             String id = InputHelper.getInputStringWithDefault("id")
-            JobsDTO job = jobsDAO.findById(id.toInteger())
+            Jobs job = jobsDAO.findById(id.toInteger())
 
             job.setTitle(InputHelper.getInputStringWithDefault("titulo", job.getTitle()))
             job.setDescription(InputHelper.getInputStringWithDefault("descrição", job.getDescription()))

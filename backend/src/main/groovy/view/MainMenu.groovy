@@ -1,8 +1,8 @@
 package view
 
-import entities.PersonDTO
-import persistencies.ConnectionFactory
-import persistencies.PersonDAO
+import entities.Person
+import DAO.ConnectionFactory
+import DAO.PersonDAO
 import utils.InputHelper
 
 class MainMenu {
@@ -60,7 +60,7 @@ class MainMenu {
             String email = InputHelper.getInputStringWithDefault("email");
             String password = InputHelper.getInputStringWithDefault("senha");
 
-            PersonDTO personDTO = new PersonDTO(email: email, password: password)
+            Person personDTO = new Person(email: email, password: password)
             PersonDAO personDAO = new PersonDAO(sql: ConnectionFactory.newInstance());
 
             personDAO.save(personDTO)

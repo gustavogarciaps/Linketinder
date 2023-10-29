@@ -1,9 +1,9 @@
 package view
 
-import entities.JobsDTO
-import entities.SkillsDTO
-import persistencies.ConnectionFactory
-import persistencies.JobsSkillsDAO
+import entities.Jobs
+import entities.Skills
+import DAO.ConnectionFactory
+import DAO.JobsSkillsDAO
 import utils.InputHelper
 
 class JobsSkillsMenu {
@@ -50,8 +50,8 @@ class JobsSkillsMenu {
 
     static void associateSkillWithJob(JobsSkillsDAO jobSkillsDAO){
 
-        JobsDTO job = new JobsDTO()
-        SkillsDTO skill = new SkillsDTO()
+        Jobs job = new Jobs()
+        Skills skill = new Skills()
 
         job.setId(InputHelper.getInputStringWithDefault("id vaga").toInteger())
         skill.setId(InputHelper.getInputStringWithDefault("id competência").toInteger())

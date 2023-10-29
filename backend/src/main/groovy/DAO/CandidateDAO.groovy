@@ -1,7 +1,7 @@
-package persistencies
+package DAO
 
-import entities.CandidateDTO
-import entities.SkillsDTO
+import entities.Candidate
+import entities.Skills
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import groovy.transform.Canonical
@@ -13,33 +13,33 @@ class CandidateDAO {
 
     Sql sql
 
-    List<CandidateDTO> findAll() {
+    List<Candidate> findAll() {
         GroovyRowResult results = sql.rows("SELECT * FROM candidatos AS c INNER JOIN usuarios AS u ON c.usuarios_id = u.id;") as GroovyRowResult
-        List<CandidateDTO> candidates = []
+        List<Candidate> candidates = []
         results.each { row ->
-            CandidateDTO candidate = new CandidateDTO(id: row.usuarios_id, name: row.nome, linkedin: row.linkedin)
+            Candidate candidate = new Candidate(id: row.usuarios_id, name: row.nome, linkedin: row.linkedin)
             candidates.add(candidate)
         }
         return candidates
     }
 
-    CandidateDTO findAll(CandidateDTO candidate) throws SQLException {
-        List<SkillsDTO> skills = []
+    Candidate findAll(Candidate candidate) throws SQLException {
+        List<Skills> skills = []
         sql.eachRow("SELECT * FROM candidatos_competencias AS cc INNER JOIN competencias AS cs ON cc.competencias_id = cs.id WHERE cc.candidatos_id = ?;", [candidate.getId()]) { rs ->
-            skills.add(new SkillsDTO(id: rs.id, name: rs.nome))
+            skills.add(new Skills(id: rs.id, name: rs.nome))
         }
         candidate.setSkills(skills)
 
         return candidate
     }
 
-    CandidateDTO findById(int id) {
+    Candidate findById(int id) {
         GroovyRowResult result = sql.firstRow("SELECT * FROM candidatos AS c INNER JOIN usuarios AS u ON c.usuarios_id = u.id WHERE id = ?", id)
-        CandidateDTO candidate = new CandidateDTO(id: result.id, name: result.razao_social, linkedin: result.linkedin)
+        Candidate candidate = new Candidate(id: result.id, name: result.razao_social, linkedin: result.linkedin)
         return result ? candidate : null
     }
 
-    boolean save(CandidateDTO candidate) {
+    boolean save(Candidate candidate) {
         List<List<Object>> result = sql.executeInsert("INSERT INTO candidatos (usuarios_id, nome, linkedin, data_nascimento) VALUES (?, ?, ?, ?)",
                 [candidate.getId(), candidate.getName(), candidate.getLinkedin(), candidate.getDateOfBirth()])
         return result ? true : false
@@ -49,9 +49,9 @@ class CandidateDAO {
         return sql.execute("DELETE FROM candidatos WHERE usuarios_id = ?", [id])
     }
 
-    boolean updateById(CandidateDTO candidate) throws SQLException {
+    boolean updateById(Candidate candidate) throws SQLException {
         return sql.execute("UPDATE candidatos SET nome = ?, sobrenome = ?, cpf = ?, descricao = ?, cidades_id = ?, cep = ?, formacao = ?, data_nascimento = ?, linkedin = ? WHERE usuarios_id = ?",
-                [candidate.getName(), candidate.getName(), candidate.getCpf(), candidate.getDescription(), candidate.getCity().toInteger(), candidate.getZipCode(), candidate.getAcademicEduation(), candidate.getDateOfBirth(), candidate.getLinkedin(), candidate.getId()])
+                [candidate.getName(), candidate.getName(), candidate.getCpf(), candidate.getDescription(), candidate.getCity().toInteger(), candidate.getZipCode(), candidate.getAcademicEducation(), candidate.getDateOfBirth(), candidate.getLinkedin(), candidate.getId()])
     }
 
 }

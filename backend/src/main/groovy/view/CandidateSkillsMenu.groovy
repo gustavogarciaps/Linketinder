@@ -1,9 +1,9 @@
 package view
 
-import entities.CandidateDTO
-import entities.SkillsDTO
-import persistencies.CandidateSkillsDAO
-import persistencies.ConnectionFactory
+import entities.Candidate
+import entities.Skills
+import DAO.CandidateSkillsDAO
+import DAO.ConnectionFactory
 import utils.InputHelper
 
 class CandidateSkillsMenu {
@@ -51,8 +51,8 @@ class CandidateSkillsMenu {
 
     static void associateSkillWithCandidate(CandidateSkillsDAO candidateSkillsDAO){
 
-        CandidateDTO candidateDTO = new CandidateDTO()
-        SkillsDTO skillsDTO = new SkillsDTO()
+        Candidate candidateDTO = new Candidate()
+        Skills skillsDTO = new Skills()
 
         candidateDTO.setId(InputHelper.getInputStringWithDefault("id candidato").toInteger())
         skillsDTO.setId(InputHelper.getInputStringWithDefault("id competência").toInteger())

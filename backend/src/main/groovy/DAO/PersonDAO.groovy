@@ -1,6 +1,6 @@
-package persistencies
+package DAO
 
-import entities.PersonDTO
+import entities.Person
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import groovy.transform.Canonical
@@ -10,23 +10,23 @@ class PersonDAO {
 
     Sql sql
 
-    List<PersonDTO> findAll() {
+    List<Person> findAll() {
         List<GroovyRowResult> results = sql.rows("SELECT * FROM usuarios")
-        List<PersonDTO> persons = []
+        List<Person> persons = []
         results.each { row ->
-            PersonDTO person = new PersonDTO(id: row.id, email: row.email, password: row.senha)
+            Person person = new Person(id: row.id, email: row.email, password: row.senha)
             persons.add(person)
         }
         return persons
     }
 
-    PersonDTO findById(int id) {
+    Person findById(int id) {
         GroovyRowResult result = sql.firstRow("SELECT * FROM usuarios WHERE id = ?", id)
-        PersonDTO person = new PersonDTO(id: result.id, email: result.email, password: result.senha)
+        Person person = new Person(id: result.id, email: result.email, password: result.senha)
         return result ? person : null
     }
 
-    boolean save(PersonDTO person) {
+    boolean save(Person person) {
         List<List<Object>> result = sql.executeInsert("INSERT INTO usuarios (email, senha) VALUES (?, ?)",
                 [person.email, person.password])
         return result ? true : false
