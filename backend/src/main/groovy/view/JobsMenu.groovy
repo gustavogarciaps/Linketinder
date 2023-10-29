@@ -1,10 +1,9 @@
 package view
 
-import entities.CompanyDTO
-import entities.JobsDTO
-import exceptions.QuitException
-import persistencies.ConnectionFactory
-import persistencies.JobsDAO
+import entities.Company
+import entities.Jobs
+import DAO.Connection
+import DAO.JobsDAO
 import utils.InputHelper
 
 class JobsMenu {
@@ -29,7 +28,7 @@ class JobsMenu {
                 println("[$key] - $value")
             }
 
-            String userInput = InputHelper.getInputString("Opção (ou 'q' para sair)")
+            String userInput = InputHelper.getInputStringWithDefault("Opção (ou 'q' para sair)")
 
             try {
 
@@ -37,19 +36,19 @@ class JobsMenu {
 
                 switch (choice) {
                     case 1:
-                        createJob(new JobsDAO(sql: ConnectionFactory.newInstance()))
+                        createJob(new JobsDAO(sql: Connection.newInstance()))
                         break
                     case 2:
-                        loadJobs(new JobsDAO(sql: ConnectionFactory.newInstance()))
+                        loadJobs(new JobsDAO(sql: Connection.newInstance()))
                         break
                     case 3:
-                        loadJobById(new JobsDAO(sql: ConnectionFactory.newInstance()))
+                        loadJobById(new JobsDAO(sql: Connection.newInstance()))
                         break
                     case 4:
-                        deleteJobById(new JobsDAO(sql: ConnectionFactory.newInstance()))
+                        deleteJobById(new JobsDAO(sql: Connection.newInstance()))
                         break
                     case 5:
-                        updateJobById(new JobsDAO(sql: ConnectionFactory.newInstance()))
+                        updateJobById(new JobsDAO(sql: Connection.newInstance()))
                         break
                     case 6:
                         JobsSkillsMenu.showOptions()
@@ -70,13 +69,13 @@ class JobsMenu {
 
         println("****** CADASTRAR NOVA VAGA ******");
         try {
-            String title = InputHelper.getInputString("titulo");
-            String description = InputHelper.getInputString("descrição");
-            String company = InputHelper.getInputString("empresa (número)");
-            String city = InputHelper.getInputString("cidade");
+            String title = InputHelper.getInputStringWithDefault("titulo");
+            String description = InputHelper.getInputStringWithDefault("descrição");
+            String company = InputHelper.getInputStringWithDefault("empresa (número)");
+            String city = InputHelper.getInputStringWithDefault("cidade");
 
-            JobsDTO job = new JobsDTO(
-                    title: title, description: description, city: city, company: new CompanyDTO(id: company.toInteger()))
+            Jobs job = new Jobs(
+                    title: title, description: description, city: city, company: new Company(id: company.toInteger()))
 
             jobsDAO.save(job) ? println("Vaga registrada com sucesso") : println("Falha ao registrar vaga")
 
@@ -88,48 +87,48 @@ class JobsMenu {
     static void loadJobs(JobsDAO jobsDAO) {
 
         println("Vagas Cadastradas:")
-        InputHelper.divider(80)
+        InputHelper.printDivider(80)
 
         jobsDAO.findAll().each {
             job ->
-                InputHelper.creatingTable(["id", "titulo", "empresa"])
-                InputHelper.creatingTable([job.getId(), job.getTitle(), job.getCompany().getId()])
+                InputHelper.printColumns(["id", "titulo", "empresa"])
+                InputHelper.printColumns([job.getId(), job.getTitle(), job.getCompany().getId()])
 
                 println("Competências Requisitadas")
-                InputHelper.creatingTable(["id", "nome"])
+                InputHelper.printColumns(["id", "nome"])
 
                 jobsDAO.findAll(job).getSkills().each { it ->
-                    InputHelper.creatingTable([it.getId(), it.getName()])
+                    InputHelper.printColumns([it.getId(), it.getName()])
                 }
-                InputHelper.divider(80)
+                InputHelper.printDivider(80)
         }
     }
 
     static void loadJobById(JobsDAO jobsDAO) {
 
-        String id = InputHelper.getInputString("id")
-        JobsDTO job = jobsDAO.findById(id.toInteger())
+        String id = InputHelper.getInputStringWithDefault("id")
+        Jobs job = jobsDAO.findById(id.toInteger())
 
         println("Vaga Cadastrada:")
-        InputHelper.divider(80)
+        InputHelper.printDivider(80)
 
-        InputHelper.creatingTable(["id", "titulo", "empresa"])
-        InputHelper.creatingTable([job.getId(), job.getTitle(), job.getCompany().getId()])
+        InputHelper.printColumns(["id", "titulo", "empresa"])
+        InputHelper.printColumns([job.getId(), job.getTitle(), job.getCompany().getId()])
 
         println("Competências Requisitadas")
-        InputHelper.creatingTable(["id", "nome"])
+        InputHelper.printColumns(["id", "nome"])
 
         jobsDAO.findAll(job).getSkills().each { it ->
-            InputHelper.creatingTable([it.getId(), it.getName()])
+            InputHelper.printColumns([it.getId(), it.getName()])
         }
-        InputHelper.divider(80)
+        InputHelper.printDivider(80)
     }
 
     static void deleteJobById(JobsDAO jobsDAO) {
         println("Excluir Vaga")
 
         try {
-            String id = InputHelper.getInputString("id")
+            String id = InputHelper.getInputStringWithDefault("id")
             jobsDAO.deleteById(id.toInteger()) ? println("Excluído com sucesso. Código ${id}") : println("Falha ao Excluir código ${id}")
 
         } catch (Exception e) {
@@ -141,12 +140,12 @@ class JobsMenu {
         println("Atualizar Vaga")
 
         try {
-            String id = InputHelper.getInputString("id")
-            JobsDTO job = jobsDAO.findById(id.toInteger())
+            String id = InputHelper.getInputStringWithDefault("id")
+            Jobs job = jobsDAO.findById(id.toInteger())
 
-            job.setTitle(InputHelper.getInputString("titulo", job.getTitle()))
-            job.setDescription(InputHelper.getInputString("descrição", job.getDescription()))
-            job.setCity(InputHelper.getInputString("cidade", job.getCity()))
+            job.setTitle(InputHelper.getInputStringWithDefault("titulo", job.getTitle()))
+            job.setDescription(InputHelper.getInputStringWithDefault("descrição", job.getDescription()))
+            job.setCity(InputHelper.getInputStringWithDefault("cidade", job.getCity()))
 
             jobsDAO.updateById(job) ? println("Atualizado com sucesso. Código ${id}") : println("Falha ao atualizar o código ${id}")
 

@@ -1,9 +1,9 @@
 package view
 
-import entities.JobsDTO
-import entities.SkillsDTO
-import persistencies.ConnectionFactory
-import persistencies.JobsSkillsDAO
+import entities.Jobs
+import entities.Skills
+import DAO.Connection
+import DAO.JobsSkillsDAO
 import utils.InputHelper
 
 class JobsSkillsMenu {
@@ -24,7 +24,7 @@ class JobsSkillsMenu {
                 println("[$key] - $value")
             }
 
-            String userInput = InputHelper.getInputString("Opção (ou 'q' para sair)")
+            String userInput = InputHelper.getInputStringWithDefault("Opção (ou 'q' para sair)")
 
             try {
                 Integer choice = userInput.toInteger()
@@ -34,7 +34,7 @@ class JobsSkillsMenu {
                         SkillsMenu.showOptions()
                         break
                     case 2:
-                        associateSkillWithJob(new JobsSkillsDAO(sql: ConnectionFactory.newInstance()))
+                        associateSkillWithJob(new JobsSkillsDAO(sql: Connection.newInstance()))
                         break
                     case 3:
                         return
@@ -50,11 +50,11 @@ class JobsSkillsMenu {
 
     static void associateSkillWithJob(JobsSkillsDAO jobSkillsDAO){
 
-        JobsDTO job = new JobsDTO()
-        SkillsDTO skill = new SkillsDTO()
+        Jobs job = new Jobs()
+        Skills skill = new Skills()
 
-        job.setId(InputHelper.getInputString("id vaga").toInteger())
-        skill.setId(InputHelper.getInputString("id competência").toInteger())
+        job.setId(InputHelper.getInputStringWithDefault("id vaga").toInteger())
+        skill.setId(InputHelper.getInputStringWithDefault("id competência").toInteger())
 
         try{
             jobSkillsDAO.save(job, skill)

@@ -126,3 +126,57 @@ O Trigger para a tabela ```empresas_candidatos``` segue quase o mesmo raciocíni
 Houve a avaliação da estrutura do código e a renomeação de variáveis que estavam com uma nomenclatura genérica. Foi refatorado deixando com nomes mais expressivos e declarativos. Além disso, foi descartado algumas Classes que não faziam mais sentido no contexto da aplicação. Essas classes estavam deixando o código com uma intepretação mais complexa.
 
 O maior desafio dessa refatoração, é a análise autocrítica, pois às vezes não é possível identificar uma variável ou função que está ambígua ou com a nomenclatura sem sentido. Isso se deve pois quando você cria a lógica da aplicação, tudo parece fazer muito sentido. Entretanto, quando você analisa de maneira externa, sem nenhuma paixão no código, vai percebendo MUITOS detalhes que poderiam ser melhorados. Porém, como é o primeiro Code Review que eu faço, ainda não consegui achar tantos pontos de melhoria. 
+
+
+# Refatoração seguindo os princípios SOLID (ou pelo menos tentando)
+
+No backend da aplicação, foi refatorado todas as classes, abstraindo os métodos para exercer apenas uma única função. A parte mais significativa que eu refatorei foi o input dos formulários. Criei uma classe para controlar tudo que se refere a entrada e saída dos dados. Como exemplo, o antes e depois.
+
+Antes:
+```groovy
+    static void carregar() {
+
+        vagas = VagaDAO.read()
+
+        println("Vagas Cadastradas:")
+        println("-" * 30);
+        println("|id" + ("\t" * 2) + "|" + "Título" + ("\t" * 6) + "Empresa" + ("\t" * 4))
+
+        vagas.each { v ->
+            println("Vaga:")
+            println("|" + v.getId() + ("\t" * 2) + "|" + v.getTitulo() + ("\t" * 6) + "|" + v.getEmpresa().getId() + ("\t" * 4))
+            println("Competências:")
+
+            v.getCompetencias().getCompetencia().each { competencia ->
+                println("|" + competencia.getId() + ("\t" * 2) + "|" + competencia.getNome() + ("\t" * 4))
+            }
+        }
+    }
+```
+
+Depois: ([conferir métodos]([ela](https://github.com/gustavogarciaps/Linketinder/blob/K2-T2/backend/src/main/groovy/utils/InputHelper.groovy)))
+```groovy
+    static void loadJobs(JobsDAO jobsDAO) {
+
+        println("Vagas Cadastradas:")
+        InputHelper.printDivider(80)
+
+        jobsDAO.findAll().each {
+            job ->
+                InputHelper.printColumns(["id", "titulo", "empresa"])
+                InputHelper.printColumns([job.getId(), job.getTitle(), job.getCompany().getId()])
+
+                println("Competências Requisitadas")
+                InputHelper.printColumns(["id", "nome"])
+
+                jobsDAO.findAll(job).getSkills().each { it ->
+                    InputHelper.printColumns([it.getId(), it.getName()])
+                }
+                InputHelper.printDivider(80)
+        }
+    }
+```
+
+Além disso, algumas conversões ou formatações de data que eu anexava à classe específica, eu criei uma Classe apenas para [ela](https://github.com/gustavogarciaps/Linketinder/blob/K2-T2/backend/src/main/groovy/utils/DateTimeHelper.groovy).
+
+As demais alterações foram mais simplórias, como renomeação das classes para a língua inglesa, a criação de Exceções e o tratamento delas, e a utilização de annotations do groovy (@Canonical) para criação dos getters e setters.

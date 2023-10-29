@@ -2,24 +2,24 @@ package entities
 
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import persistencies.ConnectionFactory
-import persistencies.PersonDAO
+import DAO.Connection
+import DAO.PersonDAO
 
 import static org.junit.jupiter.api.Assertions.assertEquals
 import static org.junit.jupiter.api.Assertions.assertTrue
 
-class PersonDTOTest {
+class PersonTest {
 
-    PersonDTO person
+    Person person
 
     @BeforeEach
     void setUp() {
-        person = new PersonDTO()
+        person = new Person()
     }
 
     @Test
     void shouldBeInstanceOfPerson() {
-        assertTrue(person instanceof PersonDTO)
+        assertTrue(person instanceof Person)
     }
 
     @Test
@@ -43,8 +43,8 @@ class PersonDTOTest {
     @Test
     void recoverPersonFromDatabase() {
 
-        PersonDAO personDAO = new PersonDAO(sql: ConnectionFactory.newInstance())
-        List<PersonDTO> personList = personDAO.findAll()
+        PersonDAO personDAO = new PersonDAO(sql: Connection.newInstance())
+        List<Person> personList = personDAO.findAll()
         personList.forEach { it ->
             println("recoverPersonFromDatabase: ${it.getId()} ${it.getEmail()}")
         }
@@ -52,14 +52,14 @@ class PersonDTOTest {
 
     @Test
     void findPerson() {
-        PersonDAO personDAO = new PersonDAO(sql: ConnectionFactory.newInstance())
+        PersonDAO personDAO = new PersonDAO(sql: Connection.newInstance())
         println("findPerson ${personDAO.findById(18)}")
     }
 
     @Test
     void insertPersonToDataBase() {
-        PersonDAO personDAO = new PersonDAO(sql: ConnectionFactory.newInstance())
-        PersonDTO personDTO = new PersonDTO(email: "teste${Math.random()}@gmail.com", password: "10987")
+        PersonDAO personDAO = new PersonDAO(sql: Connection.newInstance())
+        Person personDTO = new Person(email: "teste${Math.random()}@gmail.com", password: "10987")
         personDAO.save(personDTO)
     }
 }

@@ -1,9 +1,9 @@
 package view
 
-import entities.CandidateDTO
-import entities.SkillsDTO
-import persistencies.CandidateSkillsDAO
-import persistencies.ConnectionFactory
+import entities.Candidate
+import entities.Skills
+import DAO.CandidateSkillsDAO
+import DAO.Connection
 import utils.InputHelper
 
 class CandidateSkillsMenu {
@@ -24,7 +24,7 @@ class CandidateSkillsMenu {
                 println("[$key] - $value")
             }
 
-            String userInput = InputHelper.getInputString("Opção (ou 'q' para sair)")
+            String userInput = InputHelper.getInputStringWithDefault("Opção (ou 'q' para sair)")
 
             try {
 
@@ -35,7 +35,7 @@ class CandidateSkillsMenu {
                         SkillsMenu.showOptions()
                         break
                     case 2:
-                        associateSkillWithCandidate(new CandidateSkillsDAO(sql: ConnectionFactory.newInstance()))
+                        associateSkillWithCandidate(new CandidateSkillsDAO(sql: Connection.newInstance()))
                         break
                     case 3:
                         return
@@ -51,11 +51,11 @@ class CandidateSkillsMenu {
 
     static void associateSkillWithCandidate(CandidateSkillsDAO candidateSkillsDAO){
 
-        CandidateDTO candidateDTO = new CandidateDTO()
-        SkillsDTO skillsDTO = new SkillsDTO()
+        Candidate candidateDTO = new Candidate()
+        Skills skillsDTO = new Skills()
 
-        candidateDTO.setId(InputHelper.getInputString("id candidato").toInteger())
-        skillsDTO.setId(InputHelper.getInputString("id competência").toInteger())
+        candidateDTO.setId(InputHelper.getInputStringWithDefault("id candidato").toInteger())
+        skillsDTO.setId(InputHelper.getInputStringWithDefault("id competência").toInteger())
 
         try{
             candidateSkillsDAO.save(candidateDTO, skillsDTO)

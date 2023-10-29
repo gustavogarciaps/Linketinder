@@ -2,28 +2,26 @@ package entities
 
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import persistencies.CandidateDAO
-import persistencies.CompanyDAO
-import persistencies.ConnectionFactory
-import persistencies.PersonDAO
+import DAO.CompanyDAO
+import DAO.Connection
 
 import java.time.LocalDate
 
 import static org.junit.jupiter.api.Assertions.assertEquals
 import static org.junit.jupiter.api.Assertions.assertTrue
 
-class CompanyDTOTest {
+class CompanyTest {
 
-    CompanyDTO company
+    Company company
 
     @BeforeEach
     void setUp() {
-        company = new CompanyDTO()
+        company = new Company()
     }
 
     @Test
     void shouldBeInstanceOfPerson() {
-        assertTrue(company instanceof PersonDTO)
+        assertTrue(company instanceof Person)
     }
 
     @Test
@@ -40,17 +38,17 @@ class CompanyDTOTest {
     @Test
     void addJobsToCompany() {
         company.addJobs(
-                new JobsDTO(id: 1, title: "Desenvolvedor HTML", description: "Conhecimento avançado em HTML")
+                new Jobs(id: 1, title: "Desenvolvedor HTML", description: "Conhecimento avançado em HTML")
         )
 
-        JobsDTO job = company.getJobs()[0]
+        Jobs job = company.getJobs()[0]
         assertEquals("Desenvolvedor HTML", job.getTitle())
     }
 
     @Test
     void companyLikeToCandidate(){
 
-        CandidateDTO candidate = new CandidateDTO(name: "Gustavo")
+        Candidate candidate = new Candidate(name: "Gustavo")
         CompanyLikes companyLikes = new CompanyLikes(company: company)
 
         companyLikes.like(candidate)
@@ -62,8 +60,8 @@ class CompanyDTOTest {
     @Test
     void recoverCompaniesFromDatabase() {
 
-        CompanyDAO companyDAO = new CompanyDAO(sql: ConnectionFactory.newInstance())
-        List<CompanyDTO> companies = companyDAO.findAll()
+        CompanyDAO companyDAO = new CompanyDAO(sql: Connection.newInstance())
+        List<Company> companies = companyDAO.findAll()
         companies.forEach { it ->
             println("recoverCompaniesFromDatabase: ${it.getId()} ${it.getName()}")
         }
@@ -71,21 +69,21 @@ class CompanyDTOTest {
 
     @Test
     void findCompany() {
-        CompanyDAO companyDAO = new CompanyDAO(sql: ConnectionFactory.newInstance())
+        CompanyDAO companyDAO = new CompanyDAO(sql: Connection.newInstance())
         println("findCompany: ${companyDAO.findById(22).getName()}")
     }
 
     @Test
     void insertCompanyToDataBase() {
-        CompanyDAO companyDAO = new CompanyDAO(sql: ConnectionFactory.newInstance())
-        CompanyDTO company = new CompanyDTO(id: 22, name: "Sorvetes e Tech Solutions", description: "10987", creationDate: LocalDate.of(2022,6,9))
+        CompanyDAO companyDAO = new CompanyDAO(sql: Connection.newInstance())
+        Company company = new Company(id: 22, name: "Sorvetes e Tech Solutions", description: "10987", creationDate: LocalDate.of(2022,6,9))
         companyDAO.save(company)
     }
 
     @Test
     void updateCompanyById() {
-        CompanyDAO companyDAO = new CompanyDAO(sql: ConnectionFactory.newInstance())
-        CompanyDTO company = companyDAO.findById(22)
+        CompanyDAO companyDAO = new CompanyDAO(sql: Connection.newInstance())
+        Company company = companyDAO.findById(22)
         company.setName( "Sorvetes e Tech")
         company.setCity("1")
         company.setCreationDate(LocalDate.of(2023,10,25))
@@ -94,7 +92,7 @@ class CompanyDTOTest {
 
     @Test
     void deleteCompanyById() {
-        CompanyDAO companyDAO = new CompanyDAO(sql: ConnectionFactory.newInstance())
+        CompanyDAO companyDAO = new CompanyDAO(sql: Connection.newInstance())
         assertTrue(companyDAO.deleteById(22))
     }
 
