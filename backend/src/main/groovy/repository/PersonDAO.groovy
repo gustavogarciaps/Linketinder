@@ -1,6 +1,6 @@
-package DAO
+package repository
 
-import entities.Person
+import model.Person
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import groovy.transform.Canonical

@@ -1,7 +1,7 @@
-package DAO
+package repository
 
-import entities.Candidate
-import entities.Skills
+import model.Candidate
+import model.Skills
 import groovy.sql.Sql
 
 import java.sql.SQLException

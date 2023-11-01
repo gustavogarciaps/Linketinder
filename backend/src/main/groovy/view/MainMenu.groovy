@@ -1,11 +1,16 @@
 package view
 
-import entities.Person
-import DAO.Connection
-import DAO.PersonDAO
+import repository.CandidateDAO
+import repository.DatabaseSingleton
+import model.Person
+import repository.DatabaseConfig
+import repository.PersonDAO
+import services.CandidateService
 import utils.InputHelper
 
 class MainMenu {
+
+    static DatabaseSingleton database = DatabaseSingleton.getInstance()
 
     static void showOptions() {
 
@@ -26,7 +31,6 @@ class MainMenu {
 
             try {
                 String userInput = InputHelper.getInputStringWithDefault("Opção")
-
                 Integer choice = userInput.toInteger()
 
                 switch (choice) {
@@ -61,7 +65,7 @@ class MainMenu {
             String password = InputHelper.getInputStringWithDefault("senha");
 
             Person personDTO = new Person(email: email, password: password)
-            PersonDAO personDAO = new PersonDAO(sql: Connection.newInstance());
+            PersonDAO personDAO = new PersonDAO(sql: DatabaseConfig.newInstance());
 
             personDAO.save(personDTO)
 
@@ -95,7 +99,11 @@ class MainMenu {
                         CompanysMenu.showOptions()
                         break
                     case 2:
-                        CandidatesMenu.showOptions()
+                        CandidateDAO candidateDAO = new CandidateDAO(database.getDatabaseConnection())
+                        CandidateService candidateService = new CandidateService(candidateDAO)
+                        CandidatesMenu candidatesMenu = new CandidatesMenu(candidateService)
+
+                        candidatesMenu.showOptions()
                         break
                     case 3:
                         return
@@ -112,7 +120,7 @@ class MainMenu {
 
     static void loadPerson() {
 
-        PersonDAO personDAO = new PersonDAO(sql: Connection.newInstance())
+        PersonDAO personDAO = new PersonDAO(sql: DatabaseConfig.newInstance())
 
         println("Usuários Cadastrados:")
         InputHelper.printDivider(80)

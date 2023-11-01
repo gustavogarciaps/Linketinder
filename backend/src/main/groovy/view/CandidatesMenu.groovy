@@ -1,16 +1,22 @@
 package view
 
-import entities.Candidate
-import DAO.CandidateDAO
-import DAO.Connection
+import model.Candidate
+import services.CandidateService
 import utils.DateTimeHelper
 import utils.InputHelper
+import utils.OperationStatus
 
 import java.time.LocalDate
 
 class CandidatesMenu {
 
-    static void showOptions() {
+    private final CandidateService candidateService
+
+    CandidatesMenu(CandidateService candidateService) {
+        this.candidateService = candidateService
+    }
+
+    void showOptions() {
 
         HashMap<Integer, String> menu = [
                 1: "Cadastrar NOVO Candidato",
@@ -38,19 +44,19 @@ class CandidatesMenu {
 
                 switch (choice) {
                     case 1:
-                        createCandidate(new CandidateDAO(sql: Connection.newInstance()))
+                        createCandidate()
                         break
                     case 2:
-                        loadCandidates(new CandidateDAO(sql: Connection.newInstance()))
+                        loadCandidates()
                         break
                     case 3:
-                        loadCandidateById(new CandidateDAO(sql: Connection.newInstance()))
+                        loadCandidateById()
                         break
                     case 4:
-                        deleteCandidateById(new CandidateDAO(sql: Connection.newInstance()))
+                        deleteCandidateById()
                         break
                     case 5:
-                        updateCandidateById(new CandidateDAO(sql: Connection.newInstance()))
+                        updateCandidateById()
                         break
                     case 6:
                         CandidateSkillsMenu.showOptions()
@@ -67,7 +73,7 @@ class CandidatesMenu {
         }
     }
 
-    static void createCandidate(CandidateDAO candidateDAO) {
+    void createCandidate() {
 
         println("****** CADASTRAR NOVO CANDIDATO ******");
         try {
@@ -79,85 +85,79 @@ class CandidatesMenu {
             LocalDate dateOfBirth = DateTimeHelper.getInputDateWithDefault("data de aniversário (dd/mm/aaaa)");
             String cpf = InputHelper.getInputStringWithDefault("cpf");
 
-            Candidate candidateDTO = new Candidate(
+            Candidate candidate = new Candidate(
                     id: id.toInteger(), name: name, description: description, city: city, linkedin: linkedin, dateOfBirth: dateOfBirth, cpf: cpf)
 
-            candidateDAO.save(candidateDTO) ? println("Candidato registrado com sucesso") : println("Falha ao registrar candidato")
+            candidateService.save(candidate)
 
         } catch (Exception e) {
             e.getMessage()
         }
     }
 
-    static void loadCandidates(CandidateDAO candidateDAO) {
+    void loadCandidates() {
 
         println("Candidatos Cadastrados:")
         InputHelper.printDivider(80)
 
-        def columns = ["id", "nome", "linkedin"]
+        ArrayList<String> columns = ["id", "nome", "linkedin"]
         InputHelper.printColumns(columns)
 
-        candidateDAO.findAll().forEach { it ->
+        candidateService.findAll().forEach { it ->
 
-            Candidate candidateDTO = candidateDAO.findAll(it)
-            InputHelper.printColumns([candidateDTO.getId(), candidateDTO.getName(), candidateDTO.getLinkedin()])
+            Candidate candidate = candidateService.findAll(it)
+            InputHelper.printColumns([candidate.getId(), candidate.getName(), candidate.getLinkedin()] as ArrayList<String>)
 
             println("Competências do candidato")
-            candidateDTO.getSkills().each {skillDTO ->
-                InputHelper.printColumns([skillDTO.getId(), skillDTO.getName()])
+            candidate.getSkills().each { skill ->
+                InputHelper.printColumns([skill.getId(), skill.getName()] as ArrayList<String>)
             }
             InputHelper.printDivider(80)
         }
         InputHelper.printDivider(80)
     }
 
-    static void loadCandidateById(CandidateDAO candidateDAO) {
+    void loadCandidateById() {
 
         println("Candidato:")
-        String id = InputHelper.getInputStringWithDefault("id")
+
+        Candidate candidateSelected = candidateService.findById(InputHelper.getInputStringWithDefault("id").toInteger())
 
         InputHelper.printDivider(80)
 
         def columns = ["id", "nome", "linkedin"]
         InputHelper.printColumns(columns)
 
-        Candidate candidateDTO = candidateDAO.findById(id.toInteger())
-        candidateDTO = candidateDAO.findAll(candidateDTO)
+        Candidate candidate = candidateService.findAll(candidateSelected)
 
-        InputHelper.printColumns([candidateDTO.getId(), candidateDTO.getName(), candidateDTO.getLinkedin()])
+        InputHelper.printColumns([candidate.getId(), candidate.getName(), candidate.getLinkedin()] as ArrayList<String>)
         println("Competências do candidato")
-        candidateDTO.getSkills().each {skillDTO ->
-            InputHelper.printColumns([skillDTO.getId(), skillDTO.getName()])
+        candidate.getSkills().each { skill ->
+            InputHelper.printColumns([skill.getId(), skill.getName()] as ArrayList<String>)
         }
         InputHelper.printDivider(80)
     }
 
-    static void deleteCandidateById(CandidateDAO candidateDAO) {
+    void deleteCandidateById() {
         println("Excluir Candidato")
 
-        try {
-            String id = InputHelper.getInputStringWithDefault("id")
-            candidateDAO.deleteById(id.toInteger()) ? println("Excluído com sucesso. Código ${id}") : println("Falha ao Excluir código ${id}")
-        } catch (Exception e) {
-            e.getMessage()
-        }
+        Candidate candidate = new Candidate(id: InputHelper.getInputStringWithDefault("id").toInteger())
+        OperationStatus result = candidateService.deleteById(candidate.getId())
+        println(result.getMessage())
+
     }
 
-    static void updateCandidateById(CandidateDAO candidateDAO) {
+    void updateCandidateById() {
         println("Atualizar Candidato")
 
-        try {
-            String id = InputHelper.getInputStringWithDefault("id")
-            Candidate candidateDTO = candidateDAO.findById(id.toInteger())
+        Candidate candidateSelected = new Candidate(id: InputHelper.getInputStringWithDefault("id").toInteger())
+        Candidate candidate = candidateService.findById(candidateSelected.getId())
 
-            candidateDTO.setName(InputHelper.getInputStringWithDefault("nome", candidateDTO.getName()))
-            candidateDTO.setDescription(InputHelper.getInputStringWithDefault("descrição:", candidateDTO.getDescription()))
-            candidateDTO.setCity(InputHelper.getInputStringWithDefault("cidade:", candidateDTO.getCity()))
+        candidate.setName(InputHelper.getInputStringWithDefault("nome", candidate.getName()))
+        candidate.setDescription(InputHelper.getInputStringWithDefault("descrição:", candidate.getDescription()))
+        candidate.setCity(InputHelper.getInputStringWithDefault("cidade:", candidate.getCity()))
 
-            candidateDAO.updateById(candidateDTO) ? println("Atualizado com sucesso. Código ${id}") : println("Falha ao atualizar o código ${id}")
-
-        } catch (Exception e) {
-            e.getMessage()
-        }
+        OperationStatus result = candidateService.updateById(candidate)
+        println(result.getMessage())
     }
 }

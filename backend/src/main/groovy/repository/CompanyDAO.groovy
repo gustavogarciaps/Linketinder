@@ -1,7 +1,7 @@
-package DAO
+package repository
 
 
-import entities.Company
+import model.Company
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 

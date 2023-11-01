@@ -1,9 +1,9 @@
 package view
 
-import entities.Company
-import entities.Jobs
-import DAO.Connection
-import DAO.JobsDAO
+import model.Company
+import model.Jobs
+import repository.DatabaseConfig
+import repository.JobsDAO
 import utils.InputHelper
 
 class JobsMenu {
@@ -36,19 +36,19 @@ class JobsMenu {
 
                 switch (choice) {
                     case 1:
-                        createJob(new JobsDAO(sql: Connection.newInstance()))
+                        createJob(new JobsDAO(sql: DatabaseConfig.newInstance()))
                         break
                     case 2:
-                        loadJobs(new JobsDAO(sql: Connection.newInstance()))
+                        loadJobs(new JobsDAO(sql: DatabaseConfig.newInstance()))
                         break
                     case 3:
-                        loadJobById(new JobsDAO(sql: Connection.newInstance()))
+                        loadJobById(new JobsDAO(sql: DatabaseConfig.newInstance()))
                         break
                     case 4:
-                        deleteJobById(new JobsDAO(sql: Connection.newInstance()))
+                        deleteJobById(new JobsDAO(sql: DatabaseConfig.newInstance()))
                         break
                     case 5:
-                        updateJobById(new JobsDAO(sql: Connection.newInstance()))
+                        updateJobById(new JobsDAO(sql: DatabaseConfig.newInstance()))
                         break
                     case 6:
                         JobsSkillsMenu.showOptions()

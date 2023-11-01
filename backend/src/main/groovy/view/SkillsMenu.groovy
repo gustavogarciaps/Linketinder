@@ -1,9 +1,9 @@
 package view
 
-import entities.Skills
+import model.Skills
 import exceptions.QuitException
-import DAO.Connection
-import DAO.SkillsDAO
+import repository.DatabaseConfig
+import repository.SkillsDAO
 import utils.InputHelper
 
 class SkillsMenu {
@@ -34,19 +34,19 @@ class SkillsMenu {
 
                 switch (choice) {
                     case 1:
-                        createSkill(new SkillsDAO(sql: Connection.newInstance()))
+                        createSkill(new SkillsDAO(sql: DatabaseConfig.newInstance()))
                         break
                     case 2:
-                        loadSkills(new SkillsDAO(sql: Connection.newInstance()))
+                        loadSkills(new SkillsDAO(sql: DatabaseConfig.newInstance()))
                         break
                     case 3:
-                        loadSkillById(new SkillsDAO(sql: Connection.newInstance()))
+                        loadSkillById(new SkillsDAO(sql: DatabaseConfig.newInstance()))
                         break
                     case 4:
-                        updateSkillById(new SkillsDAO(sql: Connection.newInstance()))
+                        updateSkillById(new SkillsDAO(sql: DatabaseConfig.newInstance()))
                         break
                     case 5:
-                        deleteSkillById(new SkillsDAO(sql: Connection.newInstance()))
+                        deleteSkillById(new SkillsDAO(sql: DatabaseConfig.newInstance()))
                         break
                     case 6:
                         return

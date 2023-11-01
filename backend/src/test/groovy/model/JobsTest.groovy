@@ -1,10 +1,10 @@
-package entities
+package model
 
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import DAO.CandidateDAO
-import DAO.Connection
-import DAO.JobsDAO
+import repository.CandidateDAO
+import repository.DatabaseConfig
+import repository.JobsDAO
 
 import static org.junit.jupiter.api.Assertions.assertEquals
 import static org.junit.jupiter.api.Assertions.assertTrue
@@ -35,7 +35,7 @@ class JobsTest {
 
     @Test
     void recoverJobsFromDatabase() {
-        JobsDAO jobsDAO = new JobsDAO(sql: Connection.newInstance())
+        JobsDAO jobsDAO = new JobsDAO(sql: DatabaseConfig.newInstance())
         List<Jobs> jobs = jobsDAO.findAll()
         jobs.forEach { it ->
             println("recoverJobsFromDatabase: ${it.getId()} ${it.getTitle()} ${it.getCompany().getId()}")
@@ -44,19 +44,19 @@ class JobsTest {
 
     @Test
     void findJob() {
-        JobsDAO jobsDAO = new JobsDAO(sql: Connection.newInstance())
+        JobsDAO jobsDAO = new JobsDAO(sql: DatabaseConfig.newInstance())
         println("findJob: ${jobsDAO.findById(9).properties}")
     }
 
     @Test
     void deleteJobById() {
-        CandidateDAO candidateDAO = new CandidateDAO(sql: Connection.newInstance())
+        CandidateDAO candidateDAO = new CandidateDAO(sql: DatabaseConfig.newInstance())
         assertTrue(candidateDAO.deleteById(21))
     }
 
     @Test
     void updateJobById() {
-        JobsDAO jobsDAO = new JobsDAO(sql: Connection.newInstance())
+        JobsDAO jobsDAO = new JobsDAO(sql: DatabaseConfig.newInstance())
         Jobs job = jobsDAO.findById(9)
         job.setTitle("Desenvolvedor Java Sr.")
         jobsDAO.updateById(job)
@@ -65,7 +65,7 @@ class JobsTest {
 
     @Test
     void findAllJobSkills() {
-        JobsDAO jobsDAO = new JobsDAO(sql: Connection.newInstance())
+        JobsDAO jobsDAO = new JobsDAO(sql: DatabaseConfig.newInstance())
 
         jobsDAO.findAll().each {
             job ->

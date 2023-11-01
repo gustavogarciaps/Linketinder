@@ -1,9 +1,9 @@
 package view
 
-import entities.Jobs
-import entities.Skills
-import DAO.Connection
-import DAO.JobsSkillsDAO
+import model.Jobs
+import model.Skills
+import repository.DatabaseConfig
+import repository.JobsSkillsDAO
 import utils.InputHelper
 
 class JobsSkillsMenu {
@@ -34,7 +34,7 @@ class JobsSkillsMenu {
                         SkillsMenu.showOptions()
                         break
                     case 2:
-                        associateSkillWithJob(new JobsSkillsDAO(sql: Connection.newInstance()))
+                        associateSkillWithJob(new JobsSkillsDAO(sql: DatabaseConfig.newInstance()))
                         break
                     case 3:
                         return

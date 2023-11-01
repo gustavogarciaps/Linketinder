@@ -1,10 +1,10 @@
 package view
 
 
-import entities.Company
+import model.Company
 import exceptions.QuitException
-import DAO.CompanyDAO
-import DAO.Connection
+import repository.CompanyDAO
+import repository.DatabaseConfig
 import utils.DateTimeHelper
 import utils.InputHelper
 
@@ -40,19 +40,19 @@ class CompanysMenu {
 
                 switch (choice) {
                     case 1:
-                        createCompany(new CompanyDAO(sql: Connection.newInstance()))
+                        createCompany(new CompanyDAO(sql: DatabaseConfig.newInstance()))
                         break
                     case 2:
-                        loadCompany(new CompanyDAO(sql: Connection.newInstance()))
+                        loadCompany(new CompanyDAO(sql: DatabaseConfig.newInstance()))
                         break
                     case 3:
-                        loadCompanyById(new CompanyDAO(sql: Connection.newInstance()))
+                        loadCompanyById(new CompanyDAO(sql: DatabaseConfig.newInstance()))
                         break
                     case 4:
-                        deleteCompanyById(new CompanyDAO(sql: Connection.newInstance()))
+                        deleteCompanyById(new CompanyDAO(sql: DatabaseConfig.newInstance()))
                         break
                     case 5:
-                        updateCompanyById(new CompanyDAO(sql: Connection.newInstance()))
+                        updateCompanyById(new CompanyDAO(sql: DatabaseConfig.newInstance()))
                         break
                     case 6:
                         JobsMenu.showOptions()

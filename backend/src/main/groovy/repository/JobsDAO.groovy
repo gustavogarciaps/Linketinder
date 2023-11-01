@@ -1,9 +1,9 @@
-package DAO
+package repository
 
 
-import entities.Company
-import entities.Jobs
-import entities.Skills
+import model.Company
+import model.Jobs
+import model.Skills
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 

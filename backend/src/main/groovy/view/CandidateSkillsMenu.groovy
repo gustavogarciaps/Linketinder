@@ -1,9 +1,9 @@
 package view
 
-import entities.Candidate
-import entities.Skills
-import DAO.CandidateSkillsDAO
-import DAO.Connection
+import model.Candidate
+import model.Skills
+import repository.CandidateSkillsDAO
+import repository.DatabaseConfig
 import utils.InputHelper
 
 class CandidateSkillsMenu {
@@ -35,7 +35,7 @@ class CandidateSkillsMenu {
                         SkillsMenu.showOptions()
                         break
                     case 2:
-                        associateSkillWithCandidate(new CandidateSkillsDAO(sql: Connection.newInstance()))
+                        associateSkillWithCandidate(new CandidateSkillsDAO(sql: DatabaseConfig.newInstance()))
                         break
                     case 3:
                         return

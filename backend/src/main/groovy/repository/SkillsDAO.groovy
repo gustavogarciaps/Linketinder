@@ -1,7 +1,7 @@
-package DAO
+package repository
 
 
-import entities.Skills
+import model.Skills
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import groovy.transform.Canonical
