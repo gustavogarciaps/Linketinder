@@ -54,35 +54,17 @@ class CandidateDAO implements InterfaceDatabaseDML<Candidate> {
 
     OperationStatus save(Candidate candidate) {
         List<Object> arguments = [candidate.getId(), candidate.getName(), candidate.getLinkedin(), candidate.getDateOfBirth()]
-        return executeTransaction(INSERT_CANDIDATE, arguments)
+        return DatabaseExecute.executeTransaction(sql, INSERT_CANDIDATE, arguments)
     }
 
     OperationStatus deleteById(int id) {
         List<Object> arguments = [id]
-        return executeTransaction(DELETE_CANDIDATE, arguments)
+        return DatabaseExecute.executeTransaction(sql, DELETE_CANDIDATE, arguments)
     }
 
     OperationStatus updateById(Candidate candidate) {
         List<Object> arguments = [candidate.getName(), candidate.getName(), candidate.getCpf(), candidate.getDescription(), candidate.getCity().toInteger(), candidate.getZipCode(), candidate.getAcademicEducation(), candidate.getDateOfBirth(), candidate.getLinkedin(), candidate.getId()]
-        return executeTransaction(UPDATE_CANDIDATE, arguments)
-    }
-
-    OperationStatus executeTransaction(String sqlStatement, List<Object> arguments) {
-        OperationStatus response = OperationStatus.IN_PROGRESS
-
-        sql.withTransaction { status ->
-            try {
-                sql.execute(sqlStatement, arguments)
-                status.commit()
-                response = OperationStatus.SUCCESS
-            } catch (SQLException e) {
-                println(e.getMessage())
-                status.rollback()
-                response = OperationStatus.FAILURE
-            }
-        }
-
-        return response
+        return DatabaseExecute.executeTransaction(sql, UPDATE_CANDIDATE, arguments)
     }
 
 }

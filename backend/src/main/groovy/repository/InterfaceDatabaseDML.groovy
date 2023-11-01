@@ -8,8 +8,6 @@ interface InterfaceDatabaseDML<T> {
 
     List<T> findAll() throws SQLException
 
-    T findAll(T entity) throws SQLException
-
     T findById(int id) throws SQLException
 
     OperationStatus save(T entity)
@@ -17,4 +15,5 @@ interface InterfaceDatabaseDML<T> {
     OperationStatus deleteById(int id)
 
     OperationStatus updateById(T entity)
+
 }

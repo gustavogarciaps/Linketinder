@@ -1,7 +1,12 @@
 package view
 
 import model.Candidate
+import repository.CandidateSkillsDAO
+import repository.DatabaseSingleton
+import repository.SkillsDAO
 import services.CandidateService
+import services.CandidateSkillsService
+import services.SkillsService
 import utils.DateTimeHelper
 import utils.InputHelper
 import utils.OperationStatus
@@ -11,6 +16,7 @@ import java.time.LocalDate
 class CandidatesMenu {
 
     private final CandidateService candidateService
+    private static DatabaseSingleton database = DatabaseSingleton.getInstance()
 
     CandidatesMenu(CandidateService candidateService) {
         this.candidateService = candidateService
@@ -42,6 +48,10 @@ class CandidatesMenu {
 
                 Integer choice = userInput.toInteger()
 
+                CandidateSkillsDAO candidateSkillsDAO = new CandidateSkillsDAO(database.getDatabaseConnection())
+                CandidateSkillsService candidateSkillsService = new CandidateSkillsService(candidateSkillsDAO)
+                CandidateSkillsMenu candidateSkillsMenu = new CandidateSkillsMenu(candidateSkillsService)
+
                 switch (choice) {
                     case 1:
                         createCandidate()
@@ -59,7 +69,7 @@ class CandidatesMenu {
                         updateCandidateById()
                         break
                     case 6:
-                        CandidateSkillsMenu.showOptions()
+                        candidateSkillsMenu.showOptions()
                         break
                     case 7:
                         return
@@ -76,23 +86,21 @@ class CandidatesMenu {
     void createCandidate() {
 
         println("****** CADASTRAR NOVO CANDIDATO ******");
-        try {
-            String id = InputHelper.getInputStringWithDefault("id")
-            String name = InputHelper.getInputStringWithDefault("nome");
-            String description = InputHelper.getInputStringWithDefault("descrição");
-            String city = InputHelper.getInputStringWithDefault("cidade (número)");
-            String linkedin = InputHelper.getInputStringWithDefault("linkedin");
-            LocalDate dateOfBirth = DateTimeHelper.getInputDateWithDefault("data de aniversário (dd/mm/aaaa)");
-            String cpf = InputHelper.getInputStringWithDefault("cpf");
 
-            Candidate candidate = new Candidate(
-                    id: id.toInteger(), name: name, description: description, city: city, linkedin: linkedin, dateOfBirth: dateOfBirth, cpf: cpf)
+        String id = InputHelper.getInputStringWithDefault("id")
+        String name = InputHelper.getInputStringWithDefault("nome");
+        String description = InputHelper.getInputStringWithDefault("descrição");
+        String city = InputHelper.getInputStringWithDefault("cidade (número)");
+        String linkedin = InputHelper.getInputStringWithDefault("linkedin");
+        LocalDate dateOfBirth = DateTimeHelper.getInputDateWithDefault("data de aniversário (dd/mm/aaaa)");
+        String cpf = InputHelper.getInputStringWithDefault("cpf");
 
-            candidateService.save(candidate)
+        Candidate candidate = new Candidate(
+                id: id.toInteger(), name: name, description: description, city: city, linkedin: linkedin, dateOfBirth: dateOfBirth, cpf: cpf)
 
-        } catch (Exception e) {
-            e.getMessage()
-        }
+        OperationStatus status = candidateService.save(candidate)
+        println(status.getMessage())
+
     }
 
     void loadCandidates() {
@@ -125,7 +133,7 @@ class CandidatesMenu {
 
         InputHelper.printDivider(80)
 
-        def columns = ["id", "nome", "linkedin"]
+        ArrayList<String> columns = ["id", "nome", "linkedin"]
         InputHelper.printColumns(columns)
 
         Candidate candidate = candidateService.findAll(candidateSelected)
@@ -144,7 +152,6 @@ class CandidatesMenu {
         Candidate candidate = new Candidate(id: InputHelper.getInputStringWithDefault("id").toInteger())
         OperationStatus result = candidateService.deleteById(candidate.getId())
         println(result.getMessage())
-
     }
 
     void updateCandidateById() {

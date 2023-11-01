@@ -1,10 +1,16 @@
 package model
 
+import groovy.sql.Sql
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import repository.CandidateSkillsDAO
 import repository.DatabaseConfig
+import repository.DatabaseSingleton
 import repository.SkillsDAO
+import services.CandidateSkillsService
+import services.SkillsService
+import utils.OperationStatus
+import view.CandidateSkillsMenu
 
 import static org.junit.jupiter.api.Assertions.assertEquals
 import static org.junit.jupiter.api.Assertions.assertFalse
@@ -12,10 +18,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue
 
 class SkillsTest {
 
+    Sql sql
     Skills skill
+    SkillsDAO skillsDAO
+    SkillsService skillsService
 
     @BeforeEach
     void setUp() {
+        DatabaseSingleton database = DatabaseSingleton.getInstance()
+        sql = database.getDatabaseConnection()
+
+        skillsDAO = new SkillsDAO(sql)
+        skillsService = new SkillsService(skillsDAO)
+
         skill = new Skills()
     }
 
@@ -32,58 +47,42 @@ class SkillsTest {
 
     @Test
     void recoverSkillFromDatabase() {
-        SkillsDAO skillsDAO = new SkillsDAO(sql: DatabaseConfig.newInstance())
-        List<Skills> skillList = skillsDAO.findAll()
-        skillList.forEach { it ->
-            println("recoverSkillFromDatabase: ${it.getId()} ${it.getName()}")
+        skillsService.findAll().forEach { skill ->
+            println("recoverSkillFromDatabase: ${skill.getId()} ${skill.getName()}")
         }
     }
 
     @Test
     void findSkill() {
-        SkillsDAO skillsDAO = new SkillsDAO(sql: DatabaseConfig.newInstance())
-        println("findSkill: ${skillsDAO.findById(19)}")
+        println("findSkill: ${skillsService.findById(5)}")
     }
 
     @Test
     void deleteSkillById() {
-        SkillsDAO skillsDAO = new SkillsDAO(sql: DatabaseConfig.newInstance())
-        assertFalse(skillsDAO.deleteById(26))
+        println(skillsService.deleteById(6).getMessage())
     }
 
     @Test
     void saveSkillInDatabase() {
-        SkillsDAO skillsDAO = new SkillsDAO(sql: DatabaseConfig.newInstance())
-        skillsDAO.save(new Skills(name: "CSS 256"))
+        println(skillsService.save(new Skills(name: "NODE JS")).getMessage())
     }
 
     @Test
     void updateJobsById() {
-        SkillsDAO skillsDAO = new SkillsDAO(sql: DatabaseConfig.newInstance())
-
-        Skills skillsDTO = new Skills(id: 19, name: "Osvaldo Cruz")
-        assertTrue(skillsDAO.updateById(skillsDTO))
-    }
-
-    @Test
-    void loadAssociateSkillsWithJobs() {
-        CandidateSkillsDAO candidateSkillsDAO = new CandidateSkillsDAO(sql: DatabaseConfig.newInstance())
-
-        Candidate candidateDTO = new Candidate(id: 5)
-        candidateSkillsDAO.findAll(candidateDTO).each {
-            it ->
-                println(it)
-        }
+        Skills skill = new Skills(id: 7, name: "Node JS")
+        println(skillsService.updateById(skill).getMessage())
     }
 
     @Test
     void creatingAssociateSkillsWithUsers() {
-        CandidateSkillsDAO candidateSkillsDAO = new CandidateSkillsDAO(sql: DatabaseConfig.newInstance())
+        CandidateSkillsDAO candidateSkillsDAO = new CandidateSkillsDAO(sql)
+        CandidateSkillsService candidateSkillsService = new CandidateSkillsService(candidateSkillsDAO)
 
-        Candidate candidateDTO = new Candidate(id: 5)
-        Skills skillsDTO = new Skills(id: 20)
+        Candidate candidate = new Candidate(id: 5)
+        Skills skill = new Skills(id: 3)
 
-        candidateSkillsDAO.save(candidateDTO, skillsDTO)
+        OperationStatus status = candidateSkillsService.save(candidate, skill)
+        println(status.getMessage())
     }
 
 

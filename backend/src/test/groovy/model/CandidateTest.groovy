@@ -13,10 +13,20 @@ import static org.junit.jupiter.api.Assertions.assertTrue
 
 class CandidateTest {
 
+    Sql sql
+    CandidateDAO candidateDAO
+    CandidateService candidateService
     Candidate candidate
 
     @BeforeEach
     void setUp() {
+
+        DatabaseSingleton database = DatabaseSingleton.getInstance()
+        sql = database.getDatabaseConnection()
+
+        candidateDAO = new CandidateDAO(sql)
+        candidateService = new CandidateService(candidateDAO)
+
         candidate = new Candidate()
     }
 
@@ -37,13 +47,6 @@ class CandidateTest {
 
     @Test
     void recoverCandidateFromDatabase() {
-
-        DatabaseSingleton database = DatabaseSingleton.getInstance()
-        Sql sql = database.getDatabaseConnection()
-
-        CandidateDAO candidateDAO = new CandidateDAO(sql)
-        CandidateService candidateService = new CandidateService(candidateDAO)
-
         candidateService.findAll().forEach { it ->
             println("recoverCandidateFromDatabase: ${it.getId()} ${it.getName()}")
         }
@@ -51,11 +54,6 @@ class CandidateTest {
 
     @Test
     void findCandidate() {
-        DatabaseSingleton database = DatabaseSingleton.getInstance()
-        Sql sql = database.getDatabaseConnection()
-
-        CandidateDAO candidateDAO = new CandidateDAO(sql)
-        CandidateService candidateService = new CandidateService(candidateDAO)
 
         Candidate candidate = candidateService.findById(17)
         println("findCandidate: ${candidate.getName()}")
@@ -63,23 +61,11 @@ class CandidateTest {
 
     @Test
     void deleteCandidateById() {
-        DatabaseSingleton database = DatabaseSingleton.getInstance()
-        Sql sql = database.getDatabaseConnection()
-
-        CandidateDAO candidateDAO = new CandidateDAO(sql)
-        CandidateService candidateService = new CandidateService(candidateDAO)
-
-        assertTrue(candidateService.deleteById(21))
+        println(candidateService.deleteById(21).getMessage())
     }
 
     @Test
     void updateCandidateById() {
-        DatabaseSingleton database = DatabaseSingleton.getInstance()
-        Sql sql = database.getDatabaseConnection()
-
-        CandidateDAO candidateDAO = new CandidateDAO(sql)
-        CandidateService candidateService = new CandidateService(candidateDAO)
-
         Candidate candidate = new Candidate(id: 17, name: "Osvaldo Cruz", city: 1)
         def result = candidateService.updateById(candidate)
         println(result.getMessage())
@@ -87,14 +73,13 @@ class CandidateTest {
 
     @Test
     void findAllCandidateSkills() {
-        CandidateDAO candidateDAO = new CandidateDAO(sql: DatabaseConfig.newInstance())
 
-        Candidate candidateDTO = candidateDAO.findAll(new Candidate(id: 5))
+        Candidate candidate = candidateService.findAll(new Candidate(id: 5))
 
-        candidateDTO.each {
-            candidate->
-                println(candidate.getSkills().each{ it ->
-                    println(it.getName())
+        candidate.each {
+            it ->
+                println(it.getSkills().each { skill ->
+                    println(skill.getName())
                 })
         }
     }

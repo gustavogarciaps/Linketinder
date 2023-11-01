@@ -10,7 +10,7 @@ import utils.InputHelper
 
 class MainMenu {
 
-    static DatabaseSingleton database = DatabaseSingleton.getInstance()
+    private static DatabaseSingleton database = DatabaseSingleton.getInstance()
 
     static void showOptions() {
 
@@ -94,14 +94,15 @@ class MainMenu {
                 String userInput = InputHelper.getInputStringWithDefault("Opção")
                 Integer choice = userInput.toInteger()
 
+                CandidateDAO candidateDAO = new CandidateDAO(database.getDatabaseConnection())
+                CandidateService candidateService = new CandidateService(candidateDAO)
+                CandidatesMenu candidatesMenu = new CandidatesMenu(candidateService)
+
                 switch (choice) {
                     case 1:
                         CompanysMenu.showOptions()
                         break
                     case 2:
-                        CandidateDAO candidateDAO = new CandidateDAO(database.getDatabaseConnection())
-                        CandidateService candidateService = new CandidateService(candidateDAO)
-                        CandidatesMenu candidatesMenu = new CandidatesMenu(candidateService)
 
                         candidatesMenu.showOptions()
                         break
