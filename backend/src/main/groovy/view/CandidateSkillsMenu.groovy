@@ -2,11 +2,8 @@ package view
 
 import model.Candidate
 import model.Skills
-import repository.CandidateSkillsDAO
-import repository.DatabaseConfig
-import repository.DatabaseSingleton
+import repository.connection.DatabaseSingleton
 import repository.SkillsDAO
-import services.CandidateService
 import services.CandidateSkillsService
 import services.SkillsService
 import utils.InputHelper

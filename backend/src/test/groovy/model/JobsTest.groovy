@@ -1,16 +1,13 @@
 package model
 
 import groovy.sql.Sql
-import netscape.javascript.JSObject
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import repository.CandidateDAO
-import repository.CompanyDAO
-import repository.DatabaseConfig
-import repository.DatabaseSingleton
+import repository.connection.DatabaseConfig
+import repository.connection.DatabaseSingleton
 import repository.JobsDAO
 import repository.JobsSkillsDAO
-import services.CompanyService
 import services.JobsService
 import services.JobsSkillsService
 import utils.OperationStatus

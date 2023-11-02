@@ -1,7 +1,7 @@
 package view
 
 import model.Company
-import repository.DatabaseSingleton
+import repository.connection.DatabaseSingleton
 import repository.JobsDAO
 import services.CompanyService
 import services.JobsService

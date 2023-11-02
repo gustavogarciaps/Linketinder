@@ -1,5 +1,4 @@
-import repository.DatabaseExecute
-import repository.DatabaseSingleton
+import repository.connection.DatabaseSingleton
 import repository.PersonDAO
 import services.PersonService
 import view.MainMenu

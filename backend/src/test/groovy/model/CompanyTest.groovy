@@ -4,8 +4,7 @@ import groovy.sql.Sql
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import repository.CompanyDAO
-import repository.DatabaseConfig
-import repository.DatabaseSingleton
+import repository.connection.DatabaseSingleton
 import services.CompanyService
 import utils.OperationStatus
 
