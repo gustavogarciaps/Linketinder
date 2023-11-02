@@ -2,7 +2,7 @@ package model
 
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import repository.DatabaseConfig
+import repository.connection.DatabaseConfig
 import repository.PersonDAO
 
 import static org.junit.jupiter.api.Assertions.assertEquals

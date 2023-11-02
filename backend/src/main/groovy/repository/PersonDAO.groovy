@@ -4,6 +4,7 @@ import model.Person
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import groovy.transform.Canonical
+import repository.connection.DatabaseExecute
 import utils.OperationStatus
 
 @Canonical

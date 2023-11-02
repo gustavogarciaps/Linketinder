@@ -3,6 +3,7 @@ package repository
 import model.Candidate
 import model.Skills
 import groovy.sql.Sql
+import repository.connection.DatabaseExecute
 import utils.OperationStatus
 
 class CandidateSkillsDAO {

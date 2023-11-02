@@ -3,6 +3,7 @@ package repository
 import model.Skills
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
+import repository.connection.DatabaseExecute
 import utils.OperationStatus
 
 import java.sql.SQLException

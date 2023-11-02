@@ -2,6 +2,7 @@ package services
 
 import repository.CandidateDAO
 import model.Candidate
+import repository.dto.CandidateDTO
 import utils.OperationStatus
 
 class CandidateService {
@@ -13,7 +14,8 @@ class CandidateService {
     }
 
     List<Candidate> findAll() {
-        List<Candidate> result = candidateDAO.findAll()
+        CandidateDTO candidateDTO = new CandidateDTO(candidateDAO)
+        List<Candidate> result = candidateDTO.findAll()
         return result
     }
 

@@ -1,4 +1,4 @@
-package repository
+package repository.connection
 
 import groovy.sql.Sql
 import utils.OperationStatus

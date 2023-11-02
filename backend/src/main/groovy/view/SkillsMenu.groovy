@@ -1,9 +1,8 @@
 package view
 
-import model.Candidate
+
 import model.Skills
 import exceptions.QuitException
-import repository.DatabaseConfig
 import repository.SkillsDAO
 import services.SkillsService
 import utils.InputHelper

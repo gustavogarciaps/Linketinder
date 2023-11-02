@@ -2,7 +2,7 @@ package view
 
 import model.Company
 import model.Jobs
-import repository.DatabaseSingleton
+import repository.connection.DatabaseSingleton
 import repository.JobsSkillsDAO
 import services.JobsService
 import services.JobsSkillsService

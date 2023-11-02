@@ -2,10 +2,8 @@ package view
 
 import repository.CandidateDAO
 import repository.CompanyDAO
-import repository.DatabaseSingleton
+import repository.connection.DatabaseSingleton
 import model.Person
-import repository.DatabaseConfig
-import repository.PersonDAO
 import services.CandidateService
 import services.CompanyService
 import services.PersonService

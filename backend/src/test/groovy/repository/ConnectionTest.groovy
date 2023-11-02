@@ -2,6 +2,7 @@ package repository
 
 import groovy.sql.Sql
 import org.junit.jupiter.api.Test
+import repository.connection.DatabaseSingleton
 
 import static org.junit.jupiter.api.Assertions.assertEquals
 

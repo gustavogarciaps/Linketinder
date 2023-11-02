@@ -2,11 +2,9 @@ package view
 
 import model.Candidate
 import repository.CandidateSkillsDAO
-import repository.DatabaseSingleton
-import repository.SkillsDAO
+import repository.connection.DatabaseSingleton
 import services.CandidateService
 import services.CandidateSkillsService
-import services.SkillsService
 import utils.DateTimeHelper
 import utils.InputHelper
 import utils.OperationStatus
@@ -91,12 +89,13 @@ class CandidatesMenu {
         String name = InputHelper.getInputStringWithDefault("nome");
         String description = InputHelper.getInputStringWithDefault("descrição");
         String city = InputHelper.getInputStringWithDefault("cidade (número)");
+        String academicEducation = InputHelper.getInputStringWithDefault("Formação Academica");
         String linkedin = InputHelper.getInputStringWithDefault("linkedin");
         LocalDate dateOfBirth = DateTimeHelper.getInputDateWithDefault("data de aniversário (dd/mm/aaaa)");
         String cpf = InputHelper.getInputStringWithDefault("cpf");
 
         Candidate candidate = new Candidate(
-                id: id.toInteger(), name: name, description: description, city: city, linkedin: linkedin, dateOfBirth: dateOfBirth, cpf: cpf)
+                id: id.toInteger(), name: name, description: description, city: city, academicEducation: academicEducation, linkedin: linkedin, dateOfBirth: dateOfBirth, cpf: cpf)
 
         OperationStatus status = candidateService.save(candidate)
         println(status.getMessage())
@@ -108,13 +107,13 @@ class CandidatesMenu {
         println("Candidatos Cadastrados:")
         InputHelper.printDivider(80)
 
-        ArrayList<String> columns = ["id", "nome", "linkedin"]
+        ArrayList<String> columns = ["id", "formacao"]
         InputHelper.printColumns(columns)
 
         candidateService.findAll().forEach { it ->
 
             Candidate candidate = candidateService.findAll(it)
-            InputHelper.printColumns([candidate.getId(), candidate.getName(), candidate.getLinkedin()] as ArrayList<String>)
+            InputHelper.printColumns([candidate.getId(), candidate.getAcademicEducation()] as ArrayList<String>)
 
             println("Competências do candidato")
             candidate.getSkills().each { skill ->

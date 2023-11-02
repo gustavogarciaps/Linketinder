@@ -4,16 +4,13 @@ import groovy.sql.Sql
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import repository.CandidateSkillsDAO
-import repository.DatabaseConfig
-import repository.DatabaseSingleton
+import repository.connection.DatabaseSingleton
 import repository.SkillsDAO
 import services.CandidateSkillsService
 import services.SkillsService
 import utils.OperationStatus
-import view.CandidateSkillsMenu
 
 import static org.junit.jupiter.api.Assertions.assertEquals
-import static org.junit.jupiter.api.Assertions.assertFalse
 import static org.junit.jupiter.api.Assertions.assertTrue
 
 class SkillsTest {
