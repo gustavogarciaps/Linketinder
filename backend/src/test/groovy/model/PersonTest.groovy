@@ -1,9 +1,9 @@
-package entities
+package model
 
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import DAO.Connection
-import DAO.PersonDAO
+import repository.DatabaseConfig
+import repository.PersonDAO
 
 import static org.junit.jupiter.api.Assertions.assertEquals
 import static org.junit.jupiter.api.Assertions.assertTrue
@@ -43,7 +43,7 @@ class PersonTest {
     @Test
     void recoverPersonFromDatabase() {
 
-        PersonDAO personDAO = new PersonDAO(sql: Connection.newInstance())
+        PersonDAO personDAO = new PersonDAO(sql: DatabaseConfig.newInstance())
         List<Person> personList = personDAO.findAll()
         personList.forEach { it ->
             println("recoverPersonFromDatabase: ${it.getId()} ${it.getEmail()}")
@@ -52,13 +52,13 @@ class PersonTest {
 
     @Test
     void findPerson() {
-        PersonDAO personDAO = new PersonDAO(sql: Connection.newInstance())
+        PersonDAO personDAO = new PersonDAO(sql: DatabaseConfig.newInstance())
         println("findPerson ${personDAO.findById(18)}")
     }
 
     @Test
     void insertPersonToDataBase() {
-        PersonDAO personDAO = new PersonDAO(sql: Connection.newInstance())
+        PersonDAO personDAO = new PersonDAO(sql: DatabaseConfig.newInstance())
         Person personDTO = new Person(email: "teste${Math.random()}@gmail.com", password: "10987")
         personDAO.save(personDTO)
     }

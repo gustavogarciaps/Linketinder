@@ -1,8 +1,8 @@
-package DAO
+package repository
 
 import groovy.sql.Sql
 
-class Connection {
+class DatabaseConfig {
 
     static Sql newInstance() {
         final String url = 'jdbc:postgresql://localhost:5432/linketinder'
@@ -12,5 +12,4 @@ class Connection {
 
         return Sql.newInstance(url, user, password, driver)
     }
-
 }

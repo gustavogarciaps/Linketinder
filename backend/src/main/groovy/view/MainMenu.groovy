@@ -1,13 +1,36 @@
 package view
 
-import entities.Person
-import DAO.Connection
-import DAO.PersonDAO
+import repository.CandidateDAO
+import repository.CompanyDAO
+import repository.DatabaseSingleton
+import model.Person
+import repository.DatabaseConfig
+import repository.PersonDAO
+import services.CandidateService
+import services.CompanyService
+import services.PersonService
 import utils.InputHelper
+import utils.OperationStatus
 
 class MainMenu {
 
-    static void showOptions() {
+    private static DatabaseSingleton database = DatabaseSingleton.getInstance()
+
+    private final PersonService personService
+
+    private final CandidateDAO candidateDAO = new CandidateDAO(database.getDatabaseConnection())
+    private final CandidateService candidateService = new CandidateService(candidateDAO)
+    private final CandidatesMenu candidatesMenu = new CandidatesMenu(candidateService)
+
+    private final CompanyDAO companyDAO = new CompanyDAO(database.getDatabaseConnection())
+    private final CompanyService companyService = new CompanyService(companyDAO)
+    private final CompanysMenu companyMenu = new CompanysMenu(companyService)
+
+    MainMenu(PersonService personService) {
+        this.personService = personService
+    }
+
+    void showOptions() {
 
         HashMap<Integer, String> menu = [
                 1: "Criar usuário",
@@ -26,7 +49,6 @@ class MainMenu {
 
             try {
                 String userInput = InputHelper.getInputStringWithDefault("Opção")
-
                 Integer choice = userInput.toInteger()
 
                 switch (choice) {
@@ -45,32 +67,28 @@ class MainMenu {
                     default:
                         break
                 }
-            } catch (NumberFormatException e) {
-                println("\nDigite apenas o número das opções informadas no menu.\n")
+            } catch (NumberFormatException ignored) {
+                println(OperationStatus.NOT_NUMBER.getMessage())
             } catch (Exception e) {
                 e.getMessage()
             }
         }
     }
 
-    static void createPerson() {
+    void createPerson() {
 
         println("****** CADASTRAR NOVO USUÁRIO ******");
-        try {
-            String email = InputHelper.getInputStringWithDefault("email");
-            String password = InputHelper.getInputStringWithDefault("senha");
 
-            Person personDTO = new Person(email: email, password: password)
-            PersonDAO personDAO = new PersonDAO(sql: Connection.newInstance());
+        String email = InputHelper.getInputStringWithDefault("email");
+        String password = InputHelper.getInputStringWithDefault("senha");
 
-            personDAO.save(personDTO)
+        Person person = new Person(email: email, password: password)
 
-        } catch (Exception e) {
-            e.getMessage()
-        }
+        OperationStatus status = personService.save(person)
+        println(status.getMessage())
     }
 
-    static void accessPlatform() {
+    void accessPlatform() {
 
         HashMap<Integer, String> menu = [
                 1: "Acessar como Empresa",
@@ -92,36 +110,34 @@ class MainMenu {
 
                 switch (choice) {
                     case 1:
-                        CompanysMenu.showOptions()
+                        companyMenu.showOptions()
                         break
                     case 2:
-                        CandidatesMenu.showOptions()
+                        candidatesMenu.showOptions()
                         break
                     case 3:
                         return
                     default:
                         break
                 }
-            } catch (NumberFormatException e) {
-                println("\nDigite apenas o número das opções informadas no menu.\n")
+            } catch (NumberFormatException ignored) {
+                println(OperationStatus.NOT_NUMBER.getMessage())
             } catch (Exception e) {
                 e.getMessage()
             }
         }
     }
 
-    static void loadPerson() {
-
-        PersonDAO personDAO = new PersonDAO(sql: Connection.newInstance())
+    void loadPerson() {
 
         println("Usuários Cadastrados:")
         InputHelper.printDivider(80)
 
-        def columns = ["id", "email", "password"]
+        ArrayList<String> columns = ["id", "email", "password"]
         InputHelper.printColumns(columns)
 
-        personDAO.findAll().forEach { it ->
-            InputHelper.printColumns([it.getId(), it.getEmail(), it.getPassword()])
+        personService.findAll().forEach { person ->
+            InputHelper.printColumns([person.getId(), person.getEmail(), person.getPassword()] as ArrayList<String>)
         }
 
         InputHelper.printDivider(80)

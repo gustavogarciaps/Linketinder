@@ -1,14 +1,31 @@
 package view
 
-import entities.Candidate
-import entities.Skills
-import DAO.CandidateSkillsDAO
-import DAO.Connection
+import model.Candidate
+import model.Skills
+import repository.CandidateSkillsDAO
+import repository.DatabaseConfig
+import repository.DatabaseSingleton
+import repository.SkillsDAO
+import services.CandidateService
+import services.CandidateSkillsService
+import services.SkillsService
 import utils.InputHelper
+import utils.OperationStatus
 
 class CandidateSkillsMenu {
 
-    static void showOptions() {
+    private final CandidateSkillsService candidateSkillsService
+    private static DatabaseSingleton database = DatabaseSingleton.getInstance()
+
+    private final SkillsDAO skillsDAO = new SkillsDAO(database.getDatabaseConnection())
+    private final SkillsService skillsService = new SkillsService(skillsDAO)
+    private final SkillsMenu skillsMenu = new SkillsMenu(skillsService)
+
+    CandidateSkillsMenu(CandidateSkillsService candidateSkillsService) {
+        this.candidateSkillsService = candidateSkillsService
+    }
+
+    void showOptions() {
 
         HashMap<Integer, String> menu = [
                 1: "Gerenciamento de Competências",
@@ -32,10 +49,10 @@ class CandidateSkillsMenu {
 
                 switch (choice) {
                     case 1:
-                        SkillsMenu.showOptions()
+                        skillsMenu.showOptions()
                         break
                     case 2:
-                        associateSkillWithCandidate(new CandidateSkillsDAO(sql: Connection.newInstance()))
+                        associateSkillWithCandidate()
                         break
                     case 3:
                         return
@@ -43,24 +60,22 @@ class CandidateSkillsMenu {
                     default:
                         break
                 }
-            } catch (NumberFormatException e) {
-                println("\nDigite apenas o número das opções informadas no menu.\n")
+            } catch (NumberFormatException ignored) {
+                println(OperationStatus.NOT_NUMBER.getMessage())
             }
         }
     }
 
-    static void associateSkillWithCandidate(CandidateSkillsDAO candidateSkillsDAO){
+    void associateSkillWithCandidate(){
 
-        Candidate candidateDTO = new Candidate()
-        Skills skillsDTO = new Skills()
+        Candidate candidate = new Candidate()
+        Skills skill = new Skills()
 
-        candidateDTO.setId(InputHelper.getInputStringWithDefault("id candidato").toInteger())
-        skillsDTO.setId(InputHelper.getInputStringWithDefault("id competência").toInteger())
+        candidate.setId(InputHelper.getInputStringWithDefault("id candidato").toInteger())
+        skill.setId(InputHelper.getInputStringWithDefault("id competência").toInteger())
 
-        try{
-            candidateSkillsDAO.save(candidateDTO, skillsDTO)
-        }catch(Exception e){
-            println(e.getMessage())
-        }
+        OperationStatus status = candidateSkillsService.save(candidate, skill)
+        println(status.getMessage())
+
     }
 }

@@ -1,9 +1,13 @@
-package entities
+package model
 
+import groovy.sql.Sql
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import DAO.CompanyDAO
-import DAO.Connection
+import repository.CompanyDAO
+import repository.DatabaseConfig
+import repository.DatabaseSingleton
+import services.CompanyService
+import utils.OperationStatus
 
 import java.time.LocalDate
 
@@ -12,10 +16,20 @@ import static org.junit.jupiter.api.Assertions.assertTrue
 
 class CompanyTest {
 
+    Sql sql
+    CompanyDAO companyDAO
+    CompanyService companyService
     Company company
 
     @BeforeEach
     void setUp() {
+
+        DatabaseSingleton database = DatabaseSingleton.getInstance()
+        sql = database.getDatabaseConnection()
+
+        companyDAO = new CompanyDAO(sql)
+        companyService = new CompanyService(companyDAO)
+
         company = new Company()
     }
 
@@ -46,7 +60,7 @@ class CompanyTest {
     }
 
     @Test
-    void companyLikeToCandidate(){
+    void companyLikeToCandidate() {
 
         Candidate candidate = new Candidate(name: "Gustavo")
         CompanyLikes companyLikes = new CompanyLikes(company: company)
@@ -59,41 +73,39 @@ class CompanyTest {
 
     @Test
     void recoverCompaniesFromDatabase() {
-
-        CompanyDAO companyDAO = new CompanyDAO(sql: Connection.newInstance())
-        List<Company> companies = companyDAO.findAll()
-        companies.forEach { it ->
-            println("recoverCompaniesFromDatabase: ${it.getId()} ${it.getName()}")
+        companyService.findAll().forEach { company ->
+            println("recoverCompaniesFromDatabase: ${company.getId()} ${company.getName()}")
         }
     }
 
     @Test
     void findCompany() {
-        CompanyDAO companyDAO = new CompanyDAO(sql: Connection.newInstance())
-        println("findCompany: ${companyDAO.findById(22).getName()}")
+        println("findCompany: ${companyService.findById(6).getName()}")
     }
 
     @Test
     void insertCompanyToDataBase() {
-        CompanyDAO companyDAO = new CompanyDAO(sql: Connection.newInstance())
-        Company company = new Company(id: 22, name: "Sorvetes e Tech Solutions", description: "10987", creationDate: LocalDate.of(2022,6,9))
-        companyDAO.save(company)
+        Company company = new Company(id: 11, name: "Sorvetes e Tech Solutions", description: "Somos bons", creationDate: LocalDate.of(2022, 6, 9))
+        OperationStatus status = companyService.save(company)
+        println(status.getMessage())
     }
 
     @Test
     void updateCompanyById() {
-        CompanyDAO companyDAO = new CompanyDAO(sql: Connection.newInstance())
-        Company company = companyDAO.findById(22)
-        company.setName( "Sorvetes e Tech")
+
+        Company company = companyService.findById(11)
+        company.setName("Açai e Tech")
         company.setCity("1")
-        company.setCreationDate(LocalDate.of(2023,10,25))
-        assertTrue(companyDAO.updateById(company))
+        company.setCreationDate(LocalDate.of(2023, 10, 25))
+
+        OperationStatus status = companyService.updateById(company)
+        println(status.getMessage())
     }
 
     @Test
     void deleteCompanyById() {
-        CompanyDAO companyDAO = new CompanyDAO(sql: Connection.newInstance())
-        assertTrue(companyDAO.deleteById(22))
+        OperationStatus status = companyService.deleteById(11)
+        println(status.getMessage())
     }
 
 }

@@ -1,17 +1,31 @@
 package view
 
-import entities.Company
-import entities.Jobs
-import DAO.Connection
-import DAO.JobsDAO
+import model.Company
+import model.Jobs
+import repository.DatabaseSingleton
+import repository.JobsSkillsDAO
+import services.JobsService
+import services.JobsSkillsService
 import utils.InputHelper
+import utils.OperationStatus
 
 class JobsMenu {
 
-    static void showOptions() {
+    private final JobsService jobsService
+    private static DatabaseSingleton database = DatabaseSingleton.getInstance()
+
+    private final JobsSkillsDAO jobsSkillsDAO = new JobsSkillsDAO(database.getDatabaseConnection())
+    private final JobsSkillsService jobsSkillsService = new JobsSkillsService(jobsSkillsDAO)
+    private final JobsSkillsMenu jobsSkillsMenu = new JobsSkillsMenu(jobsSkillsService)
+
+    JobsMenu(JobsService jobsService) {
+        this.jobsService = jobsService
+    }
+
+    void showOptions() {
 
         HashMap<Integer, String> menu = [
-                1: "Cadastrar NOVO Emprego",
+                1: "Cadastrar NOVA Vaga",
                 2: "Visualizar Empregos",
                 3: "Visualizar Emprego pelo ID",
                 4: "Excluir Emprego",
@@ -36,22 +50,22 @@ class JobsMenu {
 
                 switch (choice) {
                     case 1:
-                        createJob(new JobsDAO(sql: Connection.newInstance()))
+                        createJob()
                         break
                     case 2:
-                        loadJobs(new JobsDAO(sql: Connection.newInstance()))
+                        loadJobs()
                         break
                     case 3:
-                        loadJobById(new JobsDAO(sql: Connection.newInstance()))
+                        loadJobById()
                         break
                     case 4:
-                        deleteJobById(new JobsDAO(sql: Connection.newInstance()))
+                        deleteJobById()
                         break
                     case 5:
-                        updateJobById(new JobsDAO(sql: Connection.newInstance()))
+                        updateJobById()
                         break
                     case 6:
-                        JobsSkillsMenu.showOptions()
+                        jobsSkillsMenu.showOptions()
                         break
                     case 7:
                         return
@@ -59,99 +73,88 @@ class JobsMenu {
                         break
                 }
 
-            } catch (NumberFormatException e) {
-                println("\nDigite apenas o número das opções informadas no menu.\n")
+            } catch (NumberFormatException ignored) {
+                println(OperationStatus.NOT_NUMBER.getMessage())
             }
         }
     }
 
-    static void createJob(JobsDAO jobsDAO) {
+    void createJob() {
 
         println("****** CADASTRAR NOVA VAGA ******");
-        try {
-            String title = InputHelper.getInputStringWithDefault("titulo");
-            String description = InputHelper.getInputStringWithDefault("descrição");
-            String company = InputHelper.getInputStringWithDefault("empresa (número)");
-            String city = InputHelper.getInputStringWithDefault("cidade");
 
-            Jobs job = new Jobs(
-                    title: title, description: description, city: city, company: new Company(id: company.toInteger()))
+        String title = InputHelper.getInputStringWithDefault("titulo");
+        String description = InputHelper.getInputStringWithDefault("descrição");
+        String company = InputHelper.getInputStringWithDefault("empresa (número)");
+        String city = InputHelper.getInputStringWithDefault("cidade (número)");
 
-            jobsDAO.save(job) ? println("Vaga registrada com sucesso") : println("Falha ao registrar vaga")
+        Jobs job = new Jobs(
+                title: title, description: description, city: city, company: new Company(id: company.toInteger()))
 
-        } catch (Exception e) {
-            e.getMessage()
-        }
+        OperationStatus status = jobsService.save(job)
+        println(status.getMessage())
     }
 
-    static void loadJobs(JobsDAO jobsDAO) {
+    void loadJobs() {
 
         println("Vagas Cadastradas:")
         InputHelper.printDivider(80)
 
-        jobsDAO.findAll().each {
+        jobsService.findAll().each {
             job ->
                 InputHelper.printColumns(["id", "titulo", "empresa"])
-                InputHelper.printColumns([job.getId(), job.getTitle(), job.getCompany().getId()])
+                InputHelper.printColumns([job.getId(), job.getTitle(), job.getCompany().getId()] as ArrayList<String>)
 
                 println("Competências Requisitadas")
                 InputHelper.printColumns(["id", "nome"])
 
-                jobsDAO.findAll(job).getSkills().each { it ->
-                    InputHelper.printColumns([it.getId(), it.getName()])
+                jobsService.findAll(job).getSkills().each { it ->
+                    InputHelper.printColumns([it.getId(), it.getName()] as ArrayList<String>)
                 }
                 InputHelper.printDivider(80)
         }
     }
 
-    static void loadJobById(JobsDAO jobsDAO) {
+    void loadJobById() {
 
-        String id = InputHelper.getInputStringWithDefault("id")
-        Jobs job = jobsDAO.findById(id.toInteger())
+        Jobs jobSelected = new Jobs(id: InputHelper.getInputStringWithDefault("id").toInteger())
+        Jobs job = jobsService.findById(jobSelected.getId())
 
         println("Vaga Cadastrada:")
         InputHelper.printDivider(80)
 
         InputHelper.printColumns(["id", "titulo", "empresa"])
-        InputHelper.printColumns([job.getId(), job.getTitle(), job.getCompany().getId()])
+        InputHelper.printColumns([job.getId(), job.getTitle(), job.getCompany().getId()] as ArrayList<String>)
 
         println("Competências Requisitadas")
         InputHelper.printColumns(["id", "nome"])
 
-        jobsDAO.findAll(job).getSkills().each { it ->
-            InputHelper.printColumns([it.getId(), it.getName()])
+        jobsService.findAll(job).getSkills().each { it ->
+            InputHelper.printColumns([it.getId(), it.getName()] as ArrayList<String>)
         }
         InputHelper.printDivider(80)
     }
 
-    static void deleteJobById(JobsDAO jobsDAO) {
+    void deleteJobById() {
         println("Excluir Vaga")
 
-        try {
-            String id = InputHelper.getInputStringWithDefault("id")
-            jobsDAO.deleteById(id.toInteger()) ? println("Excluído com sucesso. Código ${id}") : println("Falha ao Excluir código ${id}")
-
-        } catch (Exception e) {
-            e.getMessage()
-        }
+        Jobs job = new Jobs(id: InputHelper.getInputStringWithDefault("id").toInteger())
+        OperationStatus status = jobsService.deleteById(job.getId())
+        println(status.getMessage())
     }
 
-    static void updateJobById(JobsDAO jobsDAO) {
+    void updateJobById() {
         println("Atualizar Vaga")
 
-        try {
-            String id = InputHelper.getInputStringWithDefault("id")
-            Jobs job = jobsDAO.findById(id.toInteger())
+        Jobs jobSelected = new Jobs(id: InputHelper.getInputStringWithDefault("id").toInteger())
 
-            job.setTitle(InputHelper.getInputStringWithDefault("titulo", job.getTitle()))
-            job.setDescription(InputHelper.getInputStringWithDefault("descrição", job.getDescription()))
-            job.setCity(InputHelper.getInputStringWithDefault("cidade", job.getCity()))
+        Jobs job = jobsService.findById(jobSelected.getId())
 
-            jobsDAO.updateById(job) ? println("Atualizado com sucesso. Código ${id}") : println("Falha ao atualizar o código ${id}")
+        job.setTitle(InputHelper.getInputStringWithDefault("titulo", job.getTitle()))
+        job.setDescription(InputHelper.getInputStringWithDefault("descrição", job.getDescription()))
+        job.setCity(InputHelper.getInputStringWithDefault("cidade", job.getCity()))
 
-        } catch (Exception e) {
-            e.getMessage()
-        }
-
+        OperationStatus status = jobsService.updateById(job)
+        println(status.getMessage())
     }
 }

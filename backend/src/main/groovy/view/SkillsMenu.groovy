@@ -1,14 +1,23 @@
 package view
 
-import entities.Skills
+import model.Candidate
+import model.Skills
 import exceptions.QuitException
-import DAO.Connection
-import DAO.SkillsDAO
+import repository.DatabaseConfig
+import repository.SkillsDAO
+import services.SkillsService
 import utils.InputHelper
+import utils.OperationStatus
 
 class SkillsMenu {
 
-    static void showOptions() {
+    private final SkillsService skillsService
+
+    SkillsMenu(SkillsService skillsService) {
+        this.skillsService = skillsService
+    }
+
+    void showOptions() {
 
         HashMap<Integer, String> menu = [
                 1: "Criar Competência",
@@ -34,19 +43,19 @@ class SkillsMenu {
 
                 switch (choice) {
                     case 1:
-                        createSkill(new SkillsDAO(sql: Connection.newInstance()))
+                        createSkill()
                         break
                     case 2:
-                        loadSkills(new SkillsDAO(sql: Connection.newInstance()))
+                        loadSkills()
                         break
                     case 3:
-                        loadSkillById(new SkillsDAO(sql: Connection.newInstance()))
+                        loadSkillById()
                         break
                     case 4:
-                        updateSkillById(new SkillsDAO(sql: Connection.newInstance()))
+                        updateSkillById()
                         break
                     case 5:
-                        deleteSkillById(new SkillsDAO(sql: Connection.newInstance()))
+                        deleteSkillById()
                         break
                     case 6:
                         return
@@ -54,8 +63,8 @@ class SkillsMenu {
                         break
                 }
 
-            } catch (NumberFormatException e) {
-                println("\nDigite apenas o número das opções informadas no menu.\n")
+            } catch (NumberFormatException ignored) {
+                println(OperationStatus.NOT_NUMBER.getMessage())
             } catch (QuitException e) {
                 e.getMessage()
             }
@@ -63,77 +72,67 @@ class SkillsMenu {
 
     }
 
-    static void createSkill(SkillsDAO skillsDAO) {
+    void createSkill() {
 
         println("****** CADASTRAR NOVA COMPETÊNCIA ******");
-        try {
-            String name = InputHelper.getInputStringWithDefault("nome");
-            Skills skillsDTO = new Skills(name: name)
 
-            skillsDAO.save(skillsDTO) ? println("Competência registrada com sucesso") : println("Falha ao registrar competência")
-        } catch (Exception e) {
-            e.getMessage()
-        }
+        String name = InputHelper.getInputStringWithDefault("nome");
+        Skills skill = new Skills(name: name)
+        OperationStatus status = skillsService.save(skill)
+        println(status.getMessage())
+
     }
 
-    static void loadSkills(SkillsDAO skillsDAO) {
+    void loadSkills() {
 
         println("Competências Cadastradas:")
         InputHelper.printDivider(80)
 
-        def columns = ["id", "nome"]
+        ArrayList<String> columns = ["id", "nome"]
         InputHelper.printColumns(columns)
 
-        skillsDAO.findAll().forEach { it ->
-            InputHelper.printColumns([it.getId().toString(), it.getName()])
+        skillsService.findAll().forEach { skill ->
+            InputHelper.printColumns([skill.getId().toString(), skill.getName()])
         }
 
         InputHelper.printDivider(80)
     }
 
-    static void loadSkillById(SkillsDAO skillsDAO) {
+    void loadSkillById() {
 
         println("Competência")
         String id = InputHelper.getInputStringWithDefault("id")
 
         InputHelper.printDivider(80)
 
-        def columns = ["id", "nome"]
+        ArrayList<String> columns = ["id", "nome"]
         InputHelper.printColumns(columns)
 
-        Skills skillsDTO = skillsDAO.findById(id.toInteger())
-        InputHelper.printColumns([skillsDTO.getId().toString(), skillsDTO.getName()])
+        Skills skill = skillsService.findById(id.toInteger())
+        InputHelper.printColumns([skill.getId().toString(), skill.getName()])
 
         InputHelper.printDivider(80)
     }
 
-    static void deleteSkillById(SkillsDAO skillsDAO) {
+    void deleteSkillById() {
         println("Excluir Competência")
 
-        try {
-            String id = InputHelper.getInputStringWithDefault("id")
-            skillsDAO.deleteById(id.toInteger()) ? println("Excluído com sucesso. Código ${id}") : println("Falha ao Excluir código ${id}")
-
-        } catch (Exception e) {
-            e.getMessage()
-        }
-
+        Skills skill = new Skills(id: InputHelper.getInputStringWithDefault("id").toInteger())
+        OperationStatus result = skillsService.deleteById(skill.getId())
+        println(result.getMessage())
     }
 
-    static void updateSkillById(SkillsDAO skillsDAO) {
+    void updateSkillById(SkillsDAO skillsDAO) {
         println("Atualizar Competência")
 
-        try {
-            String id = InputHelper.getInputStringWithDefault("id")
-            Skills skillsDTO = skillsDAO.findById(id.toInteger())
+        Skills skillSelected = new Skills(id: InputHelper.getInputStringWithDefault("id").toInteger())
+        Skills skill = skillsService.findById(skillSelected.getId())
 
-            skillsDTO.setName(InputHelper.getInputStringWithDefault("nome", skillsDTO.getName()))
+        skill.setName(InputHelper.getInputStringWithDefault("nome", skill.getName()))
 
-            skillsDAO.updateById(skillsDTO) ? println("Atualizado com sucesso. Código ${id}") : println("Falha ao atualizar o código ${id}")
-
-        } catch (Exception e) {
-            e.getMessage()
-        }
-
+        OperationStatus result = skillsService.updateById(skill)
+        println(result.getMessage())
     }
 }
+
+
