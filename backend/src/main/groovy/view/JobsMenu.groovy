@@ -3,8 +3,10 @@ package view
 import model.Company
 import model.Jobs
 import repository.DatabaseSingleton
+import repository.JobsSkillsDAO
 import repository.SkillsDAO
 import services.JobsService
+import services.JobsSkillsService
 import services.SkillsService
 import utils.InputHelper
 import utils.OperationStatus
@@ -18,10 +20,10 @@ class JobsMenu {
         this.jobsService = jobsService
     }
 
-    static void showOptions() {
+    void showOptions() {
 
         HashMap<Integer, String> menu = [
-                1: "Cadastrar NOVO Emprego",
+                1: "Cadastrar NOVA Vaga",
                 2: "Visualizar Empregos",
                 3: "Visualizar Emprego pelo ID",
                 4: "Excluir Emprego",
@@ -44,9 +46,9 @@ class JobsMenu {
 
                 Integer choice = userInput.toInteger()
 
-                SkillsDAO skillsDAO = new SkillsDAO(database.getDatabaseConnection())
-                SkillsService skillsService = new SkillsService(skillsDAO)
-                SkillsMenu skillsMenu = new SkillsMenu(skillsService)
+                JobsSkillsDAO jobsSkillsDAO = new JobsSkillsDAO(database.getDatabaseConnection())
+                JobsSkillsService jobsSkillsService = new JobsSkillsService(jobsSkillsDAO)
+                JobsSkillsMenu jobsSkillsMenu = new JobsSkillsMenu(jobsSkillsService)
 
                 switch (choice) {
                     case 1:
@@ -65,7 +67,7 @@ class JobsMenu {
                         updateJobById()
                         break
                     case 6:
-                        skillsMenu.showOptions()
+                        jobsSkillsMenu.showOptions()
                         break
                     case 7:
                         return
@@ -86,7 +88,7 @@ class JobsMenu {
         String title = InputHelper.getInputStringWithDefault("titulo");
         String description = InputHelper.getInputStringWithDefault("descrição");
         String company = InputHelper.getInputStringWithDefault("empresa (número)");
-        String city = InputHelper.getInputStringWithDefault("cidade");
+        String city = InputHelper.getInputStringWithDefault("cidade (número)");
 
         Jobs job = new Jobs(
                 title: title, description: description, city: city, company: new Company(id: company.toInteger()))
@@ -103,13 +105,13 @@ class JobsMenu {
         jobsService.findAll().each {
             job ->
                 InputHelper.printColumns(["id", "titulo", "empresa"])
-                InputHelper.printColumns([job.getId(), job.getTitle(), job.getCompany().getId()])
+                InputHelper.printColumns([job.getId(), job.getTitle(), job.getCompany().getId()] as ArrayList<String>)
 
                 println("Competências Requisitadas")
                 InputHelper.printColumns(["id", "nome"])
 
                 jobsService.findAll(job).getSkills().each { it ->
-                    InputHelper.printColumns([it.getId(), it.getName()])
+                    InputHelper.printColumns([it.getId(), it.getName()] as ArrayList<String>)
                 }
                 InputHelper.printDivider(80)
         }
@@ -117,20 +119,20 @@ class JobsMenu {
 
     void loadJobById() {
 
-        Jobs jobSelected = new Jobs(id: InputHelper.getInputStringWithDefault("id"))
+        Jobs jobSelected = new Jobs(id: InputHelper.getInputStringWithDefault("id").toInteger())
         Jobs job = jobsService.findById(jobSelected.getId())
 
         println("Vaga Cadastrada:")
         InputHelper.printDivider(80)
 
         InputHelper.printColumns(["id", "titulo", "empresa"])
-        InputHelper.printColumns([job.getId(), job.getTitle(), job.getCompany().getId()])
+        InputHelper.printColumns([job.getId(), job.getTitle(), job.getCompany().getId()] as ArrayList<String>)
 
         println("Competências Requisitadas")
         InputHelper.printColumns(["id", "nome"])
 
         jobsService.findAll(job).getSkills().each { it ->
-            InputHelper.printColumns([it.getId(), it.getName()])
+            InputHelper.printColumns([it.getId(), it.getName()] as ArrayList<String>)
         }
         InputHelper.printDivider(80)
     }
@@ -138,7 +140,7 @@ class JobsMenu {
     void deleteJobById() {
         println("Excluir Vaga")
 
-        Jobs job = new Jobs(id: InputHelper.getInputStringWithDefault("id"))
+        Jobs job = new Jobs(id: InputHelper.getInputStringWithDefault("id").toInteger())
         OperationStatus status = jobsService.deleteById(job.getId())
         println(status.getMessage())
     }
@@ -146,7 +148,7 @@ class JobsMenu {
     void updateJobById() {
         println("Atualizar Vaga")
 
-        Jobs jobSelected = new Jobs(id: InputHelper.getInputStringWithDefault("id"))
+        Jobs jobSelected = new Jobs(id: InputHelper.getInputStringWithDefault("id").toInteger())
 
         Jobs job = jobsService.findById(jobSelected.getId())
 
@@ -154,7 +156,7 @@ class JobsMenu {
         job.setDescription(InputHelper.getInputStringWithDefault("descrição", job.getDescription()))
         job.setCity(InputHelper.getInputStringWithDefault("cidade", job.getCity()))
 
-        OperationStatus status = jobsService.updateById(company)
+        OperationStatus status = jobsService.updateById(job)
         println(status.getMessage())
     }
 }

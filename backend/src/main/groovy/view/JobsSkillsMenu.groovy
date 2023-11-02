@@ -3,12 +3,24 @@ package view
 import model.Jobs
 import model.Skills
 import repository.DatabaseConfig
+import repository.DatabaseSingleton
 import repository.JobsSkillsDAO
+import repository.SkillsDAO
+import services.JobsSkillsService
+import services.SkillsService
 import utils.InputHelper
+import utils.OperationStatus
 
 class JobsSkillsMenu {
 
-    static void showOptions() {
+    private final JobsSkillsService jobsSkillsService
+    private static DatabaseSingleton database = DatabaseSingleton.getInstance()
+
+    JobsSkillsMenu(JobsSkillsService jobsSkillsService) {
+        this.jobsSkillsService = jobsSkillsService
+    }
+
+    void showOptions() {
 
         HashMap<Integer, String> menu = [
                 1: "Gerenciamento de Competências",
@@ -29,12 +41,16 @@ class JobsSkillsMenu {
             try {
                 Integer choice = userInput.toInteger()
 
+                SkillsDAO skillsDAO = new SkillsDAO(database.getDatabaseConnection())
+                SkillsService skillsService = new SkillsService(skillsDAO)
+                SkillsMenu skillsMenu = new SkillsMenu(skillsService)
+
                 switch (choice) {
                     case 1:
-                        SkillsMenu.showOptions()
+                        skillsMenu.showOptions()
                         break
                     case 2:
-                        associateSkillWithJob(new JobsSkillsDAO(sql: DatabaseConfig.newInstance()))
+                        associateSkillWithJob()
                         break
                     case 3:
                         return
@@ -42,13 +58,13 @@ class JobsSkillsMenu {
                     default:
                         break
                 }
-            } catch (NumberFormatException e) {
-                println("\nDigite apenas o número das opções informadas no menu.\n")
+            } catch (NumberFormatException ignored) {
+                println(OperationStatus.NOT_NUMBER.getMessage())
             }
         }
     }
 
-    static void associateSkillWithJob(JobsSkillsDAO jobSkillsDAO){
+    void associateSkillWithJob() {
 
         Jobs job = new Jobs()
         Skills skill = new Skills()
@@ -56,10 +72,8 @@ class JobsSkillsMenu {
         job.setId(InputHelper.getInputStringWithDefault("id vaga").toInteger())
         skill.setId(InputHelper.getInputStringWithDefault("id competência").toInteger())
 
-        try{
-            jobSkillsDAO.save(job, skill)
-        }catch(Exception e){
-            println(e.getMessage())
-        }
+        OperationStatus status = jobsSkillsService.save(job, skill)
+        println(status.getMessage())
+
     }
 }

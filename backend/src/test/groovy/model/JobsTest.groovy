@@ -9,8 +9,10 @@ import repository.CompanyDAO
 import repository.DatabaseConfig
 import repository.DatabaseSingleton
 import repository.JobsDAO
+import repository.JobsSkillsDAO
 import services.CompanyService
 import services.JobsService
+import services.JobsSkillsService
 import utils.OperationStatus
 
 import static org.junit.jupiter.api.Assertions.assertEquals
@@ -60,12 +62,12 @@ class JobsTest {
 
     @Test
     void findJob() {
-        println("findJob: ${jobsService.findById(1).properties}")
+        println("findJob: ${jobsService.findById(7).properties}")
     }
 
     @Test
-    void insertJobDatabase(){
-        Jobs job = new Jobs(company: new Company(id:6),title: "Desenvolvedor Ruby", description: "Desenvolver soluções em Ruby Rails e integras com X", city: 1)
+    void insertJobDatabase() {
+        Jobs job = new Jobs(company: new Company(id: 6), title: "Desenvolvedor Ruby", description: "Desenvolver soluções em Ruby Rails e integras com X", city: 1)
         OperationStatus status = jobsService.save(job)
         println(status.getMessage())
     }
@@ -99,5 +101,16 @@ class JobsTest {
                 }
 
         }
+    }
+
+    @Test
+    void associateJobsWithSkills() {
+        Jobs job = new Jobs(id: 6)
+        Skills skill = new Skills(id: 5)
+
+        JobsSkillsDAO jobsSkillsDAO = new JobsSkillsDAO(sql)
+        JobsSkillsService jobsSkillsService = new JobsSkillsService(jobsSkillsDAO)
+        OperationStatus status = jobsSkillsService.save(job, skill)
+        println(status.getMessage())
     }
 }

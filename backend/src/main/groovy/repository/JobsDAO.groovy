@@ -63,7 +63,7 @@ class JobsDAO implements InterfaceDatabaseDML<Jobs>{
     }
 
     OperationStatus updateById(Jobs job) {
-        List<Object> arguments = [job.getTitle(), job.getTitle(), 1, job.getCity().toInteger(), job.getId()]
+        List<Object> arguments = [job.getTitle(), job.getDescription(), 1, job.getCity().toInteger(), job.getId()]
         return DatabaseExecute.executeTransaction(sql, UPDATE_JOB, arguments)
     }
 }
