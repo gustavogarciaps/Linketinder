@@ -7,7 +7,8 @@ enum OperationStatus {
     NOT_FOUND(">>>> Registro não encontrado."),
     PERMISSION_DENIED(">>>> Permissão negada."),
     IN_PROGRESS(">>>> Operação em andamento."),
-    CANCELED(">>>> Operação cancelada.")
+    CANCELED(">>>> Operação cancelada."),
+    NOT_NUMBER(">>>> Operação não executada. Digite apenas números inteiros.")
 
     String message;
 

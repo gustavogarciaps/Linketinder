@@ -1,18 +1,29 @@
 package view
 
-
+import model.Candidate
 import model.Company
 import exceptions.QuitException
 import repository.CompanyDAO
 import repository.DatabaseConfig
+import repository.DatabaseSingleton
+import services.CandidateService
+import services.CompanyService
 import utils.DateTimeHelper
 import utils.InputHelper
+import utils.OperationStatus
 
 import java.time.LocalDate
 
 class CompanysMenu {
 
-    static void showOptions() {
+    private final CompanyService companyService
+    private static DatabaseSingleton database = DatabaseSingleton.getInstance()
+
+    CompanysMenu(CompanyService companyService) {
+        this.companyService = companyService
+    }
+
+    void showOptions() {
 
         HashMap<Integer, String> menu = [
                 1: "Cadastrar NOVA empresa",
@@ -40,19 +51,19 @@ class CompanysMenu {
 
                 switch (choice) {
                     case 1:
-                        createCompany(new CompanyDAO(sql: DatabaseConfig.newInstance()))
+                        createCompany()
                         break
                     case 2:
-                        loadCompany(new CompanyDAO(sql: DatabaseConfig.newInstance()))
+                        loadCompany()
                         break
                     case 3:
-                        loadCompanyById(new CompanyDAO(sql: DatabaseConfig.newInstance()))
+                        loadCompanyById()
                         break
                     case 4:
-                        deleteCompanyById(new CompanyDAO(sql: DatabaseConfig.newInstance()))
+                        deleteCompanyById()
                         break
                     case 5:
-                        updateCompanyById(new CompanyDAO(sql: DatabaseConfig.newInstance()))
+                        updateCompanyById()
                         break
                     case 6:
                         JobsMenu.showOptions()
@@ -63,88 +74,81 @@ class CompanysMenu {
                         break
                 }
 
-            } catch (NumberFormatException e) {
-                println("\nDigite apenas o número das opções informadas no menu.\n")
+            } catch (NumberFormatException ignored) {
+                println(OperationStatus.NOT_NUMBER.getMessage())
             }
         }
     }
 
-    static void createCompany(CompanyDAO companyDAO) {
+    void createCompany() {
 
         println("****** CADASTRAR NOVA EMPRESA ******");
-        try {
-            String id = InputHelper.getInputStringWithDefault("id")
-            String name = InputHelper.getInputStringWithDefault("nome");
-            String description = InputHelper.getInputStringWithDefault("descrição");
-            String city = InputHelper.getInputStringWithDefault("cidade (número)");
-            LocalDate creationDate = DateTimeHelper.getInputDateWithDefault("data de fundação (dd/mm/aaaa)");
-            String cnpj = InputHelper.getInputStringWithDefault("cnpj");
 
-            Company company = new Company(
-                    id: id.toInteger(), name: name, description: description, city: city, creationDate: creationDate, cnpj: cnpj)
+        String id = InputHelper.getInputStringWithDefault("id")
+        String name = InputHelper.getInputStringWithDefault("nome");
+        String description = InputHelper.getInputStringWithDefault("descrição");
+        String city = InputHelper.getInputStringWithDefault("cidade (número)");
+        LocalDate creationDate = DateTimeHelper.getInputDateWithDefault("data de fundação (dd/mm/aaaa)");
+        String cnpj = InputHelper.getInputStringWithDefault("cnpj");
 
-            companyDAO.save(company) ? println("Empresa registrada com sucesso") : println("Falha ao registrar empresa")
+        Company company = new Company(
+                id: id.toInteger(), name: name, description: description, city: city, creationDate: creationDate, cnpj: cnpj)
 
-        } catch (QuitException e) {
-            e.getMessage()
-        }
+        OperationStatus status = companyService.save(company)
+        println(status.getMessage())
+
     }
 
-    static void loadCompany(CompanyDAO companyDAO) {
+    void loadCompany() {
 
         println("Empresas Cadastradas:")
         InputHelper.printDivider(80)
 
-        def columns = ["id", "nome", "linkedin"]
+        ArrayList<String> columns = ["id", "nome", "Descrição"]
         InputHelper.printColumns(columns)
 
-        companyDAO.findAll().forEach { it ->
-            InputHelper.printColumns([it.getId().toString(), it.getName(), it.getDescription()])
+        companyService.findAll().forEach { company ->
+            InputHelper.printColumns([company.getId().toString(), company.getName(), company.getDescription()])
         }
         InputHelper.printDivider(80)
     }
 
-    static void loadCompanyById(CompanyDAO companyDAO) {
+    void loadCompanyById(CompanyDAO companyDAO) {
 
         println("Empresa:")
-        String id = InputHelper.getInputStringWithDefault("id")
+
+        Company companySelected = new Company(id: InputHelper.getInputStringWithDefault("id").toInteger())
 
         InputHelper.printDivider(80)
 
-        def columns = ["id", "nome", "linkedin"]
+        ArrayList<String> columns = ["id", "nome", "linkedin"]
         InputHelper.printColumns(columns)
 
-        Company company = companyDAO.findById(id.toInteger())
+        Company company = companyService.findById(companySelected.getId())
         InputHelper.printColumns([company.getId().toString(), company.getName(), company.getDescription()])
         InputHelper.printDivider(80)
     }
 
-    static void deleteCompanyById(CompanyDAO companyDAO) {
+    void deleteCompanyById() {
         println("Excluir Empresa")
 
-        try {
-            String id = InputHelper.getInputStringWithDefault("id")
-            companyDAO.deleteById(id.toInteger()) ? println("Excluído com sucesso. Código ${id}") : println("Falha ao Excluir código ${id}")
-        } catch (Exception e) {
-            e.getMessage()
-        }
+        Company company = new Company(id: InputHelper.getInputStringWithDefault("id").toInteger())
+        OperationStatus status = companyService.deleteById(company.getId())
+        println(status.getMessage())
     }
 
-    static void updateCompanyById(CompanyDAO companyDAO) {
+    void updateCompanyById() {
         println("Atualizar Empresa")
 
-        try {
-            String id = InputHelper.getInputStringWithDefault("id")
-            Company company = companyDAO.findById(id.toInteger())
+        Company companySelected = new Company(id:InputHelper.getInputStringWithDefault("id").toInteger())
 
-            company.setName(InputHelper.getInputStringWithDefault("nome", company.getName()))
-            company.setDescription(InputHelper.getInputStringWithDefault("descrição:", company.getDescription()))
-            company.setCity(InputHelper.getInputStringWithDefault("cidade:", company.getCity()))
+        Company company = companyService.findById(companySelected.getId())
 
-            companyDAO.updateById(company) ? println("Atualizado com sucesso. Código ${id}") : println("Falha ao atualizar o código ${id}")
+        company.setName(InputHelper.getInputStringWithDefault("nome", company.getName()))
+        company.setDescription(InputHelper.getInputStringWithDefault("descrição:", company.getDescription()))
+        company.setCity(InputHelper.getInputStringWithDefault("cidade:", company.getCity()))
 
-        } catch (QuitException e) {
-            e.getMessage()
-        }
+        OperationStatus status = companyService.updateById(company)
+        println(status.getMessage())
     }
 }

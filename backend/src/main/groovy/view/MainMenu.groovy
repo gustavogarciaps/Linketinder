@@ -1,12 +1,15 @@
 package view
 
 import repository.CandidateDAO
+import repository.CompanyDAO
 import repository.DatabaseSingleton
 import model.Person
 import repository.DatabaseConfig
 import repository.PersonDAO
 import services.CandidateService
+import services.CompanyService
 import utils.InputHelper
+import utils.OperationStatus
 
 class MainMenu {
 
@@ -49,8 +52,8 @@ class MainMenu {
                     default:
                         break
                 }
-            } catch (NumberFormatException e) {
-                println("\nDigite apenas o número das opções informadas no menu.\n")
+            } catch (NumberFormatException ignored) {
+                println(OperationStatus.NOT_NUMBER.getMessage())
             } catch (Exception e) {
                 e.getMessage()
             }
@@ -98,12 +101,15 @@ class MainMenu {
                 CandidateService candidateService = new CandidateService(candidateDAO)
                 CandidatesMenu candidatesMenu = new CandidatesMenu(candidateService)
 
+                CompanyDAO companyDAO = new CompanyDAO(database.getDatabaseConnection())
+                CompanyService companyService = new CompanyService(companyDAO)
+                CompanysMenu companysMenu = new CompanysMenu(companyService)
+
                 switch (choice) {
                     case 1:
-                        CompanysMenu.showOptions()
+                        companysMenu.showOptions()
                         break
                     case 2:
-
                         candidatesMenu.showOptions()
                         break
                     case 3:
@@ -111,8 +117,8 @@ class MainMenu {
                     default:
                         break
                 }
-            } catch (NumberFormatException e) {
-                println("\nDigite apenas o número das opções informadas no menu.\n")
+            } catch (NumberFormatException ignored) {
+                println(OperationStatus.NOT_NUMBER.getMessage())
             } catch (Exception e) {
                 e.getMessage()
             }

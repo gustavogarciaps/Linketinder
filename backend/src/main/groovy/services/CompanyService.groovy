@@ -1,8 +1,6 @@
 package services
 
-import model.Candidate
 import model.Company
-import repository.CandidateDAO
 import repository.CompanyDAO
 import utils.OperationStatus
 
@@ -10,7 +8,7 @@ class CompanyService {
 
     private final CompanyDAO companyDAO
 
-    CompanyService(CandidateDAO companyDAO) {
+    CompanyService(CompanyDAO companyDAO) {
         this.companyDAO = companyDAO
     }
 

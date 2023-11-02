@@ -77,8 +77,8 @@ class CandidatesMenu {
                         break
                 }
 
-            } catch (NumberFormatException e) {
-                println("\nDigite apenas o número das opções informadas no menu.\n")
+            } catch (NumberFormatException ignored) {
+                println(OperationStatus.NOT_NUMBER.getMessage())
             }
         }
     }
@@ -128,7 +128,6 @@ class CandidatesMenu {
     void loadCandidateById() {
 
         println("Candidato:")
-
         Candidate candidateSelected = candidateService.findById(InputHelper.getInputStringWithDefault("id").toInteger())
 
         InputHelper.printDivider(80)
@@ -139,6 +138,7 @@ class CandidatesMenu {
         Candidate candidate = candidateService.findAll(candidateSelected)
 
         InputHelper.printColumns([candidate.getId(), candidate.getName(), candidate.getLinkedin()] as ArrayList<String>)
+
         println("Competências do candidato")
         candidate.getSkills().each { skill ->
             InputHelper.printColumns([skill.getId(), skill.getName()] as ArrayList<String>)
@@ -150,8 +150,8 @@ class CandidatesMenu {
         println("Excluir Candidato")
 
         Candidate candidate = new Candidate(id: InputHelper.getInputStringWithDefault("id").toInteger())
-        OperationStatus result = candidateService.deleteById(candidate.getId())
-        println(result.getMessage())
+        OperationStatus status = candidateService.deleteById(candidate.getId())
+        println(status.getMessage())
     }
 
     void updateCandidateById() {
@@ -164,7 +164,7 @@ class CandidatesMenu {
         candidate.setDescription(InputHelper.getInputStringWithDefault("descrição:", candidate.getDescription()))
         candidate.setCity(InputHelper.getInputStringWithDefault("cidade:", candidate.getCity()))
 
-        OperationStatus result = candidateService.updateById(candidate)
-        println(result.getMessage())
+        OperationStatus status = candidateService.updateById(candidate)
+        println(status.getMessage())
     }
 }

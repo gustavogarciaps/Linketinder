@@ -1,8 +1,6 @@
 package services
 
-import model.Candidate
 import model.Skills
-import repository.CandidateDAO
 import repository.SkillsDAO
 import utils.OperationStatus
 
