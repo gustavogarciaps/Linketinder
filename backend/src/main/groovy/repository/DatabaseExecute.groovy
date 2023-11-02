@@ -7,12 +7,13 @@ import java.sql.SQLException
 
 class DatabaseExecute {
 
+    private static OperationStatus response
+
     private DatabaseExecute() {
 
     }
 
     static OperationStatus executeTransaction(Sql sql, String sqlStatement, List<Object> arguments) {
-        OperationStatus response = OperationStatus.IN_PROGRESS
 
         sql.withTransaction { status ->
             try {

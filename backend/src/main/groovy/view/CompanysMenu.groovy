@@ -1,13 +1,10 @@
 package view
 
-import model.Candidate
 import model.Company
-import exceptions.QuitException
-import repository.CompanyDAO
-import repository.DatabaseConfig
 import repository.DatabaseSingleton
-import services.CandidateService
+import repository.JobsDAO
 import services.CompanyService
+import services.JobsService
 import utils.DateTimeHelper
 import utils.InputHelper
 import utils.OperationStatus
@@ -49,6 +46,10 @@ class CompanysMenu {
 
                 Integer choice = userInput.toInteger()
 
+                JobsDAO jobsDAO = new JobsDAO(database.getDatabaseConnection())
+                JobsService jobsService = new JobsService(jobsDAO)
+                JobsMenu jobsMenu = new JobsMenu(jobsService)
+
                 switch (choice) {
                     case 1:
                         createCompany()
@@ -66,7 +67,7 @@ class CompanysMenu {
                         updateCompanyById()
                         break
                     case 6:
-                        JobsMenu.showOptions()
+                        jobsMenu.showOptions()
                         break
                     case 7:
                         return
@@ -113,7 +114,7 @@ class CompanysMenu {
         InputHelper.printDivider(80)
     }
 
-    void loadCompanyById(CompanyDAO companyDAO) {
+    void loadCompanyById() {
 
         println("Empresa:")
 

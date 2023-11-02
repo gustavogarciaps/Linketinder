@@ -1,20 +1,37 @@
 package model
 
+import groovy.sql.Sql
+import netscape.javascript.JSObject
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import repository.CandidateDAO
+import repository.CompanyDAO
 import repository.DatabaseConfig
+import repository.DatabaseSingleton
 import repository.JobsDAO
+import services.CompanyService
+import services.JobsService
+import utils.OperationStatus
 
 import static org.junit.jupiter.api.Assertions.assertEquals
 import static org.junit.jupiter.api.Assertions.assertTrue
 
 class JobsTest {
 
+    Sql sql
+    JobsDAO jobsDAO
+    JobsService jobsService
     Jobs job
 
     @BeforeEach
     void setUp() {
+
+        DatabaseSingleton database = DatabaseSingleton.getInstance()
+        sql = database.getDatabaseConnection()
+
+        jobsDAO = new JobsDAO(sql)
+        jobsService = new JobsService(jobsDAO)
+
         job = new Jobs()
     }
 
@@ -35,18 +52,24 @@ class JobsTest {
 
     @Test
     void recoverJobsFromDatabase() {
-        JobsDAO jobsDAO = new JobsDAO(sql: DatabaseConfig.newInstance())
-        List<Jobs> jobs = jobsDAO.findAll()
-        jobs.forEach { it ->
+
+        jobsService.findAll().forEach { it ->
             println("recoverJobsFromDatabase: ${it.getId()} ${it.getTitle()} ${it.getCompany().getId()}")
         }
     }
 
     @Test
     void findJob() {
-        JobsDAO jobsDAO = new JobsDAO(sql: DatabaseConfig.newInstance())
-        println("findJob: ${jobsDAO.findById(9).properties}")
+        println("findJob: ${jobsService.findById(1).properties}")
     }
+
+    @Test
+    void insertJobDatabase(){
+        Jobs job = new Jobs(company: new Company(id:6),title: "Desenvolvedor Ruby", description: "Desenvolver soluções em Ruby Rails e integras com X", city: 1)
+        OperationStatus status = jobsService.save(job)
+        println(status.getMessage())
+    }
+
 
     @Test
     void deleteJobById() {
@@ -56,22 +79,21 @@ class JobsTest {
 
     @Test
     void updateJobById() {
-        JobsDAO jobsDAO = new JobsDAO(sql: DatabaseConfig.newInstance())
-        Jobs job = jobsDAO.findById(9)
+
+        Jobs job = jobsService.findById(6)
         job.setTitle("Desenvolvedor Java Sr.")
-        jobsDAO.updateById(job)
+        jobsService.updateById(job)
         recoverJobsFromDatabase()
     }
 
     @Test
     void findAllJobSkills() {
-        JobsDAO jobsDAO = new JobsDAO(sql: DatabaseConfig.newInstance())
 
-        jobsDAO.findAll().each {
+        jobsService.findAll().each {
             job ->
                 println(job.getTitle())
 
-                jobsDAO.findAll(job).getSkills().each { it ->
+                jobsService.findAll(job).getSkills().each { it ->
                     println(it.getId())
                     println(it.getName())
                 }
