@@ -4,10 +4,8 @@ import model.Company
 import model.Jobs
 import repository.DatabaseSingleton
 import repository.JobsSkillsDAO
-import repository.SkillsDAO
 import services.JobsService
 import services.JobsSkillsService
-import services.SkillsService
 import utils.InputHelper
 import utils.OperationStatus
 

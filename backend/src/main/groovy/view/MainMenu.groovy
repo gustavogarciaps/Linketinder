@@ -8,6 +8,7 @@ import repository.DatabaseConfig
 import repository.PersonDAO
 import services.CandidateService
 import services.CompanyService
+import services.PersonService
 import utils.InputHelper
 import utils.OperationStatus
 
@@ -15,7 +16,13 @@ class MainMenu {
 
     private static DatabaseSingleton database = DatabaseSingleton.getInstance()
 
-    static void showOptions() {
+    private final PersonService personService
+
+    MainMenu(PersonService personService) {
+        this.personService = personService
+    }
+
+    void showOptions() {
 
         HashMap<Integer, String> menu = [
                 1: "Criar usuário",
@@ -60,24 +67,20 @@ class MainMenu {
         }
     }
 
-    static void createPerson() {
+    void createPerson() {
 
         println("****** CADASTRAR NOVO USUÁRIO ******");
-        try {
-            String email = InputHelper.getInputStringWithDefault("email");
-            String password = InputHelper.getInputStringWithDefault("senha");
 
-            Person personDTO = new Person(email: email, password: password)
-            PersonDAO personDAO = new PersonDAO(sql: DatabaseConfig.newInstance());
+        String email = InputHelper.getInputStringWithDefault("email");
+        String password = InputHelper.getInputStringWithDefault("senha");
 
-            personDAO.save(personDTO)
+        Person person = new Person(email: email, password: password)
 
-        } catch (Exception e) {
-            e.getMessage()
-        }
+        OperationStatus status = personService.save(person)
+        println(status.getMessage())
     }
 
-    static void accessPlatform() {
+    void accessPlatform() {
 
         HashMap<Integer, String> menu = [
                 1: "Acessar como Empresa",
@@ -103,11 +106,11 @@ class MainMenu {
 
                 CompanyDAO companyDAO = new CompanyDAO(database.getDatabaseConnection())
                 CompanyService companyService = new CompanyService(companyDAO)
-                CompanysMenu companysMenu = new CompanysMenu(companyService)
+                CompanysMenu companyMenu = new CompanysMenu(companyService)
 
                 switch (choice) {
                     case 1:
-                        companysMenu.showOptions()
+                        companyMenu.showOptions()
                         break
                     case 2:
                         candidatesMenu.showOptions()
@@ -125,18 +128,16 @@ class MainMenu {
         }
     }
 
-    static void loadPerson() {
-
-        PersonDAO personDAO = new PersonDAO(sql: DatabaseConfig.newInstance())
+    void loadPerson() {
 
         println("Usuários Cadastrados:")
         InputHelper.printDivider(80)
 
-        def columns = ["id", "email", "password"]
+        ArrayList<String> columns = ["id", "email", "password"]
         InputHelper.printColumns(columns)
 
-        personDAO.findAll().forEach { it ->
-            InputHelper.printColumns([it.getId(), it.getEmail(), it.getPassword()])
+        personService.findAll().forEach { person ->
+            InputHelper.printColumns([person.getId(), person.getEmail(), person.getPassword()])
         }
 
         InputHelper.printDivider(80)
