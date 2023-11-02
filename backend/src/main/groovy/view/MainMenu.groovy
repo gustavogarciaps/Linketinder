@@ -18,6 +18,14 @@ class MainMenu {
 
     private final PersonService personService
 
+    private final CandidateDAO candidateDAO = new CandidateDAO(database.getDatabaseConnection())
+    private final CandidateService candidateService = new CandidateService(candidateDAO)
+    private final CandidatesMenu candidatesMenu = new CandidatesMenu(candidateService)
+
+    private final CompanyDAO companyDAO = new CompanyDAO(database.getDatabaseConnection())
+    private final CompanyService companyService = new CompanyService(companyDAO)
+    private final CompanysMenu companyMenu = new CompanysMenu(companyService)
+
     MainMenu(PersonService personService) {
         this.personService = personService
     }
@@ -100,14 +108,6 @@ class MainMenu {
                 String userInput = InputHelper.getInputStringWithDefault("Opção")
                 Integer choice = userInput.toInteger()
 
-                CandidateDAO candidateDAO = new CandidateDAO(database.getDatabaseConnection())
-                CandidateService candidateService = new CandidateService(candidateDAO)
-                CandidatesMenu candidatesMenu = new CandidatesMenu(candidateService)
-
-                CompanyDAO companyDAO = new CompanyDAO(database.getDatabaseConnection())
-                CompanyService companyService = new CompanyService(companyDAO)
-                CompanysMenu companyMenu = new CompanysMenu(companyService)
-
                 switch (choice) {
                     case 1:
                         companyMenu.showOptions()
@@ -137,7 +137,7 @@ class MainMenu {
         InputHelper.printColumns(columns)
 
         personService.findAll().forEach { person ->
-            InputHelper.printColumns([person.getId(), person.getEmail(), person.getPassword()])
+            InputHelper.printColumns([person.getId(), person.getEmail(), person.getPassword()] as ArrayList<String>)
         }
 
         InputHelper.printDivider(80)

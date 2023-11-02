@@ -16,6 +16,10 @@ class CompanysMenu {
     private final CompanyService companyService
     private static DatabaseSingleton database = DatabaseSingleton.getInstance()
 
+    private final JobsDAO jobsDAO = new JobsDAO(database.getDatabaseConnection())
+    private final JobsService jobsService = new JobsService(jobsDAO)
+    private final JobsMenu jobsMenu = new JobsMenu(jobsService)
+
     CompanysMenu(CompanyService companyService) {
         this.companyService = companyService
     }
@@ -45,10 +49,6 @@ class CompanysMenu {
             try {
 
                 Integer choice = userInput.toInteger()
-
-                JobsDAO jobsDAO = new JobsDAO(database.getDatabaseConnection())
-                JobsService jobsService = new JobsService(jobsDAO)
-                JobsMenu jobsMenu = new JobsMenu(jobsService)
 
                 switch (choice) {
                     case 1:

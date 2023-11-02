@@ -16,6 +16,10 @@ class JobsSkillsMenu {
     private final JobsSkillsService jobsSkillsService
     private static DatabaseSingleton database = DatabaseSingleton.getInstance()
 
+    private final SkillsDAO skillsDAO = new SkillsDAO(database.getDatabaseConnection())
+    private final SkillsService skillsService = new SkillsService(skillsDAO)
+    private final SkillsMenu skillsMenu = new SkillsMenu(skillsService)
+
     JobsSkillsMenu(JobsSkillsService jobsSkillsService) {
         this.jobsSkillsService = jobsSkillsService
     }
@@ -40,10 +44,6 @@ class JobsSkillsMenu {
 
             try {
                 Integer choice = userInput.toInteger()
-
-                SkillsDAO skillsDAO = new SkillsDAO(database.getDatabaseConnection())
-                SkillsService skillsService = new SkillsService(skillsDAO)
-                SkillsMenu skillsMenu = new SkillsMenu(skillsService)
 
                 switch (choice) {
                     case 1:
