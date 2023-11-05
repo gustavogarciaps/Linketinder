@@ -22,9 +22,9 @@ class CandidateController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         BufferedReader reader = req.getReader();
-
         StringBuilder jsonRequest = new StringBuilder();
         String line;
+
         while ((line = reader.readLine()) != null) {
             jsonRequest.append(line);
         }
@@ -34,7 +34,7 @@ class CandidateController extends HttpServlet {
         Candidate candidate = objectMapper.readValue(jsonRequest.toString(), Candidate.class);
         OperationStatus status = candidateService.save(candidate);
 
-        String jsonResponse = objectMapper.writeValueAsString(status);
+        String jsonResponse = objectMapper.writeValueAsString(status.getMessage());
         resp.setContentType("application/json");
         resp.getWriter().write(jsonResponse);
     }
@@ -48,4 +48,21 @@ class CandidateController extends HttpServlet {
         resp.getWriter().write(jsonResponse);
     }
 
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        BufferedReader reader = req.getReader();
+        StringBuilder jsonRequest = new StringBuilder();
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            jsonRequest.append(line);
+        }
+
+        Candidate candidate = objectMapper.readValue(jsonRequest.toString(), Candidate.class);
+        OperationStatus status = candidateService.updateById(candidate)
+
+        String jsonResponse = objectMapper.writeValueAsString(status.getMessage())
+        resp.setContentType("application/json");
+        resp.getWriter().write(jsonResponse);
+    }
 }

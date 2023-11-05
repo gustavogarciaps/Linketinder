@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f5c6a1d-82d5-493e-a614-04e933396d7e" name="Changes" comment="" />
+    <list default="true" id="6f5c6a1d-82d5-493e-a614-04e933396d7e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/20938643-cc4a-4e25-b5e4-9d4ee973b4a5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/20938643-cc4a-4e25-b5e4-9d4ee973b4a5.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/controller/CandidateController.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/controller/CandidateController.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/controller/CompanyController.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/controller/CompanyController.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/controller/JobsController.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/controller/JobsController.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/controller/PersonController.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/controller/PersonController.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/controller/SkillsController.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/controller/SkillsController.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,6 +38,9 @@
       </state>
     </system>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="GitToolBoxStore">
     <option name="projectConfigVersion" value="5" />
   </component>
@@ -41,6 +55,7 @@
   &quot;associatedIndex&quot;: 4
 }</component>
   <component name="ProjectId" id="2XkxV6vowoHZQAv5jfKFXn32AXA" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -50,6 +65,12 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "develop",
+    "last_opened_file_path": "/home/gustavo/Projetos/ACZG/Linketinder/backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -203,10 +224,27 @@
       <option name="presentableId" value="Default" />
       <updated>1699186902504</updated>
       <workItem from="1699186903674" duration="102000" />
+      <workItem from="1699207925130" duration="5085000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
   </component>
 </project>
