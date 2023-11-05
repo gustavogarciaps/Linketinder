@@ -1,6 +1,7 @@
 plugins {
-    id 'groovy'
     id 'java'
+    id 'groovy'
+    id 'war'
     id 'application'
 }
 
@@ -12,21 +13,30 @@ run {
     standardInput = System.in
 }
 
-group = 'br.com.linketinder'
-version = '1.0-SNAPSHOT'
+group 'br.com.linketinder'
+version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
 
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
 dependencies {
-    implementation fileTree('/home/gustavo/.sdkman/candidates/groovy/current/lib') {
-        include '*.jar'
-        include '*/*.jar'
-    }
+    implementation 'org.codehaus.groovy:groovy-all:3.0.18'
+    compileOnly('jakarta.platform:jakarta.jakartaee-api:9.1.0')
+
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.8.2'
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '4.11.0'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.3'
+
 }
 
 test {
@@ -35,7 +45,3 @@ test {
         events 'passed', 'skipped', 'failed'
     }
 }
-
-
-
-

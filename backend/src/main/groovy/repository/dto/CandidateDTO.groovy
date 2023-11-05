@@ -15,10 +15,8 @@ class CandidateDTO {
         List<Candidate> result = []
 
         candidateDAO.findAll().forEach { candidate ->
-
             result.add(new Candidate(id: candidate.getId(), academicEducation: candidate.getAcademicEducation()))
         }
-
         return result
     }
 }
