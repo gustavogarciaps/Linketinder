@@ -65,4 +65,25 @@ class SkillsController extends HttpServlet {
         resp.setContentType("application/json");
         resp.getWriter().write(jsonResponse);
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        BufferedReader reader = req.getReader();
+        StringBuilder jsonRequest = new StringBuilder();
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            jsonRequest.append(line);
+        }
+
+        Skills skills = objectMapper.readValue(jsonRequest.toString(), Skills.class);
+        OperationStatus status = skillsService.deleteById(skills.getId())
+
+        String jsonResponse = objectMapper.writeValueAsString(status.getMessage())
+        resp.setContentType("application/json");
+        resp.getWriter().write(jsonResponse);
+
+    }
+
 }

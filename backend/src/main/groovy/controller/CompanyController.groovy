@@ -65,4 +65,22 @@ class CompanyController extends HttpServlet {
         resp.setContentType("application/json");
         resp.getWriter().write(jsonResponse);
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        BufferedReader reader = req.getReader();
+        StringBuilder jsonRequest = new StringBuilder();
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            jsonRequest.append(line);
+        }
+
+        Company company = objectMapper.readValue(jsonRequest.toString(), Company.class);
+        OperationStatus status = companyService.deleteById(company.getId())
+
+        String jsonResponse = objectMapper.writeValueAsString(status.getMessage())
+        resp.setContentType("application/json");
+        resp.getWriter().write(jsonResponse);
+    }
 }

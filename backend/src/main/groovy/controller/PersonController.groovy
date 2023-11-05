@@ -65,4 +65,22 @@ class PersonController extends HttpServlet{
         resp.setContentType("application/json");
         resp.getWriter().write(jsonResponse);
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        BufferedReader reader = req.getReader();
+        StringBuilder jsonRequest = new StringBuilder();
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            jsonRequest.append(line);
+        }
+
+        Person person = objectMapper.readValue(jsonRequest.toString(), Person.class);
+        OperationStatus status = personService.deleteById(person.getId())
+
+        String jsonResponse = objectMapper.writeValueAsString(status.getMessage())
+        resp.setContentType("application/json");
+        resp.getWriter().write(jsonResponse);
+    }
 }

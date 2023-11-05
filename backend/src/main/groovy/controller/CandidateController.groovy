@@ -65,4 +65,22 @@ class CandidateController extends HttpServlet {
         resp.setContentType("application/json");
         resp.getWriter().write(jsonResponse);
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        BufferedReader reader = req.getReader();
+        StringBuilder jsonRequest = new StringBuilder();
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            jsonRequest.append(line);
+        }
+
+        Candidate candidate = objectMapper.readValue(jsonRequest.toString(), Candidate.class);
+        OperationStatus status = candidateService.deleteById(candidate.getId())
+
+        String jsonResponse = objectMapper.writeValueAsString(status.getMessage())
+        resp.setContentType("application/json");
+        resp.getWriter().write(jsonResponse);
+    }
 }

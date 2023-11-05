@@ -41,7 +41,12 @@ class JobsController extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Jobs> jobs = jobsService.findAll();
+        List<Jobs> jobs = []
+
+        jobsService.findAll().each { it->
+            jobs.add(jobsService.findAll(it))
+        }
+
         String jsonResponse = objectMapper.writeValueAsString(jobs);
 
         resp.setContentType("application/json");
@@ -60,6 +65,24 @@ class JobsController extends HttpServlet{
 
         Jobs jobs = objectMapper.readValue(jsonRequest.toString(), Jobs.class);
         OperationStatus status = jobsService.updateById(jobs)
+
+        String jsonResponse = objectMapper.writeValueAsString(status.getMessage())
+        resp.setContentType("application/json");
+        resp.getWriter().write(jsonResponse);
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        BufferedReader reader = req.getReader();
+        StringBuilder jsonRequest = new StringBuilder();
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            jsonRequest.append(line);
+        }
+
+        Jobs jobs = objectMapper.readValue(jsonRequest.toString(), Jobs.class);
+        OperationStatus status = jobsService.deleteById(jobs.getId())
 
         String jsonResponse = objectMapper.writeValueAsString(status.getMessage())
         resp.setContentType("application/json");
