@@ -1,4 +1,4 @@
-package model
+package domain
 
 import groovy.sql.Sql
 import org.junit.jupiter.api.BeforeEach

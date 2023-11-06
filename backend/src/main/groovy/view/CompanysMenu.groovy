@@ -1,6 +1,6 @@
 package view
 
-import model.Company
+import domain.Company
 import repository.connection.DatabaseSingleton
 import repository.JobsDAO
 import services.CompanyService

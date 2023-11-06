@@ -1,6 +1,6 @@
 package repository.dto
 
-import model.Candidate
+import domain.Candidate
 import repository.CandidateDAO
 
 class CandidateDTO {

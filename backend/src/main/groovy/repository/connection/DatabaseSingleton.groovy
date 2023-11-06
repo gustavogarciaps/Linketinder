@@ -10,7 +10,7 @@ class DatabaseSingleton {
     static private Sql databaseConnection
 
     private DatabaseSingleton() {
-        databaseConnection = DatabaseConfig.newInstance()
+        databaseConnection = DatabasePostgresConfig.newInstance()
     }
 
     static synchronized DatabaseSingleton getInstance() {

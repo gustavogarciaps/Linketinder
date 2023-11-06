@@ -1,10 +1,10 @@
-package model
+package domain
 
 import groovy.sql.Sql
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import repository.CandidateDAO
-import repository.connection.DatabaseConfig
+import repository.connection.DatabasePostgresConfig
 import repository.connection.DatabaseSingleton
 import repository.JobsDAO
 import repository.JobsSkillsDAO
@@ -72,7 +72,7 @@ class JobsTest {
 
     @Test
     void deleteJobById() {
-        CandidateDAO candidateDAO = new CandidateDAO(sql: DatabaseConfig.newInstance())
+        CandidateDAO candidateDAO = new CandidateDAO(sql: DatabasePostgresConfig.newInstance())
         assertTrue(candidateDAO.deleteById(21))
     }
 

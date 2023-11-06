@@ -1,7 +1,7 @@
 package repository
 
-import model.Candidate
-import model.Skills
+import domain.Candidate
+import domain.Skills
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import repository.connection.DatabaseExecute

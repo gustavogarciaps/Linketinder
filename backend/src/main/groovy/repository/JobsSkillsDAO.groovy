@@ -1,8 +1,8 @@
 package repository
 
 
-import model.Jobs
-import model.Skills
+import domain.Jobs
+import domain.Skills
 import groovy.sql.Sql
 import repository.connection.DatabaseExecute
 import utils.OperationStatus

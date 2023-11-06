@@ -1,7 +1,7 @@
 package view
 
 
-import model.Skills
+import domain.Skills
 import exceptions.QuitException
 import repository.SkillsDAO
 import services.SkillsService

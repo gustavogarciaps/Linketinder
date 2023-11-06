@@ -1,6 +1,6 @@
 package services
 
-import model.Person
+import domain.Person
 import repository.PersonDAO
 import utils.OperationStatus
 

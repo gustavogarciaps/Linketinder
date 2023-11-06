@@ -1,6 +1,6 @@
 package services
 
-import model.Company
+import domain.Company
 import repository.CompanyDAO
 import utils.OperationStatus
 
