@@ -14,8 +14,7 @@ class CandidateService {
     }
 
     List<Candidate> findAll() {
-        CandidateDTO candidateDTO = new CandidateDTO(candidateDAO)
-        List<Candidate> result = candidateDTO.findAll()
+        List<Candidate> result = candidateDAO.findAll()
         return result
     }
 

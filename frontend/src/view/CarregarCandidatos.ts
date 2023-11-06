@@ -39,7 +39,7 @@ const montarHTMLCandidatos = (candidato: Candidato) => {
             <div class="card-body placeholder-glow">
                 <div class="row d-flex">
                 <div class="col">
-                <h5 class="card-title placeholder">${candidato.nome.split(" ")[0] + " " + candidato.nome.split(" ")[1]}</h5>
+                <h5 class="card-title placeholder">${candidato.nome.split(" ")[0]}</h5>
                 </div>
                 <div class="col">
                 <i class='fas fa-question-circle' style='font-size:24px' data-bs-toggle="tooltip"
