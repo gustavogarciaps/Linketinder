@@ -62,20 +62,25 @@ Executando a aplicação frontend:
 ```
 A partir desses comandos, a aplicação pode ser acessível em: http://localhost:9000/
 
-Página Inicial
+- Página Inicial
+
 ![Exemplo de Imagem](https://github.com/gustavogarciaps/Linketinder/blob/master/docs/imgs/homepage.png)
 
-Registro Candidatos
+- Registro Candidatos
+  
 ![Exemplo de Imagem](https://github.com/gustavogarciaps/Linketinder/blob/master/docs/imgs/register_candidates.png)
 ![Exemplo de Imagem](https://github.com/gustavogarciaps/Linketinder/blob/master/docs/imgs/register_skills_candidates.png)
 
-Visualização de Candidatos Cadastrados
+- Visualização de Candidatos Cadastrados
+  
 ![Exemplo de Imagem](https://github.com/gustavogarciaps/Linketinder/blob/master/docs/imgs/read_candidates.png)
 
-Registro de Vagas
+- Registro de Vagas
+  
 ![Exemplo de Imagem](https://github.com/gustavogarciaps/Linketinder/blob/master/docs/imgs/register_jobs.png)
 
-Visualização Vagas Cadastradas
+- Visualização Vagas Cadastradas
+  
 ![Exemplo de Imagem](https://github.com/gustavogarciaps/Linketinder/blob/master/docs/imgs/read_jobs.png)
 ![Exemplo de Imagem](https://github.com/gustavogarciaps/Linketinder/blob/master/docs/imgs/help_description_company.png)
 
