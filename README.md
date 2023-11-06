@@ -180,3 +180,109 @@ Depois: ([conferir métodos]([ela](https://github.com/gustavogarciaps/Linketinde
 Além disso, algumas conversões ou formatações de data que eu anexava à classe específica, eu criei uma Classe apenas para [ela](https://github.com/gustavogarciaps/Linketinder/blob/K2-T2/backend/src/main/groovy/utils/DateTimeHelper.groovy).
 
 As demais alterações foram mais simplórias, como renomeação das classes para a língua inglesa, a criação de Exceções e o tratamento delas, e a utilização de annotations do groovy (@Canonical) para criação dos getters e setters.
+
+
+# Padrões de Projeto
+
+Neste projeto, foi utilizado o padrão MVC para separar as responsabilidades da classes. Além disso, também foi optado pelo Padrão Singleton para gerenciar a conexão com o banco de dados. Desse modo, garantimos que exista apenas uma instância de conexão, evitando a concorrência dos processos. 
+
+```groovy
+@Canonical
+class DatabaseSingleton {
+
+    static private DatabaseSingleton instance
+    static private Sql databaseConnection
+
+    private DatabaseSingleton() {
+        databaseConnection = DatabaseConfig.newInstance()
+    }
+
+    static synchronized DatabaseSingleton getInstance() {
+        if (instance == null) {
+            instance = new DatabaseSingleton()
+        }
+        return instance
+    }
+
+    static Sql getDatabaseConnection() {
+        return databaseConnection
+    }
+}
+```
+
+Cabe ressaltar que o ```databaseConnection = DatabaseConfig.newInstance() ``` está recebendo os dados do SQL de outra classe. Isso se deve porque a classe está pronta para trabalhar com qualquer Banco de Dados relacional que implemente o SQL.
+
+Singleton na prática:
+
+```groovy
+    private DatabaseSingleton database = DatabaseSingleton.getInstance()
+    private CandidateDAO candidateDAO = new CandidateDAO(database.getDatabaseConnection())
+    private CandidateService candidateService = new CandidateService(candidateDAO);
+```
+Além dos padrões que foram implementados, o projeto segue as boas práticas de injeção de dependências.
+
+# Criando endpoints com WebServlets
+
+Antes de criar os endpoints, é importante configurar o ambiente de desenvolvimento. Nesse projeto, foi utilizando o Tomcat versão 10.1.14 como servidor local. Para facilitar a instalação, foi usado o sdkman.
+
+```
+sdk list tomcat
+sdk install tomcat 10.1.14
+sdk default tomcat 10.1.14
+```
+
+Criando um link para a pasta /opt
+```
+sudo ln -s /home/$USER/.sdkman/candidates/tomcat/current /opt/tomcat
+```
+Para configuração, é necessário criar um arquivo com o nome "tomcat"
+```
+#!/usr/bin/env bash
+
+CURRENT_TOMCAT_BIN="/opt/tomcat/bin"
+
+chmod +x $CURRENT_TOMCAT_BIN/*
+
+case "$1" in
+  start)
+    "$CURRENT_TOMCAT_BIN/startup.sh"
+  ;;
+  stop)
+    "$CURRENT_TOMCAT_BIN/shutdown.sh"
+  ;;
+  restart)
+    "$CURRENT_TOMCAT_BIN/shutdown.sh"
+    sleep 10
+    "$CURRENT_TOMCAT_BIN/startup.sh"
+  ;;
+  version)
+    "$CURRENT_TOMCAT_BIN/version.sh"
+  ;;
+  *)
+    echo "Usage: {start|stop|restart|version}"
+esac
+```
+
+Atribua permissão de execução para o arquivo e mova para pasta bin
+```
+chmod +x tomcat
+sudo mv tomcat /usr/bin/
+```
+
+Referência do Autor: [link](https://franciscochaves.com.br/blog/instale-o-apache-tomcat-com-sdkman)
+
+Observação: é possível configurar o tomcat dentro da IDE Java, seja Intellij ou Eclipse. Referência do Autor: [link](https://www.youtube.com/watch?v=IYH9IvUU1J0)
+
+Para este projeto, foi utilizado os imports do jakarta
+
+```
+import jakarta.servlet.annotation.WebServlet
+import jakarta.servlet.http.*
+```
+
+# Demonstração do Frontend do App
+
+![Exemplo de Imagem](https://github.com/gustavogarciaps/Linketinder/blob/develop/docs/imgs/dashboard_skills_candidates.png)
+
+
+
