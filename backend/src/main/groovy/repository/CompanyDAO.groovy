@@ -1,7 +1,6 @@
 package repository
 
-
-import model.Company
+import domain.Company
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import repository.connection.DatabaseExecute
@@ -27,7 +26,7 @@ class CompanyDAO implements InterfaceDatabaseDML<Company> {
 
         List<Company> companies = []
         sql.rows(SELECT_ALL_COMPANIES).each { row ->
-            Company company = new Company(id: row.usuarios_id, name: row.razao_social, description: row.descricao)
+            Company company = new Company(id: row.usuarios_id as int, name: row.razao_social, city: row.cidades_id, description: row.descricao)
             companies.add(company)
         }
         return companies
@@ -36,7 +35,7 @@ class CompanyDAO implements InterfaceDatabaseDML<Company> {
     Company findById(int id) {
         GroovyRowResult result = sql.firstRow(SELECT_COMPANY_BY_ID, id)
 
-        Company company = new Company(id: result.id, name: result.razao_social, description: result.descricao)
+        Company company = new Company(id: result.id as int, name: result.razao_social, description: result.descricao)
         return company
     }
 

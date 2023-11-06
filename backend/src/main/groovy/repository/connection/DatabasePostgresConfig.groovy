@@ -2,7 +2,7 @@ package repository.connection
 
 import groovy.sql.Sql
 
-class DatabaseConfig {
+class DatabasePostgresConfig {
 
     static Sql newInstance() {
         final String url = 'jdbc:postgresql://localhost:5432/linketinder'

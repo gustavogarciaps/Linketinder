@@ -1,8 +1,8 @@
 package repository
 
-import model.Company
-import model.Jobs
-import model.Skills
+import domain.Company
+import domain.Jobs
+import domain.Skills
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import repository.connection.DatabaseExecute

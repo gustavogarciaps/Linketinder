@@ -6,7 +6,47 @@
   <component name="ChangeListManager">
     <list default="true" id="6f5c6a1d-82d5-493e-a614-04e933396d7e" name="Changes" comment="add: feature WebServlet DELETE Models - Controllers">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/controller/CandidateController.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/controller/CandidateController.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/controller/CompanyController.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/controller/CompanyController.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/controller/JobsController.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/controller/JobsController.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/controller/PersonController.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/controller/PersonController.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/controller/SkillsController.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/controller/SkillsController.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/model/Candidate.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/domain/Candidate.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/model/Company.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/domain/Company.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/model/CompanyLikes.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/domain/CompanyLikes.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/model/InterfacePersonLikes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/domain/InterfacePersonLikes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/model/Jobs.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/domain/Jobs.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/model/Person.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/domain/Person.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/model/Skills.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/domain/Skills.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/repository/CandidateDAO.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/repository/CandidateDAO.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/repository/CandidateSkillsDAO.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/repository/CandidateSkillsDAO.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/repository/CompanyDAO.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/repository/CompanyDAO.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/repository/JobsDAO.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/repository/JobsDAO.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/repository/JobsSkillsDAO.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/repository/JobsSkillsDAO.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/repository/PersonDAO.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/repository/PersonDAO.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/repository/SkillsDAO.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/repository/SkillsDAO.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/repository/connection/DatabaseConfig.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/repository/connection/DatabasePostgresConfig.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/repository/connection/DatabaseSingleton.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/repository/connection/DatabaseSingleton.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/repository/dto/CandidateDTO.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/repository/dto/CandidateDTO.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/services/CandidateService.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/services/CandidateService.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/services/CandidateSkillsService.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/services/CandidateSkillsService.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/services/CompanyService.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/services/CompanyService.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/services/JobsService.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/services/JobsService.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/services/JobsSkillsService.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/services/JobsSkillsService.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/services/PersonService.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/services/PersonService.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/services/SkillsService.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/services/SkillsService.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/view/CandidateSkillsMenu.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/view/CandidateSkillsMenu.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/view/CandidatesMenu.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/view/CandidatesMenu.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/view/CompanysMenu.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/view/CompanysMenu.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/view/JobsMenu.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/view/JobsMenu.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/view/JobsSkillsMenu.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/view/JobsSkillsMenu.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/view/MainMenu.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/view/MainMenu.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/view/SkillsMenu.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/view/SkillsMenu.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/groovy/model/CandidateTest.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/groovy/domain/CandidateTest.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/groovy/model/CompanyTest.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/groovy/domain/CompanyTest.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/groovy/model/JobsTest.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/groovy/domain/JobsTest.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/groovy/model/PersonTest.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/groovy/domain/PersonTest.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/groovy/model/SkillsTest.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/groovy/domain/SkillsTest.groovy" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +102,7 @@
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.uml",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -217,7 +257,8 @@
       <option name="presentableId" value="Default" />
       <updated>1699186902504</updated>
       <workItem from="1699186903674" duration="102000" />
-      <workItem from="1699207925130" duration="11475000" />
+      <workItem from="1699207925130" duration="11879000" />
+      <workItem from="1699301140883" duration="4978000" />
     </task>
     <task id="LOCAL-00001" summary="add: feature WebServlet GET, POST and PUT Models - Controllers">
       <option name="closed" value="true" />
@@ -259,5 +300,9 @@
     <MESSAGE value="add: feature WebServlet GET, POST and PUT Models - Controllers" />
     <MESSAGE value="add: feature WebServlet DELETE Models - Controllers" />
     <option name="LAST_COMMIT_MESSAGE" value="add: feature WebServlet DELETE Models - Controllers" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

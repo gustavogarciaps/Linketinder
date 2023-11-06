@@ -1,7 +1,7 @@
 package services
 
-import model.Jobs
-import model.Skills
+import domain.Jobs
+import domain.Skills
 import repository.JobsSkillsDAO
 import utils.OperationStatus
 

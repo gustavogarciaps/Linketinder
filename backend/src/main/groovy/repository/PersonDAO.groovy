@@ -1,6 +1,6 @@
 package repository
 
-import model.Person
+import domain.Person
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import groovy.transform.Canonical

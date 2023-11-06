@@ -1,6 +1,6 @@
 package view
 
-import model.Candidate
+import domain.Candidate
 import repository.CandidateSkillsDAO
 import repository.connection.DatabaseSingleton
 import services.CandidateService
@@ -108,10 +108,10 @@ class CandidatesMenu {
         InputHelper.printDivider(80)
 
         ArrayList<String> columns = ["id", "formacao"]
-        InputHelper.printColumns(columns)
 
         candidateService.findAll().forEach { it ->
 
+            InputHelper.printColumns(columns)
             Candidate candidate = candidateService.findAll(it)
             InputHelper.printColumns([candidate.getId(), candidate.getAcademicEducation()] as ArrayList<String>)
 

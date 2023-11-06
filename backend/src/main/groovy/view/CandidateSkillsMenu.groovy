@@ -1,7 +1,7 @@
 package view
 
-import model.Candidate
-import model.Skills
+import domain.Candidate
+import domain.Skills
 import repository.connection.DatabaseSingleton
 import repository.SkillsDAO
 import services.CandidateSkillsService

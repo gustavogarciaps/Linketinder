@@ -3,7 +3,7 @@ package view
 import repository.CandidateDAO
 import repository.CompanyDAO
 import repository.connection.DatabaseSingleton
-import model.Person
+import domain.Person
 import services.CandidateService
 import services.CompanyService
 import services.PersonService

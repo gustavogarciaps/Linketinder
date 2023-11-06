@@ -1,6 +1,6 @@
 package services
 
-import model.Jobs
+import domain.Jobs
 import repository.JobsDAO
 import utils.OperationStatus
 

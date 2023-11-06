@@ -1,6 +1,6 @@
 package services
 
-import model.Skills
+import domain.Skills
 import repository.SkillsDAO
 import utils.OperationStatus
 

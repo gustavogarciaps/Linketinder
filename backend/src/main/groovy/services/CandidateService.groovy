@@ -1,8 +1,7 @@
 package services
 
 import repository.CandidateDAO
-import model.Candidate
-import repository.dto.CandidateDTO
+import domain.Candidate
 import utils.OperationStatus
 
 class CandidateService {

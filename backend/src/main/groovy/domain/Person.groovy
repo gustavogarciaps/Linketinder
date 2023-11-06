@@ -1,7 +1,6 @@
-package model
+package domain
 
 import groovy.transform.Canonical
-import jakarta.json.bind.annotation.JsonbProperty
 
 @Canonical
 class Person {

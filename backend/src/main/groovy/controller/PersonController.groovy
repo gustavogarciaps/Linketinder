@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.ServletException
 import jakarta.servlet.annotation.WebServlet
 import jakarta.servlet.http.*
-import model.Person
+import domain.Person
 import repository.PersonDAO
 import repository.connection.DatabaseSingleton
 import services.PersonService

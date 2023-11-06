@@ -1,6 +1,6 @@
 package repository
 
-import model.Skills
+import domain.Skills
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import repository.connection.DatabaseExecute
