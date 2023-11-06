@@ -62,6 +62,23 @@ Executando a aplicação frontend:
 ```
 A partir desses comandos, a aplicação pode ser acessível em: http://localhost:9000/
 
+Página Inicial
+![Exemplo de Imagem](https://github.com/gustavogarciaps/Linketinder/blob/master/docs/imgs/homepage.png)
+
+Registro Candidatos
+![Exemplo de Imagem](https://github.com/gustavogarciaps/Linketinder/blob/master/docs/imgs/register_candidates.png)
+![Exemplo de Imagem](https://github.com/gustavogarciaps/Linketinder/blob/master/docs/imgs/register_skills_candidates.png)
+
+Visualização de Candidatos Cadastrados
+![Exemplo de Imagem](https://github.com/gustavogarciaps/Linketinder/blob/master/docs/imgs/read_candidates.png)
+
+Registro de Vagas
+![Exemplo de Imagem](https://github.com/gustavogarciaps/Linketinder/blob/master/docs/imgs/register_jobs.png)
+
+Visualização Vagas Cadastradas
+![Exemplo de Imagem](https://github.com/gustavogarciaps/Linketinder/blob/master/docs/imgs/read_jobs.png)
+![Exemplo de Imagem](https://github.com/gustavogarciaps/Linketinder/blob/master/docs/imgs/help_description_company.png)
+
 Executando a aplicação backend:
 
 ```bash
@@ -127,9 +144,6 @@ Houve a avaliação da estrutura do código e a renomeação de variáveis que e
 
 O maior desafio dessa refatoração, é a análise autocrítica, pois às vezes não é possível identificar uma variável ou função que está ambígua ou com a nomenclatura sem sentido. Isso se deve pois quando você cria a lógica da aplicação, tudo parece fazer muito sentido. Entretanto, quando você analisa de maneira externa, sem nenhuma paixão no código, vai percebendo MUITOS detalhes que poderiam ser melhorados. Porém, como é o primeiro Code Review que eu faço, ainda não consegui achar tantos pontos de melhoria. 
 
-
-## Refatoração seguindo os princípios SOLID (ou pelo menos tentando)
-
 No backend da aplicação, foi refatorado todas as classes, abstraindo os métodos para exercer apenas uma única função. A parte mais significativa que eu refatorei foi o input dos formulários. Criei uma classe para controlar tudo que se refere a entrada e saída dos dados. Como exemplo, o antes e depois.
 
 Antes:
@@ -182,7 +196,7 @@ Além disso, algumas conversões ou formatações de data que eu anexava à clas
 As demais alterações foram mais simplórias, como renomeação das classes para a língua inglesa, a criação de Exceções e o tratamento delas, e a utilização de annotations do groovy (@Canonical) para criação dos getters e setters.
 
 
-# Padrões de Projeto
+## Padrões de Projeto
 
 Neste projeto, foi utilizado o padrão MVC para separar as responsabilidades da classes. Além disso, também foi optado pelo Padrão Singleton para gerenciar a conexão com o banco de dados. Desse modo, garantimos que exista apenas uma instância de conexão, evitando a concorrência dos processos. 
 
@@ -221,7 +235,7 @@ Singleton na prática:
 ```
 Além dos padrões que foram implementados, o projeto segue as boas práticas de injeção de dependências.
 
-# Criando endpoints com WebServlets
+## Criando endpoints com WebServlets
 
 Antes de criar os endpoints, é importante configurar o ambiente de desenvolvimento. Nesse projeto, foi utilizando o Tomcat versão 10.1.14 como servidor local. Para facilitar a instalação, foi usado o sdkman.
 
@@ -280,9 +294,8 @@ import jakarta.servlet.annotation.WebServlet
 import jakarta.servlet.http.*
 ```
 
-# Demonstração do Frontend do App
 
-![Exemplo de Imagem](https://github.com/gustavogarciaps/Linketinder/blob/develop/docs/imgs/dashboard_skills_candidates.png)
+
 
 
 
