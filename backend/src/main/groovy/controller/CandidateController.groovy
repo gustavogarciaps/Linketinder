@@ -41,7 +41,12 @@ class CandidateController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Candidate> candidates = candidateService.findAll();
+        List<Candidate> candidates = []
+
+        candidateService.findAll().each {it->
+            candidates.add(candidateService.findAll(it))
+        }
+
         String jsonResponse = objectMapper.writeValueAsString(candidates);
 
         resp.setContentType("application/json");

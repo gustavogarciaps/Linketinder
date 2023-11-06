@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f5c6a1d-82d5-493e-a614-04e933396d7e" name="Changes" comment="add: feature WebServlet GET, POST and PUT Models - Controllers">
+    <list default="true" id="6f5c6a1d-82d5-493e-a614-04e933396d7e" name="Changes" comment="add: feature WebServlet DELETE Models - Controllers">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/groovy/controller/CandidateController.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/controller/CandidateController.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/groovy/controller/CompanyController.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/controller/CompanyController.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/groovy/controller/JobsController.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/controller/JobsController.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/groovy/controller/PersonController.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/controller/PersonController.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/groovy/controller/SkillsController.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/controller/SkillsController.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/services/CandidateService.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/services/CandidateService.groovy" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,6 +120,7 @@
       </deployment>
       <server-settings>
         <option name="BASE_DIRECTORY_NAME" value="ee142bce-9395-4fc7-b463-355179c4909f" />
+        <option name="HTTP_PORT" value="8000" />
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -220,7 +218,7 @@
       <option name="presentableId" value="Default" />
       <updated>1699186902504</updated>
       <workItem from="1699186903674" duration="102000" />
-      <workItem from="1699207925130" duration="8209000" />
+      <workItem from="1699207925130" duration="9613000" />
     </task>
     <task id="LOCAL-00001" summary="add: feature WebServlet GET, POST and PUT Models - Controllers">
       <option name="closed" value="true" />
@@ -230,7 +228,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699223706361</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add: feature WebServlet DELETE Models - Controllers">
+      <option name="closed" value="true" />
+      <created>1699228567200</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1699228567200</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -252,6 +258,7 @@
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
     <MESSAGE value="add: feature WebServlet GET, POST and PUT Models - Controllers" />
-    <option name="LAST_COMMIT_MESSAGE" value="add: feature WebServlet GET, POST and PUT Models - Controllers" />
+    <MESSAGE value="add: feature WebServlet DELETE Models - Controllers" />
+    <option name="LAST_COMMIT_MESSAGE" value="add: feature WebServlet DELETE Models - Controllers" />
   </component>
 </project>
